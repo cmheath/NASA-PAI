@@ -1,0 +1,769 @@
+   
+   IF     ( vname == "Kmode               " ) THEN
+     ivalue = Kmode               
+   ELSEIF ( vname == "Ktyp                " ) THEN
+     ivalue = Ktyp                
+   ELSEIF ( vname == "Kcomp               " ) THEN
+     ivalue = Kcomp               
+   ELSEIF ( vname == "Ksurf               " ) THEN
+     ivalue = Ksurf               
+   ELSEIF ( vname == "KgCFD               " ) THEN
+     ivalue = KgCFD               
+   ELSEIF ( vname == "KWinp               " ) THEN
+     ivalue = KWinp               
+   ELSEIF ( vname == "KWunit              " ) THEN
+     ivalue = KWunit              
+   ELSEIF ( vname == "Kfs                 " ) THEN
+     ivalue = Kfs                 
+   ELSEIF ( vname == "Kapp                " ) THEN
+     ivalue = Kapp                
+   ELSEIF ( vname == "Nsapp               " ) THEN
+     ivalue = Nsapp               
+   ELSEIF ( vname == "Knose               " ) THEN
+     ivalue = Knose               
+   ELSEIF ( vname == "Kexd                " ) THEN
+     ivalue = Kexd                
+   ELSEIF ( vname == "Nstexd              " ) THEN
+     ivalue = Nstexd              
+   ELSEIF ( vname == "Kmtexd              " ) THEN
+     ivalue = Kmtexd              
+   ELSEIF ( vname == "Kfoc                " ) THEN
+     ivalue = Kfoc                
+   ELSEIF ( vname == "Kstex               " ) THEN
+     ivalue = Kstex               
+   ELSEIF ( vname == "Kstle               " ) THEN
+     ivalue = Kstle               
+   ELSEIF ( vname == "Kclip               " ) THEN
+     ivalue = Kclip               
+   ELSEIF ( vname == "Kclin               " ) THEN
+     ivalue = Kclin               
+   ELSEIF ( vname == "Kclex               " ) THEN
+     ivalue = Kclex               
+   ELSEIF ( vname == "Kcex                " ) THEN
+     ivalue = Kcex                
+   ELSEIF ( vname == "Kthrt               " ) THEN
+     ivalue = Kthrt               
+   ELSEIF ( vname == "Kstcl               " ) THEN
+     ivalue = Kstcl               
+   ELSEIF ( vname == "Kthcb               " ) THEN
+     ivalue = Kthcb               
+   ELSEIF ( vname == "Nthcb               " ) THEN
+     ivalue = Nthcb               
+   ELSEIF ( vname == "Kthcw               " ) THEN
+     ivalue = Kthcw               
+   ELSEIF ( vname == "Ksubd               " ) THEN
+     ivalue = Ksubd               
+   ELSEIF ( vname == "Ksdcb               " ) THEN
+     ivalue = Ksdcb               
+   ELSEIF ( vname == "Ksdcw               " ) THEN
+     ivalue = Ksdcw               
+   ELSEIF ( vname == "KLsubd              " ) THEN
+     ivalue = KLsubd              
+   ELSEIF ( vname == "Npsdgc              " ) THEN
+     ivalue = Npsdgc              
+   ELSEIF ( vname == "Nsdcb               " ) THEN
+     ivalue = Nsdcb               
+   ELSEIF ( vname == "Nsdcw               " ) THEN
+     ivalue = Nsdcw               
+   ELSEIF ( vname == "Kstrut              " ) THEN
+     ivalue = Kstrut              
+   ELSEIF ( vname == "KEF                 " ) THEN
+     ivalue = KEF                 
+   ELSEIF ( vname == "KxEF                " ) THEN
+     ivalue = KxEF                
+   ELSEIF ( vname == "KyEF                " ) THEN
+     ivalue = KyEF                
+   ELSEIF ( vname == "Kspin               " ) THEN
+     ivalue = Kspin               
+   ENDIF
+   
+   IF     ( vname == "Kmode               " ) THEN
+     Kmode                = ivalue
+   ELSEIF ( vname == "Ktyp                " ) THEN
+     Ktyp                 = ivalue
+   ELSEIF ( vname == "Kcomp               " ) THEN
+     Kcomp                = ivalue
+   ELSEIF ( vname == "Ksurf               " ) THEN
+     Ksurf                = ivalue
+   ELSEIF ( vname == "KgCFD               " ) THEN
+     KgCFD                = ivalue
+   ELSEIF ( vname == "KWinp               " ) THEN
+     KWinp                = ivalue
+   ELSEIF ( vname == "KWunit              " ) THEN
+     KWunit               = ivalue
+   ELSEIF ( vname == "Kfs                 " ) THEN
+     Kfs                  = ivalue
+   ELSEIF ( vname == "Kapp                " ) THEN
+     Kapp                 = ivalue
+   ELSEIF ( vname == "Nsapp               " ) THEN
+     Nsapp                = ivalue
+   ELSEIF ( vname == "Knose               " ) THEN
+     Knose                = ivalue
+   ELSEIF ( vname == "Kexd                " ) THEN
+     Kexd                 = ivalue
+   ELSEIF ( vname == "Nstexd              " ) THEN
+     Nstexd               = ivalue
+   ELSEIF ( vname == "Kmtexd              " ) THEN
+     Kmtexd               = ivalue
+   ELSEIF ( vname == "Kfoc                " ) THEN
+     Kfoc                 = ivalue
+   ELSEIF ( vname == "Kstex               " ) THEN
+     Kstex                = ivalue
+   ELSEIF ( vname == "Kstle               " ) THEN
+     Kstle                = ivalue
+   ELSEIF ( vname == "Kclip               " ) THEN
+     Kclip                = ivalue
+   ELSEIF ( vname == "Kclin               " ) THEN
+     Kclin                = ivalue
+   ELSEIF ( vname == "Kclex               " ) THEN
+     Kclex                = ivalue
+   ELSEIF ( vname == "Kcex                " ) THEN
+     Kcex                 = ivalue
+   ELSEIF ( vname == "Kthrt               " ) THEN
+     Kthrt                = ivalue
+   ELSEIF ( vname == "Kstcl               " ) THEN
+     Kstcl                = ivalue
+   ELSEIF ( vname == "Kthcb               " ) THEN
+     Kthcb                = ivalue
+   ELSEIF ( vname == "Nthcb               " ) THEN
+     Nthcb                = ivalue
+   ELSEIF ( vname == "Kthcw               " ) THEN
+     Kthcw                = ivalue
+   ELSEIF ( vname == "Ksubd               " ) THEN
+     Ksubd                = ivalue
+   ELSEIF ( vname == "Ksdcb               " ) THEN
+     Ksdcb                = ivalue
+   ELSEIF ( vname == "Ksdcw               " ) THEN
+     Ksdcw                = ivalue
+   ELSEIF ( vname == "KLsubd              " ) THEN
+     KLsubd               = ivalue
+   ELSEIF ( vname == "Npsdgc              " ) THEN
+     Npsdgc               = ivalue
+   ELSEIF ( vname == "Nsdcb               " ) THEN
+     Nsdcb                = ivalue
+   ELSEIF ( vname == "Nsdcw               " ) THEN
+     Nsdcw                = ivalue
+   ELSEIF ( vname == "Kstrut              " ) THEN
+     Kstrut               = ivalue
+   ELSEIF ( vname == "KEF                 " ) THEN
+     KEF                  = ivalue
+   ELSEIF ( vname == "KxEF                " ) THEN
+     KxEF                 = ivalue
+   ELSEIF ( vname == "KyEF                " ) THEN
+     KyEF                 = ivalue
+   ELSEIF ( vname == "Kspin               " ) THEN
+     Kspin                = ivalue
+   ENDIF
+   
+   IF     ( vname == "Ksapp               " ) THEN
+     ivalue = Ksapp               (n)
+   ENDIF
+   
+   IF     ( vname == "gamma               " ) THEN
+     rvalue = gamma               
+   ELSEIF ( vname == "gascon              " ) THEN
+     rvalue = gascon              
+   ELSEIF ( vname == "FWinp               " ) THEN
+     rvalue = FWinp               
+   ELSEIF ( vname == "Flapeng             " ) THEN
+     rvalue = Flapeng             
+   ELSEIF ( vname == "WRspill             " ) THEN
+     rvalue = WRspill             
+   ELSEIF ( vname == "WRbypass            " ) THEN
+     rvalue = WRbypass            
+   ELSEIF ( vname == "WRbleed             " ) THEN
+     rvalue = WRbleed             
+   ELSEIF ( vname == "WRother             " ) THEN
+     rvalue = WRother             
+   ELSEIF ( vname == "Wrflow              " ) THEN
+     rvalue = Wrflow              
+   ELSEIF ( vname == "WrL                 " ) THEN
+     rvalue = WrL                 
+   ELSEIF ( vname == "Wr1                 " ) THEN
+     rvalue = Wr1                 
+   ELSEIF ( vname == "Wr2                 " ) THEN
+     rvalue = Wr2                 
+   ELSEIF ( vname == "Wrsupspill          " ) THEN
+     rvalue = Wrsupspill          
+   ELSEIF ( vname == "WaL                 " ) THEN
+     rvalue = WaL                 
+   ELSEIF ( vname == "Wa1                 " ) THEN
+     rvalue = Wa1                 
+   ELSEIF ( vname == "Wa2                 " ) THEN
+     rvalue = Wa2                 
+   ELSEIF ( vname == "Wc2                 " ) THEN
+     rvalue = Wc2                 
+   ELSEIF ( vname == "fsmach              " ) THEN
+     rvalue = fsmach              
+   ELSEIF ( vname == "fsalt               " ) THEN
+     rvalue = fsalt               
+   ELSEIF ( vname == "fsalph              " ) THEN
+     rvalue = fsalph              
+   ELSEIF ( vname == "fsbeta              " ) THEN
+     rvalue = fsbeta              
+   ELSEIF ( vname == "fspres              " ) THEN
+     rvalue = fspres              
+   ELSEIF ( vname == "fstemp              " ) THEN
+     rvalue = fstemp              
+   ELSEIF ( vname == "fsptot              " ) THEN
+     rvalue = fsptot              
+   ELSEIF ( vname == "fsttot              " ) THEN
+     rvalue = fsttot              
+   ELSEIF ( vname == "fsqdyn              " ) THEN
+     rvalue = fsqdyn              
+   ELSEIF ( vname == "fsrho               " ) THEN
+     rvalue = fsrho               
+   ELSEIF ( vname == "fsasos              " ) THEN
+     rvalue = fsasos              
+   ELSEIF ( vname == "fsvel               " ) THEN
+     rvalue = fsvel               
+   ELSEIF ( vname == "fsreyn              " ) THEN
+     rvalue = fsreyn              
+   ELSEIF ( vname == "fsvisc              " ) THEN
+     rvalue = fsvisc              
+   ELSEIF ( vname == "ptref               " ) THEN
+     rvalue = ptref               
+   ELSEIF ( vname == "ttref               " ) THEN
+     rvalue = ttref               
+   ELSEIF ( vname == "alphIn              " ) THEN
+     rvalue = alphIn              
+   ELSEIF ( vname == "betaIn              " ) THEN
+     rvalue = betaIn              
+   ELSEIF ( vname == "FAcap               " ) THEN
+     rvalue = FAcap               
+   ELSEIF ( vname == "Fhclip              " ) THEN
+     rvalue = Fhclip              
+   ELSEIF ( vname == "Fwclip              " ) THEN
+     rvalue = Fwclip              
+   ELSEIF ( vname == "Xinlet              " ) THEN
+     rvalue = Xinlet              
+   ELSEIF ( vname == "Yinlet              " ) THEN
+     rvalue = Yinlet              
+   ELSEIF ( vname == "Thinlet             " ) THEN
+     rvalue = Thinlet             
+   ELSEIF ( vname == "ARtopcap            " ) THEN
+     rvalue = ARtopcap            
+   ELSEIF ( vname == "ptopcap             " ) THEN
+     rvalue = ptopcap             
+   ELSEIF ( vname == "ARbotcap            " ) THEN
+     rvalue = ARbotcap            
+   ELSEIF ( vname == "pbotcap             " ) THEN
+     rvalue = pbotcap             
+   ELSEIF ( vname == "FXnose              " ) THEN
+     rvalue = FXnose              
+   ELSEIF ( vname == "FRnose              " ) THEN
+     rvalue = FRnose              
+   ELSEIF ( vname == "rnose               " ) THEN
+     rvalue = rnose               
+   ELSEIF ( vname == "xnose               " ) THEN
+     rvalue = xnose               
+   ELSEIF ( vname == "ynose               " ) THEN
+     rvalue = ynose               
+   ELSEIF ( vname == "xnexd               " ) THEN
+     rvalue = xnexd               
+   ELSEIF ( vname == "ynexd               " ) THEN
+     rvalue = ynexd               
+   ELSEIF ( vname == "FRECexd             " ) THEN
+     rvalue = FRECexd             
+   ELSEIF ( vname == "FMEXexd             " ) THEN
+     rvalue = FMEXexd             
+   ELSEIF ( vname == "Fmtexd              " ) THEN
+     rvalue = Fmtexd              
+   ELSEIF ( vname == "Mstex               " ) THEN
+     rvalue = Mstex               
+   ELSEIF ( vname == "Fstrunc             " ) THEN
+     rvalue = Fstrunc             
+   ELSEIF ( vname == "Fstle               " ) THEN
+     rvalue = Fstle               
+   ELSEIF ( vname == "stawid              " ) THEN
+     rvalue = stawid              
+   ELSEIF ( vname == "strbot              " ) THEN
+     rvalue = strbot              
+   ELSEIF ( vname == "strtop              " ) THEN
+     rvalue = strtop              
+   ELSEIF ( vname == "stpbot              " ) THEN
+     rvalue = stpbot              
+   ELSEIF ( vname == "stptop              " ) THEN
+     rvalue = stptop              
+   ELSEIF ( vname == "stdyax              " ) THEN
+     rvalue = stdyax              
+   ELSEIF ( vname == "arclin              " ) THEN
+     rvalue = arclin              
+   ELSEIF ( vname == "aclin               " ) THEN
+     rvalue = aclin               
+   ELSEIF ( vname == "bclin               " ) THEN
+     rvalue = bclin               
+   ELSEIF ( vname == "rclin               " ) THEN
+     rvalue = rclin               
+   ELSEIF ( vname == "thclin              " ) THEN
+     rvalue = thclin              
+   ELSEIF ( vname == "arclex              " ) THEN
+     rvalue = arclex              
+   ELSEIF ( vname == "aclex               " ) THEN
+     rvalue = aclex               
+   ELSEIF ( vname == "bclex               " ) THEN
+     rvalue = bclex               
+   ELSEIF ( vname == "rclex               " ) THEN
+     rvalue = rclex               
+   ELSEIF ( vname == "thclex              " ) THEN
+     rvalue = thclex              
+   ELSEIF ( vname == "xclip               " ) THEN
+     rvalue = xclip               
+   ELSEIF ( vname == "yclip               " ) THEN
+     rvalue = yclip               
+   ELSEIF ( vname == "xclin               " ) THEN
+     rvalue = xclin               
+   ELSEIF ( vname == "yclin               " ) THEN
+     rvalue = yclin               
+   ELSEIF ( vname == "xclex               " ) THEN
+     rvalue = xclex               
+   ELSEIF ( vname == "yclex               " ) THEN
+     rvalue = yclex               
+   ELSEIF ( vname == "Frcex               " ) THEN
+     rvalue = Frcex               
+   ELSEIF ( vname == "Fxcext              " ) THEN
+     rvalue = Fxcext              
+   ELSEIF ( vname == "thswex              " ) THEN
+     rvalue = thswex              
+   ELSEIF ( vname == "FLthrt              " ) THEN
+     rvalue = FLthrt              
+   ELSEIF ( vname == "FLthTH              " ) THEN
+     rvalue = FLthTH              
+   ELSEIF ( vname == "aTHa1               " ) THEN
+     rvalue = aTHa1               
+   ELSEIF ( vname == "aTXa1               " ) THEN
+     rvalue = aTXa1               
+   ELSEIF ( vname == "aSDaTX              " ) THEN
+     rvalue = aSDaTX              
+   ELSEIF ( vname == "aSDa1               " ) THEN
+     rvalue = aSDa1               
+   ELSEIF ( vname == "machTH              " ) THEN
+     rvalue = machTH              
+   ELSEIF ( vname == "machTX              " ) THEN
+     rvalue = machTX              
+   ELSEIF ( vname == "machSD              " ) THEN
+     rvalue = machSD              
+   ELSEIF ( vname == "stclbet             " ) THEN
+     rvalue = stclbet             
+   ELSEIF ( vname == "Fxstsh              " ) THEN
+     rvalue = Fxstsh              
+   ELSEIF ( vname == "Frstsh              " ) THEN
+     rvalue = Frstsh              
+   ELSEIF ( vname == "stclphi             " ) THEN
+     rvalue = stclphi             
+   ELSEIF ( vname == "Fstcldx             " ) THEN
+     rvalue = Fstcldx             
+   ELSEIF ( vname == "Fstcldy             " ) THEN
+     rvalue = Fstcldy             
+   ELSEIF ( vname == "stcldx              " ) THEN
+     rvalue = stcldx              
+   ELSEIF ( vname == "stcldy              " ) THEN
+     rvalue = stcldy              
+   ELSEIF ( vname == "stclth              " ) THEN
+     rvalue = stclth              
+   ELSEIF ( vname == "stclbf              " ) THEN
+     rvalue = stclbf              
+   ELSEIF ( vname == "stclar              " ) THEN
+     rvalue = stclar              
+   ELSEIF ( vname == "xSD                 " ) THEN
+     rvalue = xSD                 
+   ELSEIF ( vname == "ySD                 " ) THEN
+     rvalue = ySD                 
+   ELSEIF ( vname == "pbotSD              " ) THEN
+     rvalue = pbotSD              
+   ELSEIF ( vname == "ptopSD              " ) THEN
+     rvalue = ptopSD              
+   ELSEIF ( vname == "dthcb1              " ) THEN
+     rvalue = dthcb1              
+   ELSEIF ( vname == "dxcbSD              " ) THEN
+     rvalue = dxcbSD              
+   ELSEIF ( vname == "dycbSD              " ) THEN
+     rvalue = dycbSD              
+   ELSEIF ( vname == "thcbSD              " ) THEN
+     rvalue = thcbSD              
+   ELSEIF ( vname == "Fncb1               " ) THEN
+     rvalue = Fncb1               
+   ELSEIF ( vname == "FncbSD              " ) THEN
+     rvalue = FncbSD              
+   ELSEIF ( vname == "dxcwTH              " ) THEN
+     rvalue = dxcwTH              
+   ELSEIF ( vname == "thcwTH              " ) THEN
+     rvalue = thcwTH              
+   ELSEIF ( vname == "dxcwSD              " ) THEN
+     rvalue = dxcwSD              
+   ELSEIF ( vname == "thcwSD              " ) THEN
+     rvalue = thcwSD              
+   ELSEIF ( vname == "thcwTX              " ) THEN
+     rvalue = thcwTX              
+   ELSEIF ( vname == "LTXSD               " ) THEN
+     rvalue = LTXSD               
+   ELSEIF ( vname == "FLsubd              " ) THEN
+     rvalue = FLsubd              
+   ELSEIF ( vname == "theqsd              " ) THEN
+     rvalue = theqsd              
+   ELSEIF ( vname == "dptsubd             " ) THEN
+     rvalue = dptsubd             
+   ELSEIF ( vname == "aSDa2               " ) THEN
+     rvalue = aSDa2               
+   ELSEIF ( vname == "dysubd              " ) THEN
+     rvalue = dysubd              
+   ELSEIF ( vname == "FLsdsx              " ) THEN
+     rvalue = FLsdsx              
+   ELSEIF ( vname == "dysdsx              " ) THEN
+     rvalue = dysdsx              
+   ELSEIF ( vname == "aSXa2               " ) THEN
+     rvalue = aSXa2               
+   ELSEIF ( vname == "FdcwSD              " ) THEN
+     rvalue = FdcwSD              
+   ELSEIF ( vname == "FdcwX               " ) THEN
+     rvalue = FdcwX               
+   ELSEIF ( vname == "FLcwX               " ) THEN
+     rvalue = FLcwX               
+   ELSEIF ( vname == "FdcbSD              " ) THEN
+     rvalue = FdcbSD              
+   ELSEIF ( vname == "FdcbX               " ) THEN
+     rvalue = FdcbX               
+   ELSEIF ( vname == "thcbX               " ) THEN
+     rvalue = thcbX               
+   ELSEIF ( vname == "FLcbX               " ) THEN
+     rvalue = FLcbX               
+   ELSEIF ( vname == "wstrut              " ) THEN
+     rvalue = wstrut              
+   ELSEIF ( vname == "xstrutlecb          " ) THEN
+     rvalue = xstrutlecb          
+   ELSEIF ( vname == "dxstrut             " ) THEN
+     rvalue = dxstrut             
+   ELSEIF ( vname == "thstrutle           " ) THEN
+     rvalue = thstrutle           
+   ELSEIF ( vname == "thstrutte           " ) THEN
+     rvalue = thstrutte           
+   ELSEIF ( vname == "rstrutte            " ) THEN
+     rvalue = rstrutte            
+   ELSEIF ( vname == "radEF               " ) THEN
+     rvalue = radEF               
+   ELSEIF ( vname == "hubtip              " ) THEN
+     rvalue = hubtip              
+   ELSEIF ( vname == "FxEF                " ) THEN
+     rvalue = FxEF                
+   ELSEIF ( vname == "FyEF                " ) THEN
+     rvalue = FyEF                
+   ELSEIF ( vname == "thetEF              " ) THEN
+     rvalue = thetEF              
+   ELSEIF ( vname == "Lspin               " ) THEN
+     rvalue = Lspin               
+   ELSEIF ( vname == "rspin               " ) THEN
+     rvalue = rspin               
+   ELSEIF ( vname == "thspin              " ) THEN
+     rvalue = thspin              
+   ELSEIF ( vname == "pt2ptL              " ) THEN
+     rvalue = pt2ptL              
+   ELSEIF ( vname == "Cdwav               " ) THEN
+     rvalue = Cdwav               
+   ELSEIF ( vname == "Cdrag               " ) THEN
+     rvalue = Cdrag               
+   ENDIF
+   
+   IF     ( vname == "gamma               " ) THEN
+     gamma                = rvalue
+   ELSEIF ( vname == "gascon              " ) THEN
+     gascon               = rvalue
+   ELSEIF ( vname == "FWinp               " ) THEN
+     FWinp                = rvalue
+   ELSEIF ( vname == "Flapeng             " ) THEN
+     Flapeng              = rvalue
+   ELSEIF ( vname == "WRspill             " ) THEN
+     WRspill              = rvalue
+   ELSEIF ( vname == "WRbypass            " ) THEN
+     WRbypass             = rvalue
+   ELSEIF ( vname == "WRbleed             " ) THEN
+     WRbleed              = rvalue
+   ELSEIF ( vname == "WRother             " ) THEN
+     WRother              = rvalue
+   ELSEIF ( vname == "Wrflow              " ) THEN
+     Wrflow               = rvalue
+   ELSEIF ( vname == "WrL                 " ) THEN
+     WrL                  = rvalue
+   ELSEIF ( vname == "Wr1                 " ) THEN
+     Wr1                  = rvalue
+   ELSEIF ( vname == "Wr2                 " ) THEN
+     Wr2                  = rvalue
+   ELSEIF ( vname == "Wrsupspill          " ) THEN
+     Wrsupspill           = rvalue
+   ELSEIF ( vname == "WaL                 " ) THEN
+     WaL                  = rvalue
+   ELSEIF ( vname == "Wa1                 " ) THEN
+     Wa1                  = rvalue
+   ELSEIF ( vname == "Wa2                 " ) THEN
+     Wa2                  = rvalue
+   ELSEIF ( vname == "Wc2                 " ) THEN
+     Wc2                  = rvalue
+   ELSEIF ( vname == "fsmach              " ) THEN
+     fsmach               = rvalue
+   ELSEIF ( vname == "fsalt               " ) THEN
+     fsalt                = rvalue
+   ELSEIF ( vname == "fsalph              " ) THEN
+     fsalph               = rvalue
+   ELSEIF ( vname == "fsbeta              " ) THEN
+     fsbeta               = rvalue
+   ELSEIF ( vname == "fspres              " ) THEN
+     fspres               = rvalue
+   ELSEIF ( vname == "fstemp              " ) THEN
+     fstemp               = rvalue
+   ELSEIF ( vname == "fsptot              " ) THEN
+     fsptot               = rvalue
+   ELSEIF ( vname == "fsttot              " ) THEN
+     fsttot               = rvalue
+   ELSEIF ( vname == "fsqdyn              " ) THEN
+     fsqdyn               = rvalue
+   ELSEIF ( vname == "fsrho               " ) THEN
+     fsrho                = rvalue
+   ELSEIF ( vname == "fsasos              " ) THEN
+     fsasos               = rvalue
+   ELSEIF ( vname == "fsvel               " ) THEN
+     fsvel                = rvalue
+   ELSEIF ( vname == "fsreyn              " ) THEN
+     fsreyn               = rvalue
+   ELSEIF ( vname == "fsvisc              " ) THEN
+     fsvisc               = rvalue
+   ELSEIF ( vname == "ptref               " ) THEN
+     ptref                = rvalue
+   ELSEIF ( vname == "ttref               " ) THEN
+     ttref                = rvalue
+   ELSEIF ( vname == "alphIn              " ) THEN
+     alphIn               = rvalue
+   ELSEIF ( vname == "betaIn              " ) THEN
+     betaIn               = rvalue
+   ELSEIF ( vname == "FAcap               " ) THEN
+     FAcap                = rvalue
+   ELSEIF ( vname == "Fhclip              " ) THEN
+     Fhclip               = rvalue
+   ELSEIF ( vname == "Fwclip              " ) THEN
+     Fwclip               = rvalue
+   ELSEIF ( vname == "Xinlet              " ) THEN
+     Xinlet               = rvalue
+   ELSEIF ( vname == "Yinlet              " ) THEN
+     Yinlet               = rvalue
+   ELSEIF ( vname == "Thinlet             " ) THEN
+     Thinlet              = rvalue
+   ELSEIF ( vname == "ARtopcap            " ) THEN
+     ARtopcap             = rvalue
+   ELSEIF ( vname == "ptopcap             " ) THEN
+     ptopcap              = rvalue
+   ELSEIF ( vname == "ARbotcap            " ) THEN
+     ARbotcap             = rvalue
+   ELSEIF ( vname == "pbotcap             " ) THEN
+     pbotcap              = rvalue
+   ELSEIF ( vname == "FXnose              " ) THEN
+     FXnose               = rvalue
+   ELSEIF ( vname == "FRnose              " ) THEN
+     FRnose               = rvalue
+   ELSEIF ( vname == "rnose               " ) THEN
+     rnose                = rvalue
+   ELSEIF ( vname == "xnose               " ) THEN
+     xnose                = rvalue
+   ELSEIF ( vname == "ynose               " ) THEN
+     ynose                = rvalue
+   ELSEIF ( vname == "xnexd               " ) THEN
+     xnexd                = rvalue
+   ELSEIF ( vname == "ynexd               " ) THEN
+     ynexd                = rvalue
+   ELSEIF ( vname == "FRECexd             " ) THEN
+     FRECexd              = rvalue
+   ELSEIF ( vname == "FMEXexd             " ) THEN
+     FMEXexd              = rvalue
+   ELSEIF ( vname == "Fmtexd              " ) THEN
+     Fmtexd               = rvalue
+   ELSEIF ( vname == "Mstex               " ) THEN
+     Mstex                = rvalue
+   ELSEIF ( vname == "Fstrunc             " ) THEN
+     Fstrunc              = rvalue
+   ELSEIF ( vname == "Fstle               " ) THEN
+     Fstle                = rvalue
+   ELSEIF ( vname == "stawid              " ) THEN
+     stawid               = rvalue
+   ELSEIF ( vname == "strbot              " ) THEN
+     strbot               = rvalue
+   ELSEIF ( vname == "strtop              " ) THEN
+     strtop               = rvalue
+   ELSEIF ( vname == "stpbot              " ) THEN
+     stpbot               = rvalue
+   ELSEIF ( vname == "stptop              " ) THEN
+     stptop               = rvalue
+   ELSEIF ( vname == "stdyax              " ) THEN
+     stdyax               = rvalue
+   ELSEIF ( vname == "arclin              " ) THEN
+     arclin               = rvalue
+   ELSEIF ( vname == "aclin               " ) THEN
+     aclin                = rvalue
+   ELSEIF ( vname == "bclin               " ) THEN
+     bclin                = rvalue
+   ELSEIF ( vname == "rclin               " ) THEN
+     rclin                = rvalue
+   ELSEIF ( vname == "thclin              " ) THEN
+     thclin               = rvalue
+   ELSEIF ( vname == "arclex              " ) THEN
+     arclex               = rvalue
+   ELSEIF ( vname == "aclex               " ) THEN
+     aclex                = rvalue
+   ELSEIF ( vname == "bclex               " ) THEN
+     bclex                = rvalue
+   ELSEIF ( vname == "rclex               " ) THEN
+     rclex                = rvalue
+   ELSEIF ( vname == "thclex              " ) THEN
+     thclex               = rvalue
+   ELSEIF ( vname == "xclip               " ) THEN
+     xclip                = rvalue
+   ELSEIF ( vname == "yclip               " ) THEN
+     yclip                = rvalue
+   ELSEIF ( vname == "xclin               " ) THEN
+     xclin                = rvalue
+   ELSEIF ( vname == "yclin               " ) THEN
+     yclin                = rvalue
+   ELSEIF ( vname == "xclex               " ) THEN
+     xclex                = rvalue
+   ELSEIF ( vname == "yclex               " ) THEN
+     yclex                = rvalue
+   ELSEIF ( vname == "Frcex               " ) THEN
+     Frcex                = rvalue
+   ELSEIF ( vname == "Fxcext              " ) THEN
+     Fxcext               = rvalue
+   ELSEIF ( vname == "thswex              " ) THEN
+     thswex               = rvalue
+   ELSEIF ( vname == "FLthrt              " ) THEN
+     FLthrt               = rvalue
+   ELSEIF ( vname == "FLthTH              " ) THEN
+     FLthTH               = rvalue
+   ELSEIF ( vname == "aTHa1               " ) THEN
+     aTHa1                = rvalue
+   ELSEIF ( vname == "aTXa1               " ) THEN
+     aTXa1                = rvalue
+   ELSEIF ( vname == "aSDaTX              " ) THEN
+     aSDaTX               = rvalue
+   ELSEIF ( vname == "aSDa1               " ) THEN
+     aSDa1                = rvalue
+   ELSEIF ( vname == "machTH              " ) THEN
+     machTH               = rvalue
+   ELSEIF ( vname == "machTX              " ) THEN
+     machTX               = rvalue
+   ELSEIF ( vname == "machSD              " ) THEN
+     machSD               = rvalue
+   ELSEIF ( vname == "stclbet             " ) THEN
+     stclbet              = rvalue
+   ELSEIF ( vname == "Fxstsh              " ) THEN
+     Fxstsh               = rvalue
+   ELSEIF ( vname == "Frstsh              " ) THEN
+     Frstsh               = rvalue
+   ELSEIF ( vname == "stclphi             " ) THEN
+     stclphi              = rvalue
+   ELSEIF ( vname == "Fstcldx             " ) THEN
+     Fstcldx              = rvalue
+   ELSEIF ( vname == "Fstcldy             " ) THEN
+     Fstcldy              = rvalue
+   ELSEIF ( vname == "stcldx              " ) THEN
+     stcldx               = rvalue
+   ELSEIF ( vname == "stcldy              " ) THEN
+     stcldy               = rvalue
+   ELSEIF ( vname == "stclth              " ) THEN
+     stclth               = rvalue
+   ELSEIF ( vname == "stclbf              " ) THEN
+     stclbf               = rvalue
+   ELSEIF ( vname == "stclar              " ) THEN
+     stclar               = rvalue
+   ELSEIF ( vname == "xSD                 " ) THEN
+     xSD                  = rvalue
+   ELSEIF ( vname == "ySD                 " ) THEN
+     ySD                  = rvalue
+   ELSEIF ( vname == "pbotSD              " ) THEN
+     pbotSD               = rvalue
+   ELSEIF ( vname == "ptopSD              " ) THEN
+     ptopSD               = rvalue
+   ELSEIF ( vname == "dthcb1              " ) THEN
+     dthcb1               = rvalue
+   ELSEIF ( vname == "dxcbSD              " ) THEN
+     dxcbSD               = rvalue
+   ELSEIF ( vname == "dycbSD              " ) THEN
+     dycbSD               = rvalue
+   ELSEIF ( vname == "thcbSD              " ) THEN
+     thcbSD               = rvalue
+   ELSEIF ( vname == "Fncb1               " ) THEN
+     Fncb1                = rvalue
+   ELSEIF ( vname == "FncbSD              " ) THEN
+     FncbSD               = rvalue
+   ELSEIF ( vname == "dxcwTH              " ) THEN
+     dxcwTH               = rvalue
+   ELSEIF ( vname == "thcwTH              " ) THEN
+     thcwTH               = rvalue
+   ELSEIF ( vname == "dxcwSD              " ) THEN
+     dxcwSD               = rvalue
+   ELSEIF ( vname == "thcwSD              " ) THEN
+     thcwSD               = rvalue
+   ELSEIF ( vname == "thcwTX              " ) THEN
+     thcwTX               = rvalue
+   ELSEIF ( vname == "LTXSD               " ) THEN
+     LTXSD                = rvalue
+   ELSEIF ( vname == "FLsubd              " ) THEN
+     FLsubd               = rvalue
+   ELSEIF ( vname == "theqsd              " ) THEN
+     theqsd               = rvalue
+   ELSEIF ( vname == "dptsubd             " ) THEN
+     dptsubd              = rvalue
+   ELSEIF ( vname == "aSDa2               " ) THEN
+     aSDa2                = rvalue
+   ELSEIF ( vname == "dysubd              " ) THEN
+     dysubd               = rvalue
+   ELSEIF ( vname == "FLsdsx              " ) THEN
+     FLsdsx               = rvalue
+   ELSEIF ( vname == "dysdsx              " ) THEN
+     dysdsx               = rvalue
+   ELSEIF ( vname == "aSXa2               " ) THEN
+     aSXa2                = rvalue
+   ELSEIF ( vname == "FdcwSD              " ) THEN
+     FdcwSD               = rvalue
+   ELSEIF ( vname == "FdcwX               " ) THEN
+     FdcwX                = rvalue
+   ELSEIF ( vname == "FLcwX               " ) THEN
+     FLcwX                = rvalue
+   ELSEIF ( vname == "FdcbSD              " ) THEN
+     FdcbSD               = rvalue
+   ELSEIF ( vname == "FdcbX               " ) THEN
+     FdcbX                = rvalue
+   ELSEIF ( vname == "thcbX               " ) THEN
+     thcbX                = rvalue
+   ELSEIF ( vname == "FLcbX               " ) THEN
+     FLcbX                = rvalue
+   ELSEIF ( vname == "wstrut              " ) THEN
+     wstrut               = rvalue
+   ELSEIF ( vname == "xstrutlecb          " ) THEN
+     xstrutlecb           = rvalue
+   ELSEIF ( vname == "dxstrut             " ) THEN
+     dxstrut              = rvalue
+   ELSEIF ( vname == "thstrutle           " ) THEN
+     thstrutle            = rvalue
+   ELSEIF ( vname == "thstrutte           " ) THEN
+     thstrutte            = rvalue
+   ELSEIF ( vname == "rstrutte            " ) THEN
+     rstrutte             = rvalue
+   ELSEIF ( vname == "radEF               " ) THEN
+     radEF                = rvalue
+   ELSEIF ( vname == "hubtip              " ) THEN
+     hubtip               = rvalue
+   ELSEIF ( vname == "FxEF                " ) THEN
+     FxEF                 = rvalue
+   ELSEIF ( vname == "FyEF                " ) THEN
+     FyEF                 = rvalue
+   ELSEIF ( vname == "thetEF              " ) THEN
+     thetEF               = rvalue
+   ELSEIF ( vname == "Lspin               " ) THEN
+     Lspin                = rvalue
+   ELSEIF ( vname == "rspin               " ) THEN
+     rspin                = rvalue
+   ELSEIF ( vname == "thspin              " ) THEN
+     thspin               = rvalue
+   ELSEIF ( vname == "pt2ptL              " ) THEN
+     pt2ptL               = rvalue
+   ELSEIF ( vname == "Cdwav               " ) THEN
+     Cdwav                = rvalue
+   ELSEIF ( vname == "Cdrag               " ) THEN
+     Cdrag                = rvalue
+   ENDIF
+   
