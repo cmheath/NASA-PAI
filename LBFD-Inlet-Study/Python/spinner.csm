@@ -1,0 +1,28 @@
+ # create spinner surface
+  # make half of the ellipse
+  set Rspin 0.3
+  set Lspin 0.6
+
+  udprim    ellipse rx Lspin ry Rspin
+  box       -2*Lspin 0 -2 2*Lspin +2 +2
+  intersect
+
+  # revolve it about the x axis only 180 deg
+  revolve   -Lspin  0  0  1  0  0  -180
+  
+  store tip
+  restore tip
+  
+  extract   2
+
+  extrude 2 0 0
+  restore tip
+  union
+  store halfbody
+  restore halfbody
+  restore halfbody
+  mirror 0 0 1 0
+  union
+
+  dump spinner.iges
+  
