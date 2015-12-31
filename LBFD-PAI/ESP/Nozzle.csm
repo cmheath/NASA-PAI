@@ -1,0 +1,57 @@
+set xEF 0
+set yEF 0
+set zEF 0
+
+set y_eng 0
+set z_eng 0
+
+set yloc_eng 0
+
+# --- Nozzle ---
+dimension xloc_nozl    6   1   1
+dimension yloc_nozl    6   1   1 
+dimension zloc_nozl    6   1   1
+dimension a_nozl       6   1   1
+
+despmtr   xloc_nozl   "   0.0;    4.0;    5.5;     7.0;   7.0;  25.0"
+despmtr   yloc_nozl   "   0.0;    0.0;    0.0;     0.0;   0.0;   0.0"
+despmtr   zloc_nozl   "   0.0;    0.0;    0.0;     0.0;   0.0;   0.0"
+despmtr   a_nozl      " 4.198;  4.198;  1.623;   3.917;  50.0;  50.0"
+
+despmtr   a_throat    1.623   --Throat area of C-D nozzle
+
+# Build Nozzle
+mark
+  patbeg i 2
+    set r sqrt(a_nozl[i]/pi(1))
+    udparg supell rx r ry r
+    udprim supell
+    rotatey   90   0   0
+    rotatex  -90   0   0
+    translate xEF+xloc_nozl[(i)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i)]
+  patend
+
+  set i 3
+  set r sqrt(a_throat/pi(1))
+  udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0    
+  translate xEF+xloc_nozl[(i)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i)]
+
+  patbeg i 3
+    set r sqrt(a_nozl[i+3]/pi(1))
+    udparg supell rx r ry r
+    udprim supell
+    rotatey   90   0   0
+    rotatex  -90   0   0    
+    translate xEF+xloc_nozl[(i+3)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i+3)]
+  patend
+
+  attribute nozl 0
+rule
+
+dump Nozzle.iges
+
+scale 0.3048
+end

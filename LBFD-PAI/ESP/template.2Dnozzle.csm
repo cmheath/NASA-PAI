@@ -1,0 +1,102 @@
+set xEF 0
+set yEF 0
+set zEF 0
+
+set y_eng 0
+set z_eng 0
+
+set yloc_eng 0
+
+# --- Nozzle ---
+dimension xloc_nozl    6   1   1
+dimension yloc_nozl    6   1   1 
+dimension zloc_nozl    6   1   1
+dimension a_nozl       6   1   1
+
+despmtr   xloc_nozl   "   0.0;    4.0;    5.5;     7.0"
+despmtr   yloc_nozl   "   0.0;    0.0;    0.0;     0.0"
+despmtr   zloc_nozl   "   0.0;    0.0;    0.0;     0.0"
+despmtr   a_nozl      " 4.198;  4.198;  1.623;   3.917"
+
+despmtr   a_exit    2.492   --Throat area of C-D nozzle
+
+# Build Nozzle OML
+mark 
+  set i 1
+  set r sqrt(a_nozl[i]/pi(1))+0.25
+  udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0
+  translate xEF+xloc_nozl[(i)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i)]
+
+  set i 2
+  set r sqrt(a_nozl[i]/pi(1))+0.25
+  udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0
+  translate xEF+xloc_nozl[(i+1)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i)]
+
+  set i 4
+  set r sqrt(a_exit/pi(1))
+  udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0    
+  translate xEF+xloc_nozl[(i)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i)]
+
+rule
+
+end
+store nozl_OML 0 1
+extract 10
+store nozl_exit
+
+restore nozl_OML
+
+# Build Nozzle IML
+mark
+  patbeg i1 3
+    set r sqrt(a_nozl[i1]/pi(1))
+    udparg supell rx r ry r
+    udprim supell
+    rotatey   90   0   0
+    rotatex  -90   0   0
+    translate xEF+xloc_nozl[(i1)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i1)]
+  patend
+
+  restore nozl_exit
+  restore nozl_exit
+  translate 1 0 0
+rule
+attribute nozl 0
+
+subtract 1E-4
+
+store nozzle
+
+mark
+  set r 10
+  udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0
+  translate xEF+xloc_nozl[(1)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(1)]
+
+    udparg supell rx r ry r
+  udprim supell
+  rotatey   90   0   0
+  rotatex  -90   0   0
+  translate xEF+50  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(1)]
+rule
+box 0.0 0.0 0.0  75 25 25
+intersect vmin 1
+
+restore nozzle
+subtract 1E-4
+
+#scale 0.3048
+dump Nozzle.iges
+
+end

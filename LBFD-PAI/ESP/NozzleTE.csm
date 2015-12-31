@@ -1,0 +1,292 @@
+# Low-Boom Flight Demonstrator
+# Written by Christopher Heath
+
+######### Design Parameters ##########
+# --- Build Switches ---
+despmtr  remakeFuselage    0
+despmtr  remakeInlet       0
+despmtr  remakeEngine      1
+despmtr  remakeVtail       0
+despmtr  remakeHtail       0
+despmtr  remakeSpinner     0
+despmtr  remakeWing        0
+despmtr  remakePlug        0
+despmtr  remakeFarfield    0
+despmtr  subtractFarfield  0
+despmtr  unionAll          0
+
+# --- Conversion from ft to m ---
+set scale_factor 0.3048 
+
+# --- Engine ---
+dimension xloc_eng    4   1   1
+dimension yloc_eng    4   1   1
+dimension zloc_eng    4   1   1
+dimension ye_eng      4   1   1
+dimension yw_eng      4   1   1
+dimension nw_engOML   4   1   1
+
+despmtr   xloc_eng   "   0.0;  3.0;   5.0;   6.25"
+despmtr   yloc_eng   "   0.0;  0.0;   0.0;    0.0"
+despmtr   zloc_eng   "   0.0;  0.0;   0.0;    0.0" 
+despmtr   ye_eng     " 1.375; 1.45;   1.4;  1.375" 
+despmtr   yw_eng     " 1.475; 1.55;  1.45;  1.375"
+despmtr   nw_engOML  "   2.0;  2.5;   3.0;    3.5"
+despmtr   x_eng     -2.25
+despmtr   y_eng      0.00
+despmtr   z_eng     -1.00
+
+despmtr   x_cutoff   2.5
+despmtr   t_cutoff  -5.0
+
+# --- Nozzle ---
+dimension xloc_nozl    4   1   1
+dimension yloc_nozl    4   1   1 
+dimension zloc_nozl    4   1   1
+dimension a_nozl       4   1   1
+dimension ye_nozlOML   4   1   1
+dimension yw_nozlOML   4   1   1
+dimension z_nozlOML    4   1   1
+dimension nw_nozlOML   4   1   1
+
+despmtr   xloc_nozl   "  6.25;    7.5;   9.0;        11.0"
+despmtr   yloc_nozl   "   0.0;    0.0;   0.0;         0.0"
+despmtr   zloc_nozl   "   0.0;    0.0;   0.0;         0.0"
+despmtr   a_nozl      " 4.198;  4.198; 1.623;       3.917"
+despmtr   ye_nozlOML  " 1.375;   1.325;  1.275;  1.173987"
+despmtr   yw_nozlOML  " 1.375;   1.325;  1.275;  1.173987"
+despmtr   z_nozlOML   " 1.375;   1.325;  1.275;  1.173987"
+despmtr   nw_nozlOML  "   3.5;     3.0;    2.0;       2.0"
+
+# --- Plug ---
+dimension x_plug      6   1    1
+dimension r_plug      6   1    1
+
+despmtr   x_plug      " 6.25;   7.5;  9.0;   11.0;   12.0; 13.5"
+despmtr   r_plug      "0.225; 0.225; 0.75; 0.3625; 0.2375;  0.0"
+
+# --- Vtail ---
+dimension toc_vtail   4  1  1
+dimension chord_vtail 4  1  1
+dimension xloc_vtail  4  1  1
+dimension yloc_vtail  4  1  1
+dimension zloc_vtail  4  1  1
+
+despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;    0.06"
+despmtr   chord_vtail " 15.5000;  14.7500;    11.5;     5.0"
+despmtr   xloc_vtail  " -0.5000;   1.0000;    4.50;   13.42"
+despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
+despmtr   zloc_vtail  "  -2.500;   0.0000;  1.7636;     9.7"
+despmtr   x_vtail       90.4460
+despmtr   y_vtail        0.0000
+despmtr   z_vtail        7.1041
+
+set zEF   0.7  # Initial vertical position of Engine Face
+set Lspin 2.5   # Spinner length
+
+# --- Create VTtail ---
+patbeg foo remakeVtail
+  mark
+    patbeg i toc_vtail.size
+      # NACA 65A
+      udparg naca456 thkcode $$65A
+      udparg naca456 toc     toc_vtail[i]
+      udparg naca456 camcode $$6M
+      udparg naca456 cl      0.0
+      udparg naca456 a       0.0
+      udprim naca456 
+      scale  chord_vtail[i] 
+      translate xloc_vtail[i] yloc_vtail[i] zloc_vtail[i]
+    patend
+  rule
+  dump vtail.egads
+patend
+patbeg foo 1-remakeVtail
+  import vtail.egads
+patend
+store vtail
+
+# --- Create Engine Spinner ---
+patbeg foo remakeSpinner
+  set Rtip $Rspin
+  set Ltip 2*Rtip
+
+  udprim    ellipse rx Ltip ry Rtip
+  box       -2*Ltip 0 -Rtip 2*Ltip 2*Rtip 2*Rtip
+  intersect
+
+  # revolve it about the x axis only 180 deg
+  revolve   -Ltip  0  0  1  0  0  -180
+  
+  store tip
+  restore tip
+  extract   1
+
+  extrude Lspin 0 0
+  restore tip
+  union
+  store halfbody
+  restore halfbody
+  restore halfbody
+  mirror 0 0 1 0
+  union
+  dump spinner.egads
+patend
+
+patbeg foo 1-remakeSpinner
+  import spinner.egads
+patend
+store spinner
+
+# --- Create SUPIN STEX-Inlet ---
+patbeg foo remakeInlet
+  udprim supin
+  rotatex -90 0 0
+  translate  x_eng-@xmin  y_eng  z_eng+2*zEF
+  dump whole_inlet.egads
+
+  # Store Bounding Box of Inlet
+  set    xmin_inlet  @xmin
+  set    xmax_inlet  @xmax
+  set    ymin_inlet  @ymin
+  set    ymax_inlet  @ymax
+  set    zmin_inlet  @zmin
+  set    zmax_inlet  @zmax
+  store  whole_inlet
+
+  # Find Inlet Cutoff Angle
+  set    z1   zmin_inlet-0.1
+  set    z2   zmax_inlet+0.1
+  set    x1   x_cutoff+tand(t_cutoff)*(z2-z1)/2
+  set    x2   x_cutoff-tand(t_cutoff)*(z2-z1)/2
+  set    xmin min(x1,x2)
+
+  # Extract Inlet Interior FlowPath
+  skbeg     xmin_inlet          ymin_inlet-1  z1
+    linseg  xmax_inlet-0.01     ymin_inlet-1  z1
+    linseg  xmax_inlet-0.01     ymin_inlet-1  z2
+    linseg  max(x1,x2)-0.01     ymin_inlet-1  z2
+    linseg  xmin_inlet          ymin_inlet-1  z1
+  skend
+  extrude    0.0  ymax_inlet-ymin_inlet+2  0.0
+
+  restore   whole_inlet
+  subtract  vmin 1 
+  store interior
+
+  mark
+    restore   interior
+    extract   -9
+    restore   interior
+    extract   -11
+  combine
+
+  store engine_face
+  restore engine_face
+
+  extrude 2 0 0
+  restore interior
+  join 0.01
+  dump interior.egads   
+  store interior
+
+  restore   whole_inlet
+
+  skbeg     x1            ymin_inlet-1  z1
+    linseg  x2            ymin_inlet-1  z2
+    linseg  xmin_inlet-1  ymin_inlet-1  z2
+    linseg  xmin_inlet-1  ymin_inlet-1  z1
+    linseg  x1            ymin_inlet-1  z1
+  skend
+  extrude    0.0  ymax_inlet-ymin_inlet+2  0.0
+
+  # Cut Off Forward Inlet (@ x_cutoff with angle t_cutoff)
+  intersect
+  udprim box dx 50 dy 50 dz 0
+  translate x_eng 0 z_eng+zEF
+  subtract
+  dump   forward_inlet.egads
+  store  forward_inlet
+patend
+
+patbeg foo 1-remakeInlet
+  import forward_inlet.egads
+  store  forward_inlet
+  import interior.egads
+  store  interior
+patend
+
+# --- Create Engine/Nozzle ---
+patbeg foo remakeEngine
+  import whole_inlet.egads
+  set xEF @xmax
+  store whole_inlet.egads
+
+  # Extract edges from oblique plane and combine into sheet
+  mark  
+    restore   forward_inlet
+    extract   -12 
+    restore   forward_inlet
+    extract   -9 
+    restore   forward_inlet  
+    extract   -23 
+    restore   forward_inlet
+    extract   -25     
+  combine
+
+  # Build Engine Nacelle OML
+  patbeg i x_eng.size
+    udparg supell ry (ye_eng[i]+yw_eng[i])/2  rx_e yw_eng[i]  rx_w ye_eng[i]
+    udprim supell n_e nw_engOML[i]
+    rotatey   -90   0   0
+    rotatex   180   0   0
+    translate xEF+xloc_eng[i]  y_eng+yloc_eng  z_eng+zEF+zloc_eng[i]    
+  patend
+
+  attribute engOML 0
+
+  # Build Nozzle Nacelle OML
+  patbeg i xloc_nozl.size-1
+    udparg supell ry z_nozlOML[(i+1)]  rx_w yw_nozlOML[(i+1)]  rx_e ye_nozlOML[(i+1)]
+    udprim supell n_e nw_nozlOML[(i+1)]
+    rotatey  -90   0   0
+    rotatex  180   0   0
+    translate xEF+xloc_nozl[(i+1)]  y_eng+yloc_eng  z_eng+zEF+zloc_nozl[(i+1)]
+  patend
+  attribute nozlOML 0
+  blend
+
+  restore vtail
+  union
+  store eng_OML
+  restore eng_OML
+
+  mark  
+    restore   eng_OML     
+    extract   -4
+    restore   eng_OML
+    extract   -1
+    restore   eng_OML  
+    extract   -2
+    restore   eng_OML
+    extract   -3    
+  combine
+  store nozl_exit
+ 
+  # Build Nozzle Nacelle IML Based on Explicit Flow Areas at Nozzle Plenum, Throat and Exit
+  mark
+    patbeg i a_nozl.size-1
+      set r sqrt((a_nozl[i]+pi(1)*r_plug[i]*r_plug[i])/pi(1))
+      udparg supell rx r  ry r
+      udprim supell
+      rotatey    -90   0   0
+      rotatex     90   0   0
+      translate   xEF+xloc_nozl[i] y_eng+yloc_nozl[i] z_eng+zloc_nozl[i]+zEF
+    patend
+    restore nozl_exit
+    restore nozl_exit
+    translate 1 0 0
+  loft 0
+
+  subtract
+  end

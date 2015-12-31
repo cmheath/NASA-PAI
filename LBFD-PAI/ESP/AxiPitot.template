@@ -1,0 +1,105 @@
+# SUPIN AxiPitot Inlet OML
+
+set yEF $yEF  # Initial y position of SUPIN Engine Face
+set Rspin $Rspin
+set Lspin 5.1
+
+udprim supin
+end
+translate -@xmax 0 0
+store forward_inlet
+
+# Extract edges from oblique plane and combine into sheet
+mark
+ restore   forward_inlet
+ extract   -14
+ restore   forward_inlet
+ extract   -12
+combine
+store ef
+
+mark
+ restore   forward_inlet
+ extract   -8
+ restore   forward_inlet
+ extract   -10
+combine
+store ef2
+
+restore ef
+restore ef
+translate   5.1 0 0
+rule
+
+mark
+restore ef2
+
+restore ef2
+translate 5.1 0 0
+
+rule
+subtract
+
+restore forward_inlet
+union
+
+set xmax @xmax
+store inlet
+
+# create spinner surface
+
+set Rtip $Rspin
+set Ltip 2*Rtip
+
+udprim    ellipse rx Ltip ry Rtip
+box       -2*Ltip 0 -Rtip 2*Ltip 2*Rtip 2*Rtip
+intersect
+
+# revolve it about the x axis only 180 deg
+revolve   -Ltip  0  0  1  0  0  -180
+
+store tip
+restore tip
+extract   1
+
+extrude Lspin 0 0
+restore tip
+union
+store halfbody
+restore halfbody
+restore halfbody
+mirror 0 0 1 0
+union
+translate 0.0 yEF 0.0
+store spinner
+
+
+set Rfarfield 20
+set x1 -25
+set x2 -0.1
+set x3 4.9
+set y_offset 0
+
+cylinder x1 0 0 x2 0 0 Rfarfield
+rotatex 90 0 0
+translate 0 yEF 0
+
+cylinder x2-0.1 0 0 x3 0 0 1.2
+rotatex 90 0 0
+translate 0 yEF 0
+union
+
+box x1 -Rfarfield 0 (abs(x1)+abs(x3)) 2*Rfarfield Rfarfield
+translate 0 yEF 0
+subtract
+restore inlet
+subtract none 1 1E-4
+
+restore spinner
+subtract none 1 1E-4
+
+scale 0.3048
+
+dump Inlet.egads
+dump Inlet.step
+dump inlet.iges

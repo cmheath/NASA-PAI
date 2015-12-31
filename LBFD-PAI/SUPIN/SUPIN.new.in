@@ -1,0 +1,95 @@
+SUPIN Input File                                                      
+Streamline-Traced External-Compression (STEX) Inlet.                  
+GE F404 Conditions.                                                   
+ 
+-----------------------------------------------------------
+DataID.  Main Control for SUPIN
+  0
+Kmode    Ktyp    Kcomp    Ksurf    KgCFD
+  2        5       1        1        0
+KWinp     FWinp     KWunit     Flapeng
+  1     52.7350        2        1.000
+WRspill   WRbleed   WRbypass   WRother
+0.00000   0.00000    0.00000   0.00000
+ 
+-----------------------------------------------------------
+DataID.  Freestream
+  1
+ Kfs  Mach  Pres(psf)  Temp(R) Alpha(deg) Beta(deg) Alt(ft)
+  1  1.600    224.508  389.970    0.000     0.000   51707.0
+ 
+-----------------------------------------------------------
+DataID.  Approach Flow
+  2
+Kapp   Nsapp   Alpha_Inlet(deg)   Beta_Inlet(deg)
+  3      0         0.0000            0.0000
+  Mach_L   pt_L/pt_0   Alpha_L(deg)   Beta_L(deg)
+  1.6160    1.00000        0.0000        0.0000
+ 
+-----------------------------------------------------------
+DataID.  External Supersonic Diffuser
+  4
+Kexd
+  6
+Kstex     Mstex    Fstrunc    Kstle      Fstle
+  1       0.900      1.000      1       -4.500
+strbot    strtop    stpbot    stptop    stdyax
+1.0000    1.0000     2.200     1.900    1.0005
+ 
+-----------------------------------------------------------
+DataID.  Cowl Lip
+  5
+Kclip      Kclin     Kclex
+  1          3         3
+ bclin     ARclin     thclin
+0.00040    4.0000      0.000
+ bclex     ARclex     thclex
+0.00040    4.0000      2.154
+ 
+-----------------------------------------------------------
+DataID.  Cowl Exterior
+  6
+Kcex    Frcex    FXcext    Thswex
+  3   1.10000  -3.00000   5.00000
+ 
+-----------------------------------------------------------
+DataID.  Throat
+  8
+Kthrt
+  9
+Fxstsh    Frstsh
+0.9500    0.0050
+stclphi   Fstcldx   Fstcldy    stclth     stclb     stclar
+120.000    0.3000    0.0000     0.000    0.0010      4.000
+aSDa1       FdxSD     FdySD    pbotSD    ptopSD
+1.010      0.1000    0.0000     2.200     1.900
+ 
+-----------------------------------------------------------
+DataID.  Subsonic Diffuser
+ 10
+Ksubd    KLsubd    FLsubd     theqsd     dptsubd
+  7         1      4.7500      3.000     -0.0250
+FdcwSD    FdcwX     FLcwX
+ 0.500    0.030    0.0000
+ 
+-----------------------------------------------------------
+DataID.  Engine Face
+ 11
+KxEF     FxEF    KyEF     FyEF     ThetEF
+  2    5.58102     1    0.68500    0.0000
+KEF
+ 2
+diamEF(ft)   HubTip
+  2.2284     0.3000
+Kspin
+  3
+ARspin
+2.0000
+ 
+-----------------------------------------------------------
+DataID.  Grid Spacing
+ 13
+ Fgdds   Rgsmax    Fdswall    Fdssym    Fdscex    Fdsthrt
+ 1.000     1.15   0.000500    0.0200    0.1000     0.0150
+ Ddinf    Ddfar      Ddnoz     Ddclp     thfar      Fgnoz
+ 1.000    1.500      1.000     0.050    35.000     0.8850
