@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Model ID="Concept25d_geometry.xml" Modeler="JAGUAR" Version="0.98" Wrapper="jag_wrap.csh">
+  
+  <Constant ID="alpha" Max="90.0" Min="-90.0" TypicalSize="1.0" Value="0.0"/>
+  
+  <!-- Fuselage Parameters -->
+  <Constant ID="FwdFuseCamber" Max="0.03" Min="0.02" TypicalSize="0.01" Value="0.02502"/>
+  <Constant ID="FwdFuseLength" Max="1.0" Min="0.05" TypicalSize="1.0" Value="0.55"/>
+  <Constant ID="AftFuseCamber" Max="0.5" Min="-0.5" TypicalSize="1.0" Value="0.0"/>
+  <Constant ID="AftFuseLength" Max="0.95" Min="0.05" TypicalSize="1.0" Value="0.45"/>
+
+  <Constant ID="R_X1" Max="0.1" Min="0.01" TypicalSize="0.01" Value="0.087537"/>
+
+  <Constant ID="R_X5" Max="0.25" Min="0.1" TypicalSize="0.01" Value="0.265435"/>
+
+  <Constant ID="H_X10" Max="1.5" Min="0.5" TypicalSize="0.01" Value="0.9"/>
+  <Constant ID="W_X10" Max="1.5" Min="0.5" TypicalSize="0.01" Value="0.861911"/>
+
+  <Constant ID="H_X15" Max="2.0" Min="0.5" TypicalSize="0.01" Value="1.35"/>
+  <Constant ID="W_X15" Max="2.0" Min="0.5" TypicalSize="0.01" Value="1.116036"/>
+
+  <Constant ID="H_X20" Max="2.5" Min="0.5" TypicalSize="0.01" Value="1.8"/>
+  <Constant ID="W_X20" Max="2.5" Min="0.5" TypicalSize="0.01" Value="1.399656"/>
+
+  <Constant ID="H_X25" Max="3.0" Min="1.0" TypicalSize="0.01" Value="0.2304646777039054E+01"/>
+  <Constant ID="W_X25" Max="3.0" Min="1.0" TypicalSize="0.01" Value="0.1698089541723356E+01"/>
+
+  <Constant ID="H_X30" Max="3.5" Min="2.0" TypicalSize="0.01" Value="0.2751512554600494E+01"/>
+  <Constant ID="W_X30" Max="3.0" Min="1.0" TypicalSize="0.01" Value="0.2029268948077764E+01"/>
+
+  <Constant ID="H_X35" Max="4.0" Min="1.0" TypicalSize="0.01" Value="0.3209178224687254E+01"/>
+  <Constant ID="W_X35" Max="3.0" Min="1.0" TypicalSize="0.01" Value="0.2362384557125295E+01"/>
+
+  <!-- Wing intersects fuselage @ x = ~38 -->
+  <Constant ID="H_X38" Max="4.0" Min="1.0" TypicalSize="0.01" Value="0.3400098696933877E+01"/>
+  <Constant ID="W_X38" Max="3.0" Min="1.0" TypicalSize="0.01" Value="0.2641410953693154E+01"/>
+
+  <Constant ID="H_X40" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.3435634816978651E+01"/>
+  <Constant ID="W_X40" Max="4.0" Min="2.0" TypicalSize="0.01" Value="0.2862891005710672E+01"/>
+
+  <Constant ID="H_X45" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.3906920998119783E+01"/>
+  <Constant ID="W_X45" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.2691400677374097E+01"/>
+
+  <Constant ID="H_X50" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.4152905577906528E+01"/>
+  <Constant ID="W_X50" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.2861702456433572E+01"/>
+
+  <Constant ID="H_X55" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.4190684641613777E+01"/>
+  <Constant ID="W_X55" Max="5.0" Min="2.0" TypicalSize="0.01" Value="0.3234010319915240E+01"/>
+
+  <!-- x = 63.0 -->
+  <Constant ID="S9H" Max="6.0" Min="5.0" TypicalSize="0.01" Value="0.5044567323688260E+01"/>
+  <Constant ID="S9W" Max="6.0" Min="3.75" TypicalSize="0.01" Value="0.3750000000000000E+01"/>
+  
+  <!-- x = 68.4 -->
+  <Constant ID="S10H" Max="6.0" Min="5.0" TypicalSize="0.01" Value="0.5000000000000000E+01"/>
+  <Constant ID="S10W" Max="6.0" Min="3.75" TypicalSize="0.01" Value="0.3822758118579647E+01"/>
+  
+  <!-- x = 72.66 -->
+  <Constant ID="S11UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.1657987682043373E+01"/>
+  <Constant ID="S11LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2732383043076719E+01"/>
+  <Constant ID="S11UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="S11LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="S11W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2982718129882694E+01"/>
+  
+  <!-- x = 77.22 -->
+  <Constant ID="S12UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="1.5"/>
+  <Constant ID="S12LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2620045504681455E+01"/>
+  <Constant ID="S12UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.2"/>
+  <Constant ID="S12LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.9"/>
+  <Constant ID="S12W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2603477021904776E+01"/>
+  
+  <!-- x = 81.48 -->
+  <Constant ID="S13UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="1.406125"/>
+  <Constant ID="S13LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2791627151869591E+01"/>
+  <Constant ID="S13UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.35"/>
+  <Constant ID="S13LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.8"/>
+  <Constant ID="S13W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2329522285969399E+01"/>
+  
+  <!-- x = 84.43 -->
+  <Constant ID="S14UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="1.32839"/>
+  <Constant ID="S14LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2824735203712402E+01"/>
+  <Constant ID="S14UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.7"/>
+  <Constant ID="S14LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S14W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2398728367709294E+01"/>
+  
+  <!-- x = 87.91 -->
+  <Constant ID="S15UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="1.150695"/>
+  <Constant ID="S15LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2465490490809989E+01"/>
+  <Constant ID="S15UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.7"/>
+  <Constant ID="S15LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.75"/>
+  <Constant ID="S15W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2399283997428181E+01"/>
+  
+  <!-- x = 91.63 -->
+  <Constant ID="S16UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="1.0590775"/>
+  <Constant ID="S16LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2216218830515008E+01"/>
+  <Constant ID="S16UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.8"/>
+  <Constant ID="S16LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S16W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2554145739248170E+01"/>
+  
+  <!-- x = 95.12 -->
+  <Constant ID="S17UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.874055"/>
+  <Constant ID="S17LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.2033132281039397E+01"/>
+  <Constant ID="S17UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.9"/>
+  <Constant ID="S17LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S17W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2866249144336326E+01"/>
+  
+  <!-- x = 97.68 -->
+  <Constant ID="S18UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.727675"/>
+  <Constant ID="S18LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.1614762549252820E+01"/>
+  <Constant ID="S18UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.9"/>
+  <Constant ID="S18LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S18W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.3048567241036849E+01"/>
+  
+  <Constant ID="S19UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.4562675"/>
+  <Constant ID="S19LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.8097586313666126E+00"/>
+  <Constant ID="S19UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.9"/>
+  <Constant ID="S19LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S19W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.2391032558683238E+01"/>
+  
+  <Constant ID="S20UH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.22841"/>
+  <Constant ID="S20LH" Max="3.0" Min="0.1" TypicalSize="0.01" Value="0.1150218828815216E+00"/>
+  <Constant ID="S20UN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="2.9"/>
+  <Constant ID="S20LN" Max="5.0" Min="0.5" TypicalSize="0.01" Value="1.7"/>
+  <Constant ID="S20W" Max="6.0" Min="1.0" TypicalSize="0.01" Value="0.1730021498973609E+01"/>
+
+  <!-- Nacelle OML Parameters -->
+  <Constant ID="NacS0_W" Max="6.0" Min="2.6162" TypicalSize="0.01" Value="0.2623067045422191E+01"/>
+  <Constant ID="NacS1_W" Max="6.0" Min="2.8964" TypicalSize="0.01" Value="0.3034287620388074E+01"/>
+  <Constant ID="NacS2_W" Max="6.0" Min="3.1219" TypicalSize="0.01" Value="0.3122904972043755E+01"/>
+  <Constant ID="NacS3_W" Max="6.0" Min="3.2365" TypicalSize="0.01" Value="0.3402215017334262E+01"/>
+  <Constant ID="NacS4_W" Max="6.0" Min="3.2907" TypicalSize="0.01" Value="0.3408926340670282E+01"/>
+  <Constant ID="NacS5_W" Max="6.0" Min="3.2953" TypicalSize="0.01" Value="0.3338977201281945E+01"/>
+  <Constant ID="NacS6_W" Max="6.0" Min="3.2202" TypicalSize="0.01" Value="0.3237748220942781E+01"/>
+  <Constant ID="NacS7_W" Max="6.0" Min="3.0499" TypicalSize="0.01" Value="0.3051372513229406E+01"/>
+  
+  <!-- Wing Parameters -->
+  <Constant ID="WingX" Max="35.0" Min="31.0" TypicalSize="0.1" Value="33.7928"/>
+  <Constant ID="WingZ" Max="2.5" Min="2.4" TypicalSize="0.01" Value="2.4798"/>
+  <Constant ID="WingAngle" Max="0.1" Min="0.01" TypicalSize="0.01" Value="0.0669"/>
+  
+  <Constant ID="S0_Twist" Max="1.0" Min="-1.0" TypicalSize="0.01" Value="0.0"/>
+  <Constant ID="S1_Twist" Max="1.0" Min="-1.0" TypicalSize="0.01" Value="0.1583"/>
+  <Constant ID="S2_Twist" Max="2.0" Min="-2.0" TypicalSize="0.01" Value="0.6611082653408206E+00"/>
+  <Constant ID="S3_Twist" Max="3.0" Min="-3.0" TypicalSize="0.01" Value="-0.1981745694461342E+01"/>
+  <Constant ID="S4_Twist" Max="4.0" Min="-4.0" TypicalSize="0.01" Value="-0.3123323259429367E+01"/>
+
+  <Constant ID="S0_UA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.1946956756274679E-01"/>
+  <Constant ID="S0_UA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.7623307477743742E-03"/>
+  <Constant ID="S0_UA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.4970793153124876E-02"/>
+  <Constant ID="S0_UA3" Max="0.2" Min="-0.0025" TypicalSize="0.01" Value="-0.2500000000000000E-02"/>
+  <Constant ID="S0_UA4" Max="0.2" Min="-0.0025" TypicalSize="0.01" Value="-0.2500000000000000E-02"/>
+  <Constant ID="S0_LA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.5065218419372600E-01"/>
+  <Constant ID="S0_LA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.2046707183438309E-01"/>
+  <Constant ID="S0_LA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.8993052368670541E-01"/>
+  <Constant ID="S0_LA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.1888049356976652E+00"/>
+  <Constant ID="S0_LA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.4892870973704126E-02"/>
+  
+  <Constant ID="S1_UA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.4191368425720080E-02"/>
+  <Constant ID="S1_UA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.3918839835588298E-01"/>
+  <Constant ID="S1_UA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.2377748000468497E-01"/>
+  <Constant ID="S1_UA3" Max="0.2" Min="0.015" TypicalSize="0.01" Value="0.1500000000000000E-01"/>
+  <Constant ID="S1_UA4" Max="0.2" Min="0.005" TypicalSize="0.01" Value="0.5000000000000000E-02"/>
+  <Constant ID="S1_LA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.1137749142103694E-01"/>
+  <Constant ID="S1_LA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.7617547349079830E-01"/>
+  <Constant ID="S1_LA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.2802279791423775E-01"/>
+  <Constant ID="S1_LA3" Max="-0.0625" Min="-0.2" TypicalSize="0.01" Value="-0.6291892025785237E-01"/>
+  <Constant ID="S1_LA4" Max="-0.045" Min="-0.2" TypicalSize="0.01" Value="-0.4623718709486344E-01"/>
+  
+  <Constant ID="S2_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.0246"/>
+  <Constant ID="S2_Camber" Max="0.2" Min="-0.001" TypicalSize="0.001" Value="-0.1000000000000000E-02"/>
+  <Constant ID="S2_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.6093708074837211E+00"/>
+
+  <Constant ID="S3_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.03"/>
+  <Constant ID="S3_Camber" Max="0.2" Min="-0.01" TypicalSize="0.001" Value="-0.8378113095388749E-02"/>
+  <Constant ID="S3_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.2500000000000000E+00"/>
+
+  <Constant ID="S4_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.0354"/>
+  <Constant ID="S4_Camber" Max="0.2" Min="-0.2" TypicalSize="0.001" Value="0.4425663324565590E-01"/>
+  <Constant ID="S4_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.6857629152117911E+00"/>
+
+  <!-- <Constant ID="S2_UA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.020167"/>
+  <Constant ID="S2_UA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.006131"/>
+  <Constant ID="S2_UA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.00241"/>
+  <Constant ID="S2_UA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.020599"/>
+  <Constant ID="S2_UA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.041684"/>
+  <Constant ID="S2_LA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.034134"/>
+  <Constant ID="S2_LA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.069139"/>
+  <Constant ID="S2_LA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.069605"/>
+  <Constant ID="S2_LA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.086671"/>
+  <Constant ID="S2_LA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.062776"/>
+  
+  <Constant ID="S3_UA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.032941"/>
+  <Constant ID="S3_UA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.037493"/>
+  <Constant ID="S3_UA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.042967"/>
+  <Constant ID="S3_UA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.038473"/>
+  <Constant ID="S3_UA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.011231"/>
+  <Constant ID="S3_LA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.033366"/>
+  <Constant ID="S3_LA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.039562"/>
+  <Constant ID="S3_LA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.044863"/>
+  <Constant ID="S3_LA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.04145"/>
+  <Constant ID="S3_LA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.01412"/>
+  
+  <Constant ID="S4_UA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.039076"/>
+  <Constant ID="S4_UA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.045524"/>
+  <Constant ID="S4_UA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.051795"/>
+  <Constant ID="S4_UA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.046835"/>
+  <Constant ID="S4_UA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.014762"/>
+  <Constant ID="S4_LA0" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.039076"/>
+  <Constant ID="S4_LA1" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.045524"/>
+  <Constant ID="S4_LA2" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.051795"/>
+  <Constant ID="S4_LA3" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.046835"/>
+  <Constant ID="S4_LA4" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="-0.014762"/> -->
+  
+  <!-- Horizontal Tail Parameters -->
+  <Variable ID="HTailAngle" Max="1.0" Min="-1.0" TypicalSize="0.01" Value="0.5941485052737889E+00"/>
+
+  <Constant ID="HS0_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.04"/>
+  <Variable ID="HS0_Camber" Max="0.1" Min="-0.1" TypicalSize="0.001" Value="-0.2416528694817021E-01"/>
+  <Variable ID="HS0_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.4065229165208198E+00"/>
+
+  <Constant ID="HS1_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.045"/>
+  <Variable ID="HS1_Camber" Max="0.1" Min="-0.1" TypicalSize="0.001" Value="0.1660868415773233E-01"/>
+  <Variable ID="HS1_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.4797430726289643E+00"/>
+  <Variable ID="HS1_Twist" Max="5.0" Min="-5.0" TypicalSize="0.01" Value="0.4242763170663694E-01"/>
+
+  <Constant ID="HS2_TC" Max="0.2" Min="-0.2" TypicalSize="0.01" Value="0.05"/>
+  <Variable ID="HS2_Camber" Max="0.1" Min="-0.1" TypicalSize="0.001" Value="0.8999040617081783E-02"/>
+  <Variable ID="HS2_XMaxCam" Max="0.75" Min="0.25" TypicalSize="0.01" Value="0.6528567044042102E+00"/>
+  <Variable ID="HS2_Twist" Max="5.0" Min="-5.0" TypicalSize="0.01" Value="0.7239486506743562E+00"/>
+
+  <!-- Pod Parameters -->
+  <Variable ID="P_X1" Max="1.0" Min="0.05" TypicalSize="0.01" Value="0.2354848751240911E+00"/>
+  <Variable ID="P_X2.5" Max="1.0" Min="0.05" TypicalSize="0.01" Value="0.7923371137756019E-01"/>
+  <Variable ID="P_X4" Max="1.0" Min="0.05" TypicalSize="0.01" Value="0.2128906228511517E+00"/>
+  <Variable ID="P_X5.5" Max="1.0" Min="0.05" TypicalSize="0.01" Value="0.3663481784616291E+00"/>
+  <Variable ID="P_X7" Max="1.0" Min="0.05" TypicalSize="0.01" Value="0.3493468865130594E+00"/>
+
+  <!-- MLG Fairing Parameters -->
+  <!-- <Constant ID="Fairing_LH_X2" Max="2.0" Min="0.3" TypicalSize="0.01" Value="0.3"/>
+  <Constant ID="Fairing_LN_X2" Max="4.0" Min="2.0" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="Fairing_W_X2" Max="4.0" Min="3.0" TypicalSize="0.01" Value="3.0"/>
+    
+  <Constant ID="Fairing_LH_X5" Max="2.0" Min="0.55" TypicalSize="0.01" Value="0.55"/>
+  <Constant ID="Fairing_LN_X5" Max="4.0" Min="2.0" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="Fairing_W_X5" Max="4.0" Min="3.0" TypicalSize="0.01" Value="3.0"/>
+  
+  <Constant ID="Fairing_LH_X8" Max="2.0" Min="0.7" TypicalSize="0.01" Value="0.7"/>
+  <Constant ID="Fairing_LN_X8" Max="4.0" Min="2.5" TypicalSize="0.01" Value="2.5"/>
+  <Constant ID="Fairing_W_X8" Max="4.0" Min="3.0" TypicalSize="0.01" Value="3.0"/>
+  
+  <Constant ID="Fairing_LH_X10.5" Max="2.0" Min="0.83" TypicalSize="0.01" Value="0.83"/>
+  <Constant ID="Fairing_LN_X10.5" Max="4.0" Min="3.0" TypicalSize="0.01" Value="3.0"/>
+  <Constant ID="Fairing_W_X10.5" Max="4.0" Min="3.25" TypicalSize="0.01" Value="3.25"/>
+  
+  <Constant ID="Fairing_LH_X12" Max="2.0" Min="0.875" TypicalSize="0.01" Value="0.875"/>
+  <Constant ID="Fairing_LN_X12" Max="4.0" Min="2.0" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="Fairing_W_X12" Max="4.0" Min="3.3" TypicalSize="0.01" Value="3.3"/>
+  
+  <Constant ID="Fairing_LH_X16" Max="2.0" Min="0.725" TypicalSize="0.01" Value="0.725"/>
+  <Constant ID="Fairing_LN_X16" Max="4.0" Min="1.8" TypicalSize="0.01" Value="1.8"/>
+  <Constant ID="Fairing_W_X16" Max="4.0" Min="2.5" TypicalSize="0.01" Value="2.5"/>
+  
+  <Constant ID="Fairing_LH_X20" Max="2.0" Min="0.3" TypicalSize="0.01" Value="0.3"/>
+  <Constant ID="Fairing_LN_X20" Max="4.0" Min="2.0" TypicalSize="0.01" Value="2.0"/>
+  <Constant ID="Fairing_W_X20" Max="4.0" Min="1.8" TypicalSize="0.01" Value="1.8"/> -->
+  
+  <!-- Constraints -->
+  <!-- <Analysis ID="S0_TC" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S0_TC_S" Min="0.014" P="S0_TC" Sensitivity="Required" T="0.014"/>
+  <Constraint Expr="S0_TC_S" ID="S0_TC_C" Sensitivity="Required"/>
+ 
+  <Analysis ID="S0_Area" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S0_Area_S" Min="0.005" P="S0_Area" Sensitivity="Required" T="0.005"/>
+  <Constraint Expr="S0_Area_S" ID="S0_Area_C" Sensitivity="Required"/>
+
+  <Analysis ID="S0_TEA" Sensitivity="Required"/>
+  <Sum Expr="0.1*(P-T)" ID="S0_TEA_S" Min="1.75" P="S0_TEA" Sensitivity="Required" T="1.7"/>
+  <Constraint Expr="S0_TEA_S" ID="S0_TEA_C" Sensitivity="Required"/>
+
+  <Analysis ID="S0_TC1" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S0_TC1_S" Min="0.006" P="S0_TC1" Sensitivity="Required" T="0.006"/>
+  <Constraint Expr="S0_TC1_S" ID="S0_TC1_C" Sensitivity="Required"/>
+
+  <Analysis ID="S1_TC" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S1_TC_S" Min="0.021" P="S1_TC" Sensitivity="Required" T="0.021"/>
+  <Constraint Expr="S1_TC_S" ID="S1_TC_C" Sensitivity="Required"/>
+
+  <Analysis ID="S1_Area" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S1_Area_S" Min="0.0075" P="S1_Area" Sensitivity="Required" T="0.0075"/>
+  <Constraint Expr="S1_Area_S" ID="S1_Area_C" Sensitivity="Required"/>
+
+  <Analysis ID="S1_TEA" Sensitivity="Required"/>
+  <Sum Expr="0.1*(P-T)" ID="S1_TEA_S" Min="2.5" P="S1_TEA" Sensitivity="Required" T="2.5"/>
+  <Constraint Expr="S1_TEA_S" ID="S1_TEA_C" Sensitivity="Required"/>
+
+  <Analysis ID="S1_TC1" Sensitivity="Required"/>
+  <Sum Expr="100.0*(P-T)" ID="S1_TC1_S" Min="0.009" P="S1_TC1" Sensitivity="Required" T="0.009"/>
+  <Constraint Expr="S1_TC1_S" ID="S1_TC1_C" Sensitivity="Required"/> -->
+  
+</Model>

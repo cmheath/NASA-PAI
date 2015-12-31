@@ -1,0 +1,822 @@
+<?xml version="1.0"?>
+
+<JaguarGeometry filename="Concept25d.tri" encoding="UNFORMATTED">
+  
+  <!-- Optional description tag -->
+  <Description name="Concept25d">
+    Irian's trim and low-boom feasible concept.
+  </Description>
+  
+  <Orientation theta="0.0" phi="FWID=alpha, 0.0" psi="0.0"/>
+  <Location x="0.0" y="0.0" z="0.0"/>
+
+  <!-- Fuselage component -->
+  <Component compID="1" loftedSections="501" name="fuselage" type="BODY" enabled="true">
+
+    <Interpolation class="interpolations.CubicHermiteSpline"/>
+    <Spacing class="spacings.CosineSpacing"/>
+
+    <Orientation theta="90.0" phi="0.0" psi="90.0"/>
+    <Location x="0.0" y="0.0" z="0.0"/>
+
+    <Distortion class="distortions.AsymmetricParabolicShearDistortion">
+      <Parameter name="FwdCamber" value="FWID=FwdFuseCamber, 0.02502"/>
+      <Parameter name="FwdLength" value="FWID=FwdFuseLength, 0.55"/>
+      <Parameter name="AftCamber" value="FWID=AftFuseCamber, 0.0"/>
+      <Parameter name="AftLength" value="FWID=AftFuseLength, 0.45"/>
+    </Distortion>
+    
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="2.65" z="0.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=R_X1, 0.0398"/>
+      <Location x="0.0" y="2.65" z="1.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=R_X5, 0.19615"/>
+      <Location x="0.0" y="2.65" z="5.0"/>
+    </Section>
+
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X10, 0.9"/>
+      <Parameter name="Width" value="FWID=W_X10, 0.6583"/>
+      <Location x="0.0" y="2.65" z="10.0"/>
+    </Section>
+
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X15, 1.35"/>
+      <Parameter name="Width" value="FWID=W_X15, 0.9533"/>
+      <Location x="0.0" y="2.65" z="15.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X20, 1.8"/>
+      <Parameter name="Width" value="FWID=W_X20, 1.259"/>
+      <Location x="0.0" y="2.65" z="20.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X25, 2.3"/>
+      <Parameter name="Width" value="FWID=W_X25, 1.565"/>
+      <Location x="0.0" y="2.65" z="25.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X30, 2.8"/>
+      <Parameter name="Width" value="FWID=W_X30, 1.907"/>
+      <Location x="0.0" y="2.65" z="30.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X35, 3.2"/>
+      <Parameter name="Width" value="FWID=W_X35, 2.347"/>
+      <Location x="0.0" y="2.65" z="35.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X38, 3.4"/>
+      <Parameter name="Width" value="FWID=W_X38, 2.5"/>
+      <Location x="0.0" y="2.65" z="38.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X40, 3.55"/>
+      <Parameter name="Width" value="FWID=W_X40, 2.6"/>
+      <Location x="0.0" y="2.65" z="40.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X45, 3.85"/>
+      <Parameter name="Width" value="FWID=W_X45, 2.9"/>
+      <Location x="0.0" y="2.65" z="45.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X50, 4.1"/>
+      <Parameter name="Width" value="FWID=W_X50, 3.15"/>
+      <Location x="0.0" y="2.7" z="50.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=H_X55, 4.3"/>
+      <Parameter name="Width" value="FWID=W_X55, 3.4"/>
+      <Location x="0.0" y="2.75" z="55.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=S9H, 5.0"/>
+      <Parameter name="Width" value="FWID=S9W, 3.75"/>
+      <Location x="0.0" y="3.1" z="63.0"/>
+    </Section>
+    
+    <Section class="sections.EllipticSection" numPoints="121">
+      <Parameter name="Height" value="FWID=S10H, 5.0"/>
+      <Parameter name="Width" value="FWID=S10W, 3.75"/>
+      <Location x="0.0" y="3.1" z="68.4"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S11UH, 1.846"/>
+      <Parameter name="LowerHeight" value="FWID=S11LH, 2.769"/>
+      <Parameter name="UpperN" value="FWID=S11UN, 2.0"/>
+      <Parameter name="LowerN" value="FWID=S11LN, 2.0"/>
+      <Parameter name="Width" value="FWID=S11W, 3.2024"/>
+      <Location x="0.0" y="3.4646" z="72.66"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S12UH, 1.60095"/>
+      <Parameter name="LowerHeight" value="FWID=S12LH, 2.66825"/>
+      <Parameter name="UpperN" value="FWID=S12UN, 2.2"/>
+      <Parameter name="LowerN" value="FWID=S12LN, 1.9"/>
+      <Parameter name="Width" value="FWID=S12W, 2.6991"/>
+      <Location x="0.0" y="3.44275" z="77.22"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S13UH, 1.406125"/>
+      <Parameter name="LowerHeight" value="FWID=S13LH, 2.611375"/>
+      <Parameter name="UpperN" value="FWID=S13UN, 2.35"/>
+      <Parameter name="LowerN" value="FWID=S13LN, 1.8"/>
+      <Parameter name="Width" value="FWID=S13W, 2.4219"/>
+      <Location x="0.0" y="3.579325" z="81.48"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S14UH, 1.32839"/>
+      <Parameter name="LowerHeight" value="FWID=S14LH, 2.46701"/>
+      <Parameter name="UpperN" value="FWID=S14UN, 2.7"/>
+      <Parameter name="LowerN" value="FWID=S14LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S14W, 2.3355"/>
+      <Location x="0.0" y="3.63331" z="84.43"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S15UH, 1.150695"/>
+      <Parameter name="LowerHeight" value="FWID=S15LH, 2.389905"/>
+      <Parameter name="UpperN" value="FWID=S15UN, 2.7"/>
+      <Parameter name="LowerN" value="FWID=S15LN, 1.75"/>
+      <Parameter name="Width" value="FWID=S15W, 2.3083"/>
+      <Location x="0.0" y="3.757705" z="87.91"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S16UH, 1.0590775"/>
+      <Parameter name="LowerHeight" value="FWID=S16LH, 2.1996225"/>
+      <Parameter name="UpperN" value="FWID=S16UN, 2.8"/>
+      <Parameter name="LowerN" value="FWID=S16LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S16W, 2.4327"/>
+      <Location x="0.0" y="3.8770725" z="91.63"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S17UH, 0.874055"/>
+      <Parameter name="LowerHeight" value="FWID=S17LH, 1.815345"/>
+      <Parameter name="UpperN" value="FWID=S17UN, 2.9"/>
+      <Parameter name="LowerN" value="FWID=S17LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S17W, 2.731"/>
+      <Location x="0.0" y="3.920945" z="95.12"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S18UH, 0.727675"/>
+      <Parameter name="LowerHeight" value="FWID=S18LH, 1.511325"/>
+      <Parameter name="UpperN" value="FWID=S18UN, 2.9"/>
+      <Parameter name="LowerN" value="FWID=S18LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S18W, 2.8328"/>
+      <Location x="0.0" y="3.972825" z="97.68"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S19UH, 0.4562675"/>
+      <Parameter name="LowerHeight" value="FWID=S19LH, 0.9476325"/>
+      <Parameter name="UpperN" value="FWID=S19UN, 2.9"/>
+      <Parameter name="LowerN" value="FWID=S19LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S19W, 2.5654"/>
+      <Location x="0.0" y="4.1063825" z="101.34"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="121">
+      <Parameter name="UpperHeight" value="FWID=S20UH, 0.22841"/>
+      <Parameter name="LowerHeight" value="FWID=S20LH, 0.47439"/>
+      <Parameter name="UpperN" value="FWID=S20UN, 2.9"/>
+      <Parameter name="LowerN" value="FWID=S20LN, 1.7"/>
+      <Parameter name="Width" value="FWID=S20W, 1.7656"/>
+      <Location x="0.0" y="4.12289" z="103.63"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="4.27" z="105.9143"/>
+    </Section>
+
+  </Component>
+
+  <!-- Wing component -->
+  <Component compID="2" loftedSections="401" reflect="true" name="wing" type="AERO" enabled="true">
+  
+    <Orientation theta="90.0" phi="FWID=WingAngle, 0.0669" psi="0.0"/>
+    <Location x="FWID=WingX, 33.7928" y="0.0" z="FWID=WingZ, 2.4798"/>
+    
+    <!-- Section 0 (root) -->
+    <Section class="airfoilsections.CSTAirfoilSection" numPoints="301">
+      <Parameter name="NumParams" value="5"/>
+      <Parameter name="CLE" value="0.5"/>
+      <Parameter name="CTE" value="1.0"/>
+      <Parameter name="UpperYTE" value="0.0"/>
+      <Parameter name="LowerYTE" value="0.0"/>
+      <Parameter name="UA0" value="FWID=S0_UA0,  0.015994"/>
+      <Parameter name="UA1" value="FWID=S0_UA1,  0.001656"/>
+      <Parameter name="UA2" value="FWID=S0_UA2,  0.007311"/>
+      <Parameter name="UA3" value="FWID=S0_UA3, -0.006085"/>
+      <Parameter name="UA4" value="FWID=S0_UA4, -0.021757"/>
+      <Parameter name="LA0" value="FWID=S0_LA0, -0.023784"/>
+      <Parameter name="LA1" value="FWID=S0_LA1, -0.044379"/>
+      <Parameter name="LA2" value="FWID=S0_LA2, -0.045310"/>
+      <Parameter name="LA3" value="FWID=S0_LA3, -0.054705"/>
+      <Parameter name="LA4" value="FWID=S0_LA4, -0.037378"/>
+      <Parameter name="Incidence" value="FWID=S0_Twist, 0.0"/>
+      <Parameter name="ThicknessConstraintID" value="S0_TC"/>
+      <Parameter name="ThicknessConstraint" value="S0_TC1, 0.8"/>
+      <Parameter name="LEAngleConstraintID" value="S0_LEA"/>
+      <Parameter name="TEAngleConstraintID" value="S0_TEA"/>
+      <Parameter name="AreaConstID" value="S0_Area"/>
+      <Parameter name="ChordLength" value="59.0"/>
+      <Location x="2.1794" y="0.0344" z="0.8332"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section>
+    
+    <!-- Section 1 -->
+    <Section class="airfoilsections.CSTAirfoilSection" numPoints="301">
+      <Parameter name="NumParams" value="5"/>
+      <Parameter name="CLE" value="0.5"/>
+      <Parameter name="CTE" value="1.0"/>
+      <Parameter name="UpperYTE" value="0.0"/>
+      <Parameter name="LowerYTE" value="0.0"/>
+      <Parameter name="UA0" value="FWID=S1_UA0,  0.018051"/>
+      <Parameter name="UA1" value="FWID=S1_UA1,  0.003550"/>
+      <Parameter name="UA2" value="FWID=S1_UA2,  0.009618"/>
+      <Parameter name="UA3" value="FWID=S1_UA3, -0.004395"/>
+      <Parameter name="UA4" value="FWID=S1_UA4, -0.021844"/>
+      <Parameter name="LA0" value="FWID=S1_LA0, -0.026115"/>
+      <Parameter name="LA1" value="FWID=S1_LA1, -0.047584"/>
+      <Parameter name="LA2" value="FWID=S1_LA2, -0.048823"/>
+      <Parameter name="LA3" value="FWID=S1_LA3, -0.058274"/>
+      <Parameter name="LA4" value="FWID=S1_LA4, -0.039134"/>
+      <Parameter name="Incidence" value="FWID=S1_Twist, 0.1583"/>
+      <Parameter name="ThicknessConstraintID" value="S1_TC"/>
+      <Parameter name="ThicknessConstraint" value="S1_TC1, 0.8"/>
+      <Parameter name="LEAngleConstraintID" value="S1_LEA"/>
+      <Parameter name="TEAngleConstraintID" value="S1_TEA"/>
+      <Parameter name="AreaConstID" value="S1_Area"/>
+      <Parameter name="ChordLength" value="51.2536"/>
+      <Location x="8.770378" y="0.178" z="2.0593"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section>
+    
+    <!-- Section 2 -->
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="301">
+      <Parameter name="Incidence" value="FWID=S2_Twist, 1.0"/>
+      <Parameter name="TcRatio" value="FWID=S2_TC, 0.03"/>
+      <Parameter name="Camber" value="FWID=S2_Camber, -0.01"/>
+      <Parameter name="XMaxCamber" value="FWID=S2_XMaxCam, 0.5"/>
+      <Parameter name="ChordLength" value="27.4989"/>
+      <Location x="32.03405" y="0.774" z="4.1888"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section>
+
+    <!-- <Section class="airfoilsections.CSTAirfoilSection" numPoints="301">
+      <Parameter name="NumParams" value="5"/>
+      <Parameter name="CLE" value="0.5"/>
+      <Parameter name="CTE" value="1.0"/>
+      <Parameter name="UpperYTE" value="0.0"/>
+      <Parameter name="LowerYTE" value="0.0"/>
+      <Parameter name="UA0" value="FWID=S2_UA0,  0.020167"/>
+      <Parameter name="UA1" value="FWID=S2_UA1, -0.006131"/>
+      <Parameter name="UA2" value="FWID=S2_UA2,  0.002410"/>
+      <Parameter name="UA3" value="FWID=S2_UA3, -0.020599"/>
+      <Parameter name="UA4" value="FWID=S2_UA4, -0.041684"/>
+      <Parameter name="LA0" value="FWID=S2_LA0, -0.034134"/>
+      <Parameter name="LA1" value="FWID=S2_LA1, -0.069139"/>
+      <Parameter name="LA2" value="FWID=S2_LA2, -0.069605"/>
+      <Parameter name="LA3" value="FWID=S2_LA3, -0.086671"/>
+      <Parameter name="LA4" value="FWID=S2_LA4, -0.062776"/>
+      <Parameter name="Incidence" value="FWID=S2_Twist, 0.636"/>
+      <Parameter name="ThicknessConstraintID" value="S2_TC"/>
+      <Parameter name="LEAngleConstraintID" value="S2_LEA"/>
+      <Parameter name="TEAngleConstraintID" value="S2_TEA"/>
+      <Parameter name="AreaConstID" value="S2_Area"/>
+      <Parameter name="ChordLength" value="27.4989"/>
+      <Location x="32.03405" y="0.774" z="4.1888"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section> -->
+    
+    <!-- Section 3 -->
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="301">
+      <Parameter name="Incidence" value="FWID=S3_Twist, -1.5"/>
+      <Parameter name="TcRatio" value="FWID=S3_TC, 0.03"/>
+      <Parameter name="Camber" value="FWID=S3_Camber, -0.0075"/>
+      <Parameter name="XMaxCamber" value="FWID=S3_XMaxCam, 0.45"/>
+      <Parameter name="ChordLength" value="13.2223"/>
+      <Location x="47.95155" y="0.985" z="7.997"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section>
+
+    <!-- <Section class="airfoilsections.CSTAirfoilSection" numPoints="301">
+      <Parameter name="NumParams" value="5"/>
+      <Parameter name="CLE" value="0.5"/>
+      <Parameter name="CTE" value="1.0"/>
+      <Parameter name="UpperYTE" value="0.0"/>
+      <Parameter name="LowerYTE" value="0.0"/>
+      <Parameter name="UA0" value="FWID=S3_UA0,  0.032941"/>
+      <Parameter name="UA1" value="FWID=S3_UA1,  0.037493"/>
+      <Parameter name="UA2" value="FWID=S3_UA2,  0.042967"/>
+      <Parameter name="UA3" value="FWID=S3_UA3,  0.038473"/>
+      <Parameter name="UA4" value="FWID=S3_UA4,  0.011231"/>
+      <Parameter name="LA0" value="FWID=S3_LA0, -0.033366"/>
+      <Parameter name="LA1" value="FWID=S3_LA1, -0.039562"/>
+      <Parameter name="LA2" value="FWID=S3_LA2, -0.044863"/>
+      <Parameter name="LA3" value="FWID=S3_LA3, -0.041450"/>
+      <Parameter name="LA4" value="FWID=S3_LA4, -0.014120"/>
+      <Parameter name="Incidence" value="FWID=S3_Twist, -0.7187"/>
+      <Parameter name="ThicknessConstraintID" value="S3_TC"/>
+      <Parameter name="LEAngleConstraintID" value="S3_LEA"/>
+      <Parameter name="TEAngleConstraintID" value="S3_TEA"/>
+      <Parameter name="AreaConstID" value="S3_Area"/>
+      <Parameter name="ChordLength" value="13.2223"/>
+      <Location x="47.95155" y="0.985" z="7.997"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section> -->
+    
+    <!-- Section 4 (tip) -->
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="301">
+      <Parameter name="Incidence" value="FWID=S4_Twist, -2.75"/>
+      <Parameter name="TcRatio" value="FWID=S4_TC, 0.0354"/>
+      <Parameter name="Camber" value="FWID=S4_Camber, 0.06"/>
+      <Parameter name="XMaxCamber" value="FWID=S4_XMaxCam, 0.5"/>
+      <Parameter name="ChordLength" value="5.091"/>
+      <Location x="62.83888" y="1.264" z="15.2629"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section>
+
+    <!-- <Section class="airfoilsections.CSTAirfoilSection" numPoints="301">
+      <Parameter name="NumParams" value="5"/>
+      <Parameter name="CLE" value="0.5"/>
+      <Parameter name="CTE" value="1.0"/>
+      <Parameter name="UpperYTE" value="0.0"/>
+      <Parameter name="LowerYTE" value="0.0"/>
+      <Parameter name="UA0" value="FWID=S4_UA0,  0.039076"/>
+      <Parameter name="UA1" value="FWID=S4_UA1,  0.045524"/>
+      <Parameter name="UA2" value="FWID=S4_UA2,  0.051795"/>
+      <Parameter name="UA3" value="FWID=S4_UA3,  0.046835"/>
+      <Parameter name="UA4" value="FWID=S4_UA4,  0.014762"/>
+      <Parameter name="LA0" value="FWID=S4_LA0, -0.039076"/>
+      <Parameter name="LA1" value="FWID=S4_LA1, -0.045524"/>
+      <Parameter name="LA2" value="FWID=S4_LA2, -0.051795"/>
+      <Parameter name="LA3" value="FWID=S4_LA3, -0.046835"/>
+      <Parameter name="LA4" value="FWID=S4_LA4, -0.014762"/>
+      <Parameter name="Incidence" value="FWID=S4_Twist, -0.7998"/>
+      <Parameter name="ThicknessConstraintID" value="S4_TC"/>
+      <Parameter name="LEAngleConstraintID" value="S4_LEA"/>
+      <Parameter name="TEAngleConstraintID" value="S4_TEA"/>
+      <Parameter name="AreaConstID" value="S4_Area"/>
+      <Parameter name="ChordLength" value="5.091"/>
+      <Location x="62.83888" y="1.264" z="15.2629"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+    </Section> -->
+    
+    <StartCap class="endcaps.RoundedAirfoilCap">
+      <Parameter name="NumPoints" value="8"/>
+      <Parameter name="Bulge" value="0.5"/>
+    </StartCap>
+
+    <EndCap class="endcaps.RoundedAirfoilCap">
+      <Parameter name="NumPoints" value="8"/>
+      <Parameter name="Bulge" value="0.5"/>
+    </EndCap>
+    
+  </Component>
+
+  <!-- VTail component -->
+  <Component compID="3" loftedSections="51" name="vtail" type="AERO" enabled="true">
+  
+    <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+    <Location x="90.4460" y="0.001" z="7.1041"/>
+    
+    <Section class="airfoilsections.BiconvexAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="16.0"/>
+      <Parameter name="TcRatio" value="0.04"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="0.0"/>
+    </Section>
+
+    <Section class="airfoilsections.BiconvexAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="12.0"/>
+      <Parameter name="TcRatio" value="0.04"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="3.96" y="0.0" z="1.7636"/>
+    </Section>
+    
+    <Section class="airfoilsections.BiconvexAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="5.0"/>
+      <Parameter name="TcRatio" value="0.06"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="13.42" y="0.0" z="9.7"/>
+    </Section>
+    
+    <StartCap class="endcaps.SimplyClosedAirfoilCap"/>
+
+    <EndCap class="endcaps.RoundedAirfoilCap">
+      <Parameter name="NumPoints" value="8"/>
+      <Parameter name="Bulge" value="0.5"/>
+    </EndCap>
+    
+  </Component>
+
+  <!-- HTail component -->
+  <Component compID="4" loftedSections="41" reflect="true" name="htail" type="AERO" enabled="true">
+  
+    <Orientation theta="90.0" phi="FWID=HTailAngle, 0.45" psi="0.0"/>
+    <Location x="96.575" y="0.01" z="10.4747"/>
+    
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="11.0"/>
+      <Parameter name="TcRatio" value="FWID=HS0_TC, 0.04"/>
+      <Parameter name="Camber" value="FWID=HS0_Camber, -0.005"/>
+      <Parameter name="XMaxCamber" value="FWID=HS0_XMaxCam, 0.5"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="0.0"/>
+    </Section>
+
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="7.3"/>
+      <Parameter name="TcRatio" value="0.045"/>
+      <Parameter name="Camber" value="FWID=HS1_Camber, 0.025"/>
+      <Parameter name="XMaxCamber" value="FWID=HS1_XMaxCam, 0.5"/>
+      <Parameter name="Incidence" value="FWID=HS1_Twist, 0.0"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="5.93" y="0.06" z="4.0"/>
+    </Section>
+
+    <Section class="airfoilsections.NACA65xxxAirfoilSection" numPoints="101">
+      <Parameter name="ChordLength" value="3.6"/>
+      <Parameter name="TcRatio" value="0.05"/>
+      <Parameter name="Camber" value="FWID=HS2_Camber, 0.025"/>
+      <Parameter name="XMaxCamber" value="FWID=HS2_XMaxCam, 0.5"/>
+      <Parameter name="Incidence" value="FWID=HS2_Twist, 0.0"/>
+      <Spacing class="spacings.CosineSpacing">
+        <Parameter name="HalfCosine" value="true"/>
+      </Spacing>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="11.86" y="0.119557" z="8.0"/>
+    </Section>
+    
+    <StartCap class="endcaps.RoundedAirfoilCap">
+      <Parameter name="NumPoints" value="8"/>
+      <Parameter name="Bulge" value="0.5"/>
+    </StartCap>
+
+    <EndCap class="endcaps.RoundedAirfoilCap">
+      <Parameter name="NumPoints" value="8"/>
+      <Parameter name="Bulge" value="0.5"/>
+    </EndCap>
+    
+  </Component>
+
+  <!-- Nacelle component -->
+  <Component compID="5" class="components.FlowThroughComponent" loftedSections="201" name="nac1" type="BODY" enabled="true">
+  
+    <Interpolation class="interpolations.CubicHermiteSpline"/>
+
+    <Orientation theta="90.0" phi="0.0" psi="90.0"/>
+    <Location x="88.0074" y="0.0" z="6.3517"/>
+    
+    <Parameter name="IMLCompID" value="6"/>
+    <Parameter name="NumOuterKeySections" value="9"/>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.35"/>
+      <Parameter name="LowerHeight" value="0.45"/>
+      <Parameter name="UpperN" value="1.8"/>
+      <Parameter name="LowerN" value="2.8"/>
+      <Parameter name="Width" value="FWID=NacS0_W, 2.6162"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.45" z="0.0"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.5"/>
+      <Parameter name="LowerHeight" value="1.5"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.2"/>
+      <Parameter name="Width" value="FWID=NacS1_W, 2.8964"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.5488" z="4.286"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.6752"/>
+      <Parameter name="LowerHeight" value="1.6752"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.6"/>
+      <Parameter name="Width" value="FWID=NacS2_W, 3.1219"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.7225" z="6.27"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.7487"/>
+      <Parameter name="LowerHeight" value="1.7487"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.9"/>
+      <Parameter name="Width" value="FWID=NacS3_W, 3.2365"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.791" z="8.574"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.7791"/>
+      <Parameter name="LowerHeight" value="1.7791"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="3.0"/>
+      <Parameter name="Width" value="FWID=NacS4_W, 3.2907"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.8059" z="10.644"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.7627"/>
+      <Parameter name="LowerHeight" value="1.7627"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.9"/>
+      <Parameter name="Width" value="FWID=NacS5_W, 3.2953"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.7866" z="13.474"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.6733"/>
+      <Parameter name="LowerHeight" value="1.6733"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.4"/>
+      <Parameter name="Width" value="FWID=NacS6_W, 3.2202"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.7249" z="15.182"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.5"/>
+      <Parameter name="LowerHeight" value="1.5"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="2.0"/>
+      <Parameter name="Width" value="FWID=NacS7_W, 3.0499"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.614" z="17.74"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="51">
+      <Parameter name="Radius" value="1.09165"/>
+      <Location x="0.0" y="-0.5979" z="20.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="51">
+      <Parameter name="Radius" value="1.09165"/>
+      <Location x="0.0" y="-0.5979" z="15.72"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="51">
+      <Parameter name="Radius" value="1.09165"/>
+      <Location x="0.0" y="-0.5491" z="10.0"/>
+    </Section>
+
+    <Section class="sections.EllipticSection" numPoints="51">
+      <Parameter name="Height" value="1.82"/>
+      <Parameter name="Width" value="2.57"/>
+      <Location x="0.0" y="-0.2934" z="4.8"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.257"/>
+      <Parameter name="LowerHeight" value="0.54"/>
+      <Parameter name="UpperN" value="1.8"/>
+      <Parameter name="LowerN" value="2.8"/>
+      <Parameter name="Width" value="2.55"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.45" z="1.0"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="1.35"/>
+      <Parameter name="LowerHeight" value="0.45"/>
+      <Parameter name="UpperN" value="1.8"/>
+      <Parameter name="LowerN" value="2.8"/>
+      <Parameter name="Width" value="2.6162"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="-0.45" z="0.0"/>
+    </Section>
+
+  </Component>
+
+  <!-- Pylon -->
+  <Component compID="7" loftedSections="15" name="vpylon1" type="AERO" enabled="true">
+  
+    <Orientation theta="0.0" phi="5.068" psi="0.0"/>
+    <Location x="84.75" y="0.001" z="4.66"/>
+    
+    <!-- Section 0 (root) -->
+    <Section class="airfoilsections.DiamondAirfoilSection" numPoints="25">
+      <Parameter name="MaxThicknessLocation" value="0.78"/>
+      <Parameter name="TcRatio" value="0.31"/>
+      <Parameter name="ChordLength" value="6.656"/>
+      <Parameter name="Incidence" value="0.0"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="0.0"/>
+    </Section>
+    
+    <!-- Section 1 -->
+    <Section class="airfoilsections.DiamondAirfoilSection" numPoints="25">
+      <Parameter name="MaxThicknessLocation" value="0.75"/>
+      <Parameter name="TcRatio" value="0.355"/>
+      <Parameter name="ChordLength" value="4.2"/>
+      <Parameter name="Incidence" value="0.0"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="3.67" y="0.0" z="1.0"/>
+    </Section>
+    
+    <StartCap class="endcaps.SimplyClosedAirfoilCap"/>
+    <EndCap class="endcaps.SimplyClosedAirfoilCap"/>
+    
+  </Component>
+  
+  <!-- Pod -->
+  <Component compID="8" loftedSections="75" name="pod1" type="BODY" enabled="true">
+
+    <Interpolation class="interpolations.CubicHermiteSpline"/>
+    <Spacing class="spacings.CosineSpacing"/>
+
+    <Orientation theta="90.0" phi="0.0" psi="90.0"/>
+    <Location x="104.0" y="0.0" z="16.8"/>
+
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="0.0" z="0.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=P_X1, 0.2"/>
+      <Location x="0.0" y="0.0" z="1.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=P_X2.5, 0.2"/>
+      <Location x="0.0" y="0.0" z="2.5"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=P_X4, 0.2"/>
+      <Location x="0.0" y="0.0" z="4.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=P_X5.5, 0.2"/>
+      <Location x="0.0" y="0.0" z="5.5"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="121">
+      <Parameter name="Radius" value="FWID=P_X7, 0.2"/>
+      <Location x="0.0" y="0.0" z="7.0"/>
+    </Section>
+
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="0.0" z="8.0"/>
+    </Section>
+
+  </Component>
+  
+  <!-- MLG Fairing -->
+  <!-- <Component compID="9" loftedSections="101" name="pod2" type="BODY" enabled="false">
+
+    <Interpolation class="interpolations.CubicHermiteSpline"/>
+
+    <Orientation theta="88.5" phi="0.0" psi="90.0"/>
+    <Location x="68.0" y="0.0" z="1.8"/>
+
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="0.0" z="0.0"/>
+    </Section>
+
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X2, 0.3"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X2, 2.0"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X2, 3.0"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="2.0"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X5, 0.55"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X5, 2.0"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X5, 3.0"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="5.0"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X8, 0.7"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X8, 2.5"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X8, 3.0"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="8.0"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X10.5, 0.83"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X10.5, 3.0"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X10.5, 3.25"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="10.5"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X12, 0.875"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X12, 2.0"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X12, 3.3"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="12.0"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X16, 0.725"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X16, 1.8"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X16, 2.5"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="16.0"/>
+    </Section>
+    
+    <Section class="sections.SuperEllipseSection" numPoints="51">
+      <Parameter name="UpperHeight" value="0.1"/>
+      <Parameter name="LowerHeight" value="FWID=Fairing_LH_X20, 0.3"/>
+      <Parameter name="UpperN" value="2.0"/>
+      <Parameter name="LowerN" value="FWID=Fairing_LN_X20, 2.0"/>
+      <Parameter name="Width" value="FWID=Fairing_W_X20, 1.8"/>
+      <Orientation theta="0.0" phi="0.0" psi="0.0"/>
+      <Location x="0.0" y="0.0" z="20.0"/>
+    </Section>
+    
+    <Section class="sections.CircularSection" numPoints="1">
+      <Parameter name="Radius" value="0.0"/>
+      <Location x="0.0" y="0.0" z="25.0"/>
+    </Section>
+
+  </Component> -->
+
+</JaguarGeometry>

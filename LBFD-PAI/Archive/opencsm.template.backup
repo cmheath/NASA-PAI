@@ -1,0 +1,566 @@
+# Low-Boom Flight Demonstrator
+# Written by Christopher Heath
+
+######### Design Parameters ##########
+# --- Build Switches ---
+despmtr  remakeFuselage    0
+despmtr  remakeInlet       0
+despmtr  remakeEngine      0
+despmtr  remakeVtail       0
+despmtr  remakeHtail       0
+despmtr  remakeSpinner     0
+despmtr  remakeWing        0
+despmtr  remakePlug        0
+despmtr  remakeFarfield    0
+despmtr  subtractFarfield  0
+despmtr  unionAll          0
+
+# --- Conversion from ft to m ---
+set scale_factor 0.3048 
+
+# --- Fuselage ---
+dimension x_fuse         20   1    1
+dimension z_fuse         20   1    1
+dimension yn_fuseOML     20   1    1
+dimension ys_fuseOML     20   1    1
+dimension z_fuseOML      20   1    1
+
+despmtr   x_fuse      "    1.0; 10.0; 18.0; 26.0;  34.0;\
+                          45.0; 50.0; 56.0; 60.4;  63.7;\
+                          69.0; 73.5; 76.5; 80.0;  84.0;\
+                          87.0; 90.0; 94.0; 98.9; 100.0"
+
+despmtr   z_fuse      "  0.075;   0.50;  0.85;  1.15;   1.5;\
+                           2.0;   2.25;   2.5;  2.35;  2.15;\
+                          1.75;    1.4; 1.175;   1.0;  0.98;\
+                           0.96; 0.925; 0.875; 0.825;  0.75"
+
+despmtr   yn_fuseOML  "  0.075;   0.5;  0.85;  1.15;   1.5;\
+                           2.0;  2.25;   2.5;  2.35;  2.15;\
+                          1.75;   1.4;  1.25;  1.05;  0.85;\
+                           0.75; 0.65;   0.5;   0.2;   0.0"
+
+despmtr   ys_fuseOML  "  0.075;   0.5;  0.85;  1.15;   1.5;\
+                           2.0;  2.25;   2.5;  2.35;  2.15;\
+                          1.75;   1.4;  1.25;  1.05;  0.85;\
+                           0.75; 0.65;   0.5;   0.2;   0.0"
+
+despmtr   z_fuseOML   "  0.15;  0.5;   0.7;  0.9;   1.1;\
+                         1.45;  1.6; 1.825;  1.9; 1.975;\
+                         1.85;  1.7;   1.6; 1.55;  1.55;\
+                         1.55; 1.55;   1.5; 1.05;   0.0"
+
+despmtr   x_cutoff  -2.5
+despmtr   t_cutoff  -5.0
+
+# --- Engine ---
+dimension x_eng       4   1   1
+dimension z_eng       4   1   1
+dimension ye_engOML   4   1   1
+dimension yw_engOML   4   1   1
+dimension nw_engOML   4   1   1
+
+despmtr   x_eng      "   0.0;  3.0;   5.0;   6.25"
+despmtr   z_eng      "   0.0;  0.0;   0.0;    0.0" 
+despmtr   ye_engOML  " 1.375; 1.45;   1.4;  1.375" 
+despmtr   yw_engOML  " 1.475; 1.55;  1.45;  1.375"
+despmtr   nw_engOML  "   2.0;  2.5;   3.0;    3.5"
+
+# --- Nozzle ---
+dimension x_nozl       4   1   1
+dimension z_nozl       4   1   1
+dimension a_nozl       4   1   1
+dimension ye_nozlOML   4   1   1
+dimension yw_nozlOML   4   1   1
+dimension z_nozlOML    4   1   1
+dimension nw_nozlOML   4   1   1
+
+despmtr   x_nozl      "  6.25;    7.5;   9.0;        11.0"
+despmtr   z_nozl      "   0.0;    0.0;   0.0;         0.0"
+despmtr   a_nozl      " 4.198;  4.198; 1.623;       3.917"
+despmtr   ye_nozlOML  " 1.375;   1.325;  1.275;  1.173987"
+despmtr   yw_nozlOML  " 1.375;   1.325;  1.275;  1.173987"
+despmtr   z_nozlOML   " 1.375;   1.325;  1.275;  1.173987"
+despmtr   nw_nozlOML  "   3.5;     3.0;    2.0;       2.0"
+
+# --- Plug ---
+dimension x_plug      6   1    1
+dimension r_plug      6   1    1
+
+despmtr   x_plug      " 6.25;   7.5;  9.0;   11.0;   12.0; 13.5"
+despmtr   r_plug      "0.225; 0.225; 0.75; 0.3625; 0.2375;  0.0"
+
+# --- Wing ---
+dimension toc_wingOML   6  1  1
+dimension chord_wingOML 6  1  1
+dimension xloc_wingOML  6  1  1
+dimension yloc_wingOML  6  1  1
+dimension zloc_wingOML  6  1  1
+
+despmtr   toc_wingOML   "0.024;   0.022;  0.0245;   0.029;    0.04;    0.04"
+despmtr   chord_wingOML " 53.8;    44.9;    32.8;    25.5;  12.330;     4.8"
+despmtr   xloc_wingOML  " 28.0; 37.8364; 50.5848; 58.2355; 73.1311; 84.0133"
+despmtr   yloc_wingOML  "  0.0;   1.912;   3.162;   3.841;  7.4083; 14.2083"
+despmtr   zloc_wingOML  "  3.1;     3.1;     3.1;     3.1;     3.1;     3.1"
+
+# --- Htail ---
+dimension toc_htail   3  1  1
+dimension chord_htail 3  1  1
+dimension xloc_htail  3  1  1
+dimension yloc_htail  3  1  1
+dimension zloc_htail  3  1  1
+
+despmtr   toc_htail   "   0.06;   0.055;   0.04"
+despmtr   chord_htail "    3.0;     7.0;   11.0"
+despmtr   xloc_htail  "   10.0;     5.0;    0.0"
+despmtr   yloc_htail  "   11.0;     5.0;    0.0"
+despmtr   zloc_htail  " 3.1696;  3.1757;   3.15"
+
+# --- Vtail ---
+dimension toc_vtail   3  1  1
+dimension chord_vtail 3  1  1
+dimension xloc_vtail  3  1  1
+dimension yloc_vtail  3  1  1
+dimension zloc_vtail  3  1  1
+
+despmtr   toc_vtail   "  0.08;   0.075;   0.07"
+despmtr   chord_vtail "  12.0;     6.0;    2.0"
+despmtr   xloc_vtail  "   0.0;    6.25;   10.5"
+despmtr   yloc_vtail  "   0.0;     0.0;    0.0"
+despmtr   zloc_vtail  "   0.0;     6.5;   14.0"
+
+set yEF $yEF  # Initial y position of SUPIN Engine Face
+set Rspin $Rspin
+set Lspin Rspin
+
+# --- Create VTtail ---
+patbeg foo remakeVtail
+  mark
+    patbeg i toc_vtail.size
+      # NACA 64A004
+      udparg naca456 thkcode $$64A
+      udparg naca456 toc     toc_vtail[i]
+      udparg naca456 camcode $$6M
+      udparg naca456 cl      0.0
+      udparg naca456 a       0.0
+      udprim naca456 
+      scale  chord_vtail[i] 
+      translate xloc_vtail[i] yloc_vtail[i] zloc_vtail[i]
+    patend
+  rule
+  rotatex   90   0   0
+  rotatez -2.5   0   0
+  dump vtail.egads
+patend
+patbeg foo 1-remakeVtail
+  import vtail.egads
+patend
+store vtail
+
+# --- Create Engine Spinner ---
+patbeg foo remakeSpinner
+  udprim    ellipse rx Lspin ry Rspin
+  box       -2*Lspin 0 -Rspin 2*Lspin 2*Rspin 2*Rspin
+  intersect
+
+  # revolve it about the x axis only 180 deg
+  revolve   -Lspin  0  0  1  0  0  -180
+  
+  store tip
+  restore tip
+  extract   1
+
+  extrude 2.5 0 0
+  restore tip
+  union
+  store halfbody
+  restore halfbody
+  restore halfbody
+  mirror 0 0 1 0
+  union
+  dump spinner.egads
+patend
+
+patbeg foo 1-remakeSpinner
+  import spinner.egads
+patend
+store spinner
+
+# --- Create SUPIN STEX-Inlet ---
+patbeg foo remakeInlet
+  udprim supin
+
+  dump whole_inlet.egads
+
+  translate -@xmax 0 0
+  # remember bounding box of inlet
+  set    xmin_inlet  @xmin
+  set    xmax_inlet  @xmax
+  set    ymin_inlet  @ymin
+  set    ymax_inlet  @ymax
+  set    zmin_inlet  @zmin
+  set    zmax_inlet  @zmax
+  store  whole_inlet
+
+  # Find points on line at which inlet will be truncated
+  set    y1  ymin_inlet-1
+  set    y2  ymax_inlet+1
+  set    x1  x_cutoff+tand(t_cutoff)*(y2-y1)/2
+  set    x2  x_cutoff-tand(t_cutoff)*(y2-y1)/2
+
+  # Extract interior inlet surfaces
+  box       min(x1,x2)-1                   ymin_inlet-1             zmin_inlet-1 \
+            xmax_inlet-(min(x1,x2))+0.99   ymax_inlet-ymin_inlet+2  zmax_inlet-zmin_inlet+2
+  restore   whole_inlet
+  subtract  vmin 1 
+  store interior
+
+  mark
+    restore   interior
+    extract   -4
+    restore   interior
+    extract   -6
+  combine
+
+  store engine_face
+  restore engine_face
+
+  extrude 2 0 0
+  restore interior
+  join 0.01
+  dump interior.egads   
+  store interior
+
+  restore   whole_inlet
+
+  skbeg     x1           y1 zmin_inlet-1
+    linseg  x2           y2 zmin_inlet-1
+    linseg  xmin_inlet-1 y2 zmin_inlet-1
+    linseg  xmin_inlet-1 y1 zmin_inlet-1
+    linseg  x1           y1 zmin_inlet-1
+  skend
+  extrude    0.0  0.0  zmax_inlet-zmin_inlet+2
+
+  # Cut off forward inlet (at x_cutoff with angle t_cutoff)
+  intersect
+  udprim box dx 50 dy 0 dz 50
+  translate 0 yEF 0
+  subtract
+  dump   forward_inlet.egads
+  store  forward_inlet
+patend
+
+patbeg foo 1-remakeInlet
+  import forward_inlet.egads
+  store  forward_inlet
+  import interior.egads
+  store  interior
+patend
+
+# --- Create Engine/Nozzle ---
+patbeg foo remakeEngine
+
+  # Extract edges from oblique plane and combine into sheet
+  mark  
+    restore   forward_inlet               
+    extract   -12 
+    restore   forward_inlet
+    extract   -9 
+    restore   forward_inlet  
+    extract   -23 
+    restore   forward_inlet
+    extract   -25     
+  combine
+
+  # Build Engine Nacelle OML
+  patbeg i x_eng.size
+    udparg supell ry (ye_engOML[i]+yw_engOML[i])/2  rx_w yw_engOML[i]  rx_e ye_engOML[i]
+    udprim supell n_w nw_engOML[i]
+    rotatey  -90   0   0
+    rotatex  -90   0   0
+    translate  x_eng[i] (yEF-z_eng[i]) 0          
+  patend
+
+  attribute engOML 0
+
+  # Build Nozzle Nacelle OML
+  patbeg i x_nozl.size-1
+    udparg supell ry z_nozlOML[(i+1)]  rx_w yw_nozlOML[(i+1)]  rx_e ye_nozlOML[(i+1)]
+    udprim supell n_w nw_nozlOML[(i+1)]
+    rotatey  -90   0   0
+    rotatex  -90   0   0
+    translate  x_nozl[(i+1)] (yEF-z_nozl[(i+1)]) 0
+  patend
+  attribute nozlOML 0
+  blend
+
+  udprim box dx 50 dy 0 dz 50
+  translate 0 yEF 0
+  subtract
+  set x1 @xmin
+
+  restore vtail
+  translate x1 4.0 0.0
+  union
+  
+  # subtract out interior flowpath
+  restore  interior
+  subtract
+
+  restore spinner
+  translate 0 yEF 0
+  union
+
+  restore forward_inlet
+  join 0.1
+  store eng_OML
+  mark  
+    restore   eng_OML               
+    extract   -23
+    restore   eng_OML
+    extract   -22 
+    restore   eng_OML  
+    extract   -12 
+    restore   eng_OML
+    extract   -11     
+  combine
+  store nozl_exit
+  restore eng_OML
+
+  # Build Nozzle Nacelle IML Based on Explicit Flow Areas at Nozzle Plenum, Throat and Exit
+  mark
+    patbeg i a_nozl.size-1
+      set r sqrt((a_nozl[i]+pi(1)*r_plug[i]*r_plug[i])/pi(1))
+      udparg supell rx r  ry r
+      udprim supell
+      rotatey    -90   0   0
+      rotatex    180  0   0
+      translate   x_nozl[i] (yEF-z_nozl[i]) 0
+    patend
+    restore nozl_exit
+    restore nozl_exit
+    translate 1 0 0
+  rule
+  subtract
+  rotatex -90 0 0
+  dump engine.egads
+patend 
+
+patbeg foo 1-remakeEngine
+  import engine.egads
+patend
+store engine
+
+# --- Create Nozzle Plug ---
+patbeg foo remakePlug
+  mark
+    patbeg i x_plug.size-1
+      udparg supell  rx  r_plug[i]  ry  r_plug[i]
+      udprim supell
+      rotatey 90 0 0
+      translate  x_plug[i]  0.0  -yEF
+    patend
+
+    skbeg x_plug[x_plug.size] 0.0 -yEF
+    skend
+  rule
+  dump plug.egads
+patend
+
+patbeg foo 1-remakePlug
+  import plug.egads
+patend
+store plug
+
+# --- Create Fuselage ---
+patbeg foo remakeFuselage
+  mark
+    skbeg 0 0 0
+    skend
+    udparg supell rx z_fuseOML[1]  ry_s ys_fuseOML[1]  ry_n yn_fuseOML[1]
+    udprim supell
+    rotatey 90 0 0
+    rotatex 90 0 0
+    translate  x_fuse[1] 0 z_fuse[1]
+  rule
+   
+  mark
+    patbeg i x_fuse.size-1
+      udparg supell rx z_fuseOML[i]  ry_s ys_fuseOML[i]  ry_n yn_fuseOML[i]
+      udprim supell
+      rotatey 90 0 0
+      rotatex 90 0 0      
+      translate  x_fuse[i] 0 z_fuse[i]
+    patend
+  blend
+  attribute fuselageOML 0
+  join
+
+  mark
+    set i x_fuse.size-1
+    udparg supell rx z_fuseOML[i]  ry_s ys_fuseOML[i]  ry_n yn_fuseOML[i]
+    udprim supell
+    rotatey 90 0 0
+    rotatex 90 0 0
+    translate  x_fuse[i] 0 z_fuse[i]
+
+    set i x_fuse.size
+    skbeg x_fuse[i] 0 z_fuse[i]
+    skend
+
+  rule
+  join
+
+  attribute fuselageOML 0
+  attribute .qParams $$off
+  rotatey    -1.55        0         0
+  dump fuselage.egads
+patend
+patbeg foo 1-remakeFuselage
+  import fuselage.egads
+patend
+store fuselage
+
+# --- Create Right Wing ---
+patbeg foo remakeWing
+  mark
+    patbeg i toc_wingOML.size
+      udparg naca456 thkcode $$64A
+      udparg naca456 toc     toc_wingOML[i]
+      udparg naca456 camcode $$6M
+      udparg naca456 cl      0.0
+      udparg naca456 a       0.0
+      udprim naca456
+      rotatex   90        0         0
+      scale     chord_wingOML[i]
+      translate xloc_wingOML[i] yloc_wingOML[i] zloc_wingOML[i]
+    patend
+  rule
+  rotatey    0.8        0         28.0
+  attribute WingOML 0
+
+  dump wing.egads
+patend
+
+patbeg foo 1-remakeWing
+  import wing.egads
+patend
+store wing
+
+# --- Create Right Horizontal Tail ---
+patbeg foo remakeHtail
+  mark
+    patbeg i toc_htail.size
+      udparg naca456 thkcode $$64A
+      udparg naca456 toc     toc_htail[i]
+      udparg naca456 camcode $$6M
+      udparg naca456 cl      0.0
+      udparg naca456 a       0.0   
+      udprim naca456
+      rotatex   90        0         0
+      scale     chord_htail[i]
+      translate xloc_htail[i]  yloc_htail[i]  zloc_htail[i]
+    patend
+  rule 0
+
+  scale 0.525  
+  rotatey   0.5       3.15      86.0
+  store htail
+  restore htail
+  restore htail
+  mirror 0 1 0 0
+  join
+  attribute hTail 0
+  dump htail.egads
+patend
+
+patbeg foo 1-remakeHtail
+  import htail.egads
+patend
+store htail
+
+set Rfarfield 30
+set x1 -20
+set x2 150
+set y_offset 15
+
+cylinder x1 0 0 x2 0 0 Rfarfield
+rotatex 90 0 0
+translate 0 y_offset 0
+box x1 -Rfarfield 0 (abs(x1)+abs(x2)) 2*Rfarfield Rfarfield
+translate 0 y_offset 0
+subtract
+dump farfield.egads
+
+store farfield
+
+######### LBFD Assembly ##########
+set x_nozlface 88
+set yEng 6.8
+
+patbeg foo subtractFarfield
+  restore farfield
+patend
+
+restore engine
+translate x_nozlface 0 yEng
+
+restore plug
+translate x_nozlface 0 yEng
+
+patbeg foo unionAll
+  union
+patend
+
+patbeg foo unionAll
+  # Engine Inlet Face
+  select     face     28
+  attribute  CartBC    2
+
+  # Engine Exit Face
+  select     face     38
+  attribute  CartBC    3
+patend
+
+restore fuselage
+patbeg foo unionAll
+   union
+patend
+
+restore wing
+patbeg foo unionAll
+   union
+patend
+
+restore wing
+mirror 0 1 0 0
+patbeg foo unionAll
+   union
+patend
+
+restore htail  
+translate  92.0      0.0       7.75
+
+patbeg foo unionAll
+   union
+patend
+
+# if all the parts were unioned, rotate into flight position, and rescale
+patbeg foo unionAll
+   rotatex  -90   0   0
+   #rotatez  41.6822  0  0  
+patend
+
+patbeg foo subtractFarfield
+  subtract 1E-4
+patend
+
+patbeg foo unionAll
+  scale scale_factor 
+patend
+
+# Dump final aircraft
+dump LBFD_ESP.egads
+dump LBFD_ESP.step
+dump LBFD_ESP.iges
+end
