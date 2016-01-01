@@ -21,7 +21,7 @@ class Pointwise(ExternalCode):
     # -------------------------------------------
     # --- File Wrapper/Template for Pointwise ---
     # -------------------------------------------
-    _filein = Str('', iotype = 'in')
+    _filein = Str('../Pointwise/Load-STEX.glf', iotype = 'in')
 
     def __init__(self, *args, **kwargs):
         

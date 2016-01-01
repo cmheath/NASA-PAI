@@ -111,7 +111,6 @@ class Fun3D(Component):
         thickness = np.array([0.3, 0.33, 0.375, 0.05])    # ft
         plug = np.array([0.45, 0.45, 1.5, 0.725])         # ft
 
-
         inner_cowl = outer_cowl - thickness
         areas = np.pi*(inner_cowl/2)**2 - np.pi*(plug/2)**2
 

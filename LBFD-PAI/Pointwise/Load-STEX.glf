@@ -18,8 +18,10 @@ set scriptDir [file dirname [info script]]
 
 package require PWI_Glyph 2.17.3
 
+puts "Loading Database File: [file join $scriptDir "../Geometry/LBFD_STEX.step"]"
+
 set _DB(mode_2) [pw::Application begin DatabaseImport]
-  $_DB(mode_2) initialize -type Automatic {/Users/cheath1/NASA/Research/CST/LBFD-PAI/Geometry/LBFD_STEX.step}
+  $_DB(mode_2) initialize -type Automatic [file join $scriptDir "../Geometry/LBFD_STEX.step"]
   $_DB(mode_2) setAttribute FileUnits Millimeters
   $_DB(mode_2) setAttribute ModelFromFreeSurface true
   $_DB(mode_2) setAttribute ModelAssembleTolerance 1E-3
@@ -101,65 +103,26 @@ set _plug_lower(4) [pw::DatabaseEntity getByName "quilt-44"]
 set _plug_lower(5) [pw::DatabaseEntity getByName "quilt-43"]
 pw::Quilt assemble [list $_plug_lower(1) $_plug_lower(2) $_plug_lower(3) $_plug_lower(4) $_plug_lower(5)]
 
-set _DB(41) [pw::DatabaseEntity getByName "quilt-1"]
-$_DB(41) setName "nearfield"
-
-set _DB(42) [pw::DatabaseEntity getByName "quilt-2"]
-$_DB(42) setName "freestream"
-
-set _DB(43) [pw::DatabaseEntity getByName "quilt-3"]
-$_DB(43) setName "symmetry"
-
-set _DB(44) [pw::DatabaseEntity getByName "quilt-4"]
-$_DB(44) setName "outflow"
-
-set _DB(45) [pw::DatabaseEntity getByName "quilt-5"]
-$_DB(45) setName "nose-upper"
-
-set _DB(46) [pw::DatabaseEntity getByName "quilt-7"]
-$_DB(46) setName "pylon"
-
-set _DB(47) [pw::DatabaseEntity getByName "quilt-13"]
-$_DB(47) setName "aip"
-
-set _DB(48) [pw::DatabaseEntity getByName "quilt-24"]
-$_DB(48) setName "fairing-lower"
-
-set _DB(49) [pw::DatabaseEntity getByName "quilt-25"]
-$_DB(49) setName "fairing-upper"
-
-set _DB(50) [pw::DatabaseEntity getByName "quilt-26"]
-$_DB(50) setName "vtail-upper-trailing-edge"
-
-set _DB(51) [pw::DatabaseEntity getByName "quilt-27"]
-$_DB(51) setName "htail-upper"
-
-set _DB(52) [pw::DatabaseEntity getByName "quilt-28"]
-$_DB(52) setName "htail-lower"
-
-set _DB(53) [pw::DatabaseEntity getByName "quilt-34"]
-$_DB(53) setName "nozzle-exit"
-
-set _DB(54) [pw::DatabaseEntity getByName "quilt-49"]
-$_DB(54) setName "pylon-trailing-edge"
-
-set _DB(55) [pw::DatabaseEntity getByName "quilt-50"]
-$_DB(55) setName "fuse-upper-trailing-edge"
-
-set _DB(56) [pw::DatabaseEntity getByName "quilt-51"]
-$_DB(56) setName "fuse-lower-trailing-edge"
-
-set _DB(57) [pw::DatabaseEntity getByName "quilt-53"]
-$_DB(57) setName "nose-lower"
-
-set _DB(58) [pw::DatabaseEntity getByName "quilt-56"]
-$_DB(58) setName "htail-tip"
-
-set _DB(59) [pw::DatabaseEntity getByName "quilt-59"]
-$_DB(59) setName "wing-tip"
-
-set _DB(60) [pw::DatabaseEntity getByName "Open CASCADE STEP translator 6.8 1"]
-$_DB(60) setName "model"
+[pw::DatabaseEntity getByName "quilt-1"] setName "nearfield"
+[pw::DatabaseEntity getByName "quilt-2"] setName "freestream"
+[pw::DatabaseEntity getByName "quilt-3"] setName "symmetry"
+[pw::DatabaseEntity getByName "quilt-4"] setName "outflow"
+[pw::DatabaseEntity getByName "quilt-5"] setName "nose-upper"
+[pw::DatabaseEntity getByName "quilt-7"] setName "pylon"
+[pw::DatabaseEntity getByName "quilt-13"] setName "aip"
+[pw::DatabaseEntity getByName "quilt-24"] setName "fairing-lower"
+[pw::DatabaseEntity getByName "quilt-25"] setName "fairing-upper"
+[pw::DatabaseEntity getByName "quilt-26"] setName "vtail-upper-trailing-edge"
+[pw::DatabaseEntity getByName "quilt-27"] setName "htail-upper"
+[pw::DatabaseEntity getByName "quilt-28"] setName "htail-lower"
+[pw::DatabaseEntity getByName "quilt-34"] setName "nozzle-exit"
+[pw::DatabaseEntity getByName "quilt-49"] setName "pylon-trailing-edge"
+[pw::DatabaseEntity getByName "quilt-50"] setName "fuse-upper-trailing-edge"
+[pw::DatabaseEntity getByName "quilt-51"] setName "fuse-lower-trailing-edge"
+[pw::DatabaseEntity getByName "quilt-53"] setName "nose-lower"
+[pw::DatabaseEntity getByName "quilt-56"] setName "htail-tip"
+[pw::DatabaseEntity getByName "quilt-59"] setName "wing-tip"
+[pw::DatabaseEntity getByName "Open CASCADE STEP translator 6.8 1"] setName "model"
 
 $_fuselage(2) setName "fuselage"
 $_wing_upper(2) setName "wing-upper"

@@ -14,9 +14,9 @@ class AFLR3(ExternalCode):
 
     aflr3_exec = Str('aflr3.script', iotype='in', desc='Requires AFLR3 executable to be in path')
 
-    # -------------------------------------------
-    # --- File Wrapper/Template for Pointwise ---
-    # -------------------------------------------
+    # ---------------------------------------
+    # --- File Wrapper/Template for AFLR3 ---
+    # ---------------------------------------
 
     def __init__(self, *args, **kwargs):
         
