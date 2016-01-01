@@ -1,5 +1,0 @@
-#!/bin/sh
-rm -rf *.bak
-aflr3 -convert -igrid Inlet.b8.ugrid -ogrid project.surf.gz
-sleep 5
-aflr3 -igrid project.surf.gz -tags angblisimx=179.0 -blpr -blc3 mblend=0 -blrm 2.0 -bli 3 -blr 1 -bldr 1.05 -Re 5740509.51138 -refx 1 -y+ 1 -ogrid project.b8.ugrid $*
