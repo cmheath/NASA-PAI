@@ -1,19 +1,12 @@
-''' OpenCSM wrapper '''
+''' Pointwise wrapper '''
 
-# --- Inherent python/system level imports
-import os
-import sys
+# --- Python/system level imports
 from subprocess import call
 from string import Template
 
-# --- External python library imports (i.e. matplotlib, numpy, scipy)
-import shutil
-
-# --- OpenMDAO imports
-from openmdao.main.api import FileMetadata, VariableTree
+# --- OpenMDAO main and library imports
 from openmdao.lib.components.api import ExternalCode
 from openmdao.lib.datatypes.api import Str
-from openmdao.util.fileutil import find_in_path
 
 class Pointwise(ExternalCode):
     ''' OpenMDAO component for executing Pointwise '''

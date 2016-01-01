@@ -2,7 +2,6 @@
 
 # --- Inherent python/system level imports
 import os
-import sys
 
 # --- External python library imports (i.e. matplotlib, numpy, scipy)
 import shutil
@@ -262,7 +261,7 @@ class SUPIN(ExternalCode):
         approach_input.append(' '.join([_2str(x) for x in ['Kapp', 'Nsapp', 'Alpha_Inlet (deg)', 'Beta_Inlet (deg)']]))
         approach_input.append(' '.join([_2str(x) for x in [self.Approach.Kapp, self.Approach.Nsapp, self.Approach.IAlpha, self.Approach.IBeta]]))
         approach_input.append(' '.join([_2str(x) for x in ['Mach_L', 'pt_L/pt_0', 'Alpha_L (deg)', 'Beta_L (deg)']]))
-        approach_input.append(' '.join([_2str(x) for x in [self.Freestream.Mach*1.01, self.Approach.ptL_pt0, self.Approach.LAlpha, self.Approach.LBeta]]))                
+        approach_input.append(' '.join([_2str(x) for x in [self.Freestream.Mach, self.Approach.ptL_pt0, self.Approach.LAlpha, self.Approach.LBeta]]))                
         approach_input.append(split)                     
 
         # -------------------------------

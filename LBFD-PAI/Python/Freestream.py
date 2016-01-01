@@ -1,13 +1,12 @@
-''' OpenMDAO Restart Component '''
-''' DOE Restart Component reads in a previously created DB file and sets design parameters to match case values ''' 
-import numpy as np
-from StdAtm import Atmosphere
+''' Freestream component '''
 
 # --- OpenMDAO imports
 from openmdao.main.api import Component
 from openmdao.lib.datatypes.api import Float, Int, Str
 from openmdao.lib.casehandlers.api import DBCaseRecorder, case_db_to_dict
 
+# --- Local Python imports
+from StdAtm import Atmosphere
 
 class Freestream(Component):
     ''' OpenMDAO component for calculating freestream properties '''
@@ -55,8 +54,3 @@ if __name__ == "__main__":
     # ------------------------- 
     Freestream_Comp = Freestream()
     Freestream_Comp.run()
-
-
-    print Freestream_Comp.d_inf
-    print Freestream_Comp.p_inf
-    print Freestream_Comp.t_inf

@@ -1,9 +1,3 @@
-# --- Inherent python/system level imports
-import os
-import sys
-import logging
-import numpy as np
-
 # --- OpenMDAO main and library imports
 from openmdao.main.api import Assembly
 
@@ -15,7 +9,7 @@ from OpenCSM import OpenCSM
 from Pointwise import Pointwise
 from AFLR3 import AFLR3
 
-from Helper import copy_files, remove_files
+from Helper import copy_files
 
 # -------------------------- #
 # --- Specify Inlet Type
@@ -28,7 +22,7 @@ if Inlet == "STEX":
 elif Inlet == "AxiSpike":
     from SUPIN_AxiSpike import SUPIN
 
-class Analysis(Assembly):
+class Design(Assembly):
 
     def configure(self):    
 
@@ -53,6 +47,11 @@ class Analysis(Assembly):
         self.add('pointwise', Pointwise())
 
         # --------------------------------------------------------------------------- #
+        # --- Instantiate AFLR3 Component
+        # --------------------------------------------------------------------------- #        
+        self.add('aflr3', AFLR3())
+
+        # --------------------------------------------------------------------------- #
         # --- Instantiate Cart3D Component
         # --------------------------------------------------------------------------- #        
         self.add('cart3d',Cart3D())
@@ -68,13 +67,13 @@ class Analysis(Assembly):
         # --- Add component instances to top-level assembly
         # self.driver.workflow.add(['freestream', 'npss', 'supin', 'opencsm', 'pointwise', 'aflr3', 'cart3d', 'fun3d'])
 
-        self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'fun3d'])
+        self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'aflr3', 'fun3d'])
 
         # --------------------------------------------------------------------------- #        
         # --- Create Data Connections 
         # --------------------------------------------------------------------------- #
         self.connect('freestream.alt', ['supin.Freestream.Alt', 'cart3d.alt', 'fun3d.alt'])      
-        self.connect('freestream.M_inf', ['supin.Freestream.Mach', 'cart3d.M_inf', 'fun3d.M_inf'])           
+        self.connect('freestream.M_inf', ['supin.Freestream.Mach*1.01', 'cart3d.M_inf', 'fun3d.M_inf'])           
         self.connect('freestream.p_inf', ['supin.Freestream.Pres', 'cart3d.p_inf', 'fun3d.p_inf'])
         self.connect('freestream.t_inf', ['supin.Freestream.Temp', 'cart3d.t_inf', 'fun3d.t_inf'])             
         self.connect('freestream.alpha', ['supin.Freestream.Alpha', 'cart3d.alpha', 'fun3d.alpha'])
@@ -99,9 +98,9 @@ class Analysis(Assembly):
 
 if __name__ == '__main__':
 
-    OPT = Analysis()
+    LBFD_Des = Design()
 
     # --------------------------------------------------------------------------- #        
-    # --- Execute OpenMDAO Analysis ---
+    # --- Execute LBFD Design & Analysis @ Cruise Pt ---
     # --------------------------------------------------------------------------- #                      
-    OPT.run()
+    LBFD_Des.run()

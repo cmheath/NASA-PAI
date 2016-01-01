@@ -1,19 +1,16 @@
-''' OpenMDAO Component '''
+''' FUN3D Wrapper '''
+
+# --- Python/system level imports
 import numpy as np
-import os
-import sys
 from string import Template
-
 from scipy.optimize import fsolve
-import matplotlib
-matplotlib.use('TkAgg')
-import matplotlib.pyplot as plt
-from StdAtm import Atmosphere
 
-# --- OpenMDAO imports
+# --- OpenMDAO main and library imports
 from openmdao.main.api import Component
-from openmdao.lib.datatypes.api import Float, Int, Str
-from openmdao.lib.casehandlers.api import DBCaseRecorder, case_db_to_dict
+from openmdao.lib.datatypes.api import Float
+
+# --- Local Python imports
+from StdAtm import Atmosphere
 
 def f(M, *data):
     gamma, a_ratio = data

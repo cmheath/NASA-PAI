@@ -1,3 +1,6 @@
+''' Standard atmosphere component '''
+
+# --- Python/system level imports
 import math
 
 def Atmosphere(alt):

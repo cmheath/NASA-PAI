@@ -1,11 +1,6 @@
-''' OpenCSM wrapper '''
-
-# --- Inherent python/system level imports
-import os
-import sys
+''' AFLR3 wrapper '''
 
 # --- OpenMDAO imports
-from openmdao.main.api import FileMetadata
 from openmdao.lib.components.api import ExternalCode
 from openmdao.lib.datatypes.api import Str
 
