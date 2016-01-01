@@ -9,10 +9,8 @@ from string import Template
 import shutil
 
 # --- OpenMDAO imports
-from openmdao.main.api import FileMetadata, VariableTree
 from openmdao.lib.datatypes.api import Float, Str
 from openmdao.lib.components.api import ExternalCode
-from openmdao.util.fileutil import find_in_path
 
 class OpenCSM(ExternalCode):
     ''' OpenMDAO component for executing OpenCSM '''
@@ -22,7 +20,7 @@ class OpenCSM(ExternalCode):
     # -----------------------------------------
     yEF = Float(0.8, iotype = 'in', desc = 'Y position of the engine face', units = 'ft')
     Rspin = Float(0.33, iotype = 'in', desc = 'Spinner radius', units = 'ft')
-    ocsm_exec = 'run_servecsm'
+    ocsm_exec = 'servecsm.script'
     _filein = Str('', iotype = 'in')
 
     def __init__(self, *args, **kwargs):
@@ -34,18 +32,11 @@ class OpenCSM(ExternalCode):
         
         # --------------------------------------
         # --- External Code Public Variables ---
-        # --------------------------------------
-        #self.stdout = "stdout.log"
-        #self.stderr = "stderr.log"
-
-        #self.external_files = [FileMetadata(path = self.stdout), FileMetadata(path = self.stderr)]      
+        # --------------------------------------     
         self.force_execute = True
     
     def execute(self):
         
-        #if not os.path.isfile(self.ocsm_exec) and find_in_path(self.ocsm_exec) is None:
-        #    raise RuntimeError("OpenCSM executable '%s' not found" % self.ocsm_exec)
-
         # --------------------------------------
         # --- Execute file-wrapped component ---
         # --------------------------------------
@@ -53,12 +44,6 @@ class OpenCSM(ExternalCode):
 
     	# --- Open template file
     	filein = open(self._filein)
-
-        #filein = open('../ESP/LBFD-STEX.template')
-        #filein = open('../ESP/LBFD-AxiSpike.template')
-        #filein = open('../ESP/AxiPitot.template')
-        #filein = open('../ESP/AxiSpike.template')        
-        #filein = open('../ESP/STEX.template')
 
     	src = Template(filein.read())
 
@@ -72,9 +57,9 @@ class OpenCSM(ExternalCode):
     	fh.write(result)
     	fh.close()
 
-    	# -------------------------------
-    	# --- Execute SUPIN Component ---
-    	# -------------------------------
+    	# ---------------------------------
+    	# --- Execute OpenCSM Component ---
+    	# ---------------------------------
     	super(OpenCSM, self).execute()
 
 

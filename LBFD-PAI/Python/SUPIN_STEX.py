@@ -156,6 +156,8 @@ class Outputs(VariableTree):
 class SUPIN(ExternalCode):
     ''' OpenMDAO component for executing SUPIN '''
 
+    supin_exec = Str('supinEGADS.script', iotype='in', desc='Requires SUPIN executable to be in path')
+
     # ---------------------------------------------------------
     # --- File Wrapper for SUPIN (Streamline Traced Inlet)  ---
     # ---------------------------------------------------------
@@ -226,7 +228,7 @@ class SUPIN(ExternalCode):
         # --------------------------------------
         # --- Execute file-wrapped component --- 
         # --------------------------------------
-        self.command = ['sh', 'run_supinEGADS']
+        self.command = ['sh', supin_exec]
 
         split = '\n---------------------------------------------------------------------------\n'
 

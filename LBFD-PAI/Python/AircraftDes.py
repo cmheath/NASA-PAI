@@ -12,6 +12,8 @@ from Freestream import Freestream
 from Cart3D import Cart3D
 from Fun3D import Fun3D
 from OpenCSM import OpenCSM
+from Pointwise import Pointwise
+from AFLR3 import AFLR3
 
 from Helper import copy_files, remove_files
 
@@ -46,6 +48,11 @@ class Analysis(Assembly):
         self.add('opencsm', OpenCSM())
 
         # --------------------------------------------------------------------------- #
+        # --- Instantiate Pointwise Component
+        # --------------------------------------------------------------------------- #        
+        self.add('pointwise', Pointwise())
+
+        # --------------------------------------------------------------------------- #
         # --- Instantiate Cart3D Component
         # --------------------------------------------------------------------------- #        
         self.add('cart3d',Cart3D())
@@ -53,7 +60,7 @@ class Analysis(Assembly):
         # --------------------------------------------------------------------------- #
         # --- Instantiate Cart3D Component
         # --------------------------------------------------------------------------- #        
-        self.add('fun3d',Fun3D())
+        self.add('fun3d', Fun3D())
 
         # --------------------------------------------------------------------------- #
         # --- Create Main Assembly Workflow
@@ -61,7 +68,7 @@ class Analysis(Assembly):
         # --- Add component instances to top-level assembly
         # self.driver.workflow.add(['freestream', 'npss', 'supin', 'opencsm', 'pointwise', 'aflr3', 'cart3d', 'fun3d'])
 
-        self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'fun3d'])
+        self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'fun3d'])
 
         # --------------------------------------------------------------------------- #        
         # --- Create Data Connections 
@@ -83,9 +90,11 @@ class Analysis(Assembly):
 
         if Inlet == "STEX":
             self.opencsm._filein = '../ESP/LBFD-STEX.template'
+            self.pointwise._filein = '../Pointwise/Load-STEX.glf'            
             copy_files('../ESP/STEX/*', '../ESP/')
         elif Inlet == "AxiSpike":
             self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
+            self.pointwise._filein = '../Pointwise/Load-AxiSpike.glf'            
             copy_files('../ESP/AxiSpike/*', '../ESP/')
 
 if __name__ == '__main__':
