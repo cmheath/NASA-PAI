@@ -1,4 +1,4 @@
-11
+12
 1              4000           Aircraft
 2              5050           Freestream
 3              5000           Farfield
@@ -10,3 +10,4 @@
 9              4000           Nozzle-IML
 10             4000           Spinner
 11             4000           Plug
+12			   4000           Wing

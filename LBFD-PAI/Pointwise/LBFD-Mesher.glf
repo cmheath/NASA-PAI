@@ -1036,10 +1036,7 @@ set isoMode [pw::Application begin UnstructuredSolver [list $blk1]]
 $isoMode run Initialize
 $isoMode end
 
-set surfDoms [list $modelDoms(wing-lower)          \
-                   $modelDoms(wing-upper)          \
-                   $modelDoms(wing-tip)            \
-                   $modelDoms(htail-lower)         \
+set surfDoms [list $modelDoms(htail-lower)         \
                    $modelDoms(htail-upper)         \
                    $modelDoms(htail-tip)           \
                    $modelDoms(vtail)               \
@@ -1102,6 +1099,14 @@ set plugDoms [list $modelDoms(plug-upper) $modelDoms(plug-lower)]
 set plugBC [pw::BoundaryCondition create]
     $plugBC setName "bc-11"
     foreach dom $plugDoms {$plugBC apply [list $blk1 $dom]}
+
+set wingDoms [list $modelDoms(wing-lower)          \
+                   $modelDoms(wing-upper)          \
+                   $modelDoms(wing-tip)]
+
+set wingBC [pw::BoundaryCondition create]
+    $wingBC setName "bc-12"
+    foreach dom $wingDoms {$wingBC apply [list $blk1 $dom]}
 
 timestamp
 puts "Run Time: [convSeconds [pwu::Time elapsed $tBegin]]"

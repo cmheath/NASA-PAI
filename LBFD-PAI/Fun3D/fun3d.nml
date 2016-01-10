@@ -69,7 +69,7 @@
 /
 &boundary_output_variables
     number_of_boundaries = -1 ! compute from list
-    boundary_list = '1-11'
+    boundary_list = '1-12'
     cp = .true.
     mach = .true.
     ttot = .true.
