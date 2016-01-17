@@ -5,7 +5,7 @@ gamma = 1.4
 tzm   = 216.65
 reyno = 5740509.51138
 R = 286.7 
-alpha = 3.375 * np.pi/180.0
+alpha = 3.275 * np.pi/180.0
 
 N_to_lbf = 0.224809
 
@@ -22,7 +22,7 @@ area          = symmetry * convert_area
 convert_flux  = area * rhozm * azm * azm
 convert_pres  = area * pzm * gamma
 
-IDs = ['Aircraft', 'Inlet', 'Nozzle', 'Inlet-IML', 'Nozzle-IML', 'Spinner', 'Plug']
+IDs = ['Aircraft', 'Wing', 'Inlet', 'Nozzle', 'Inlet-IML', 'Nozzle-IML', 'Spinner', 'Plug']
 
 L_net = D_net = Fx_net = Fz_net = 0
 
@@ -57,7 +57,7 @@ with open('LBFD.forces') as f:
         Fz = float(line.split()[8])
 
         # --- Sum engine-only force coefficients
-        if bndry != 'Aircraft':
+        if (bndry != 'Aircraft') or (bndry != 'Wing'):
             Fx_net += Fx
             Fz_net += Fz
 

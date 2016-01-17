@@ -67,13 +67,14 @@ class Design(Assembly):
         # --- Add component instances to top-level assembly
         # self.driver.workflow.add(['freestream', 'npss', 'supin', 'opencsm', 'pointwise', 'aflr3', 'cart3d', 'fun3d'])
 
-        self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'aflr3', 'fun3d'])
-
+        #self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'aflr3', 'fun3d'])
+	    self.driver.workflow.add(['freestream', 'supin', 'opencsm'])
+        
         # --------------------------------------------------------------------------- #        
         # --- Create Data Connections 
         # --------------------------------------------------------------------------- #
         self.connect('freestream.alt', ['supin.Freestream.Alt', 'cart3d.alt', 'fun3d.alt'])      
-        self.connect('freestream.M_inf', ['supin.Freestream.Mach*1.01', 'cart3d.M_inf', 'fun3d.M_inf'])           
+        self.connect('freestream.M_inf', ['supin.Freestream.Mach', 'cart3d.M_inf', 'fun3d.M_inf'])           
         self.connect('freestream.p_inf', ['supin.Freestream.Pres', 'cart3d.p_inf', 'fun3d.p_inf'])
         self.connect('freestream.t_inf', ['supin.Freestream.Temp', 'cart3d.t_inf', 'fun3d.t_inf'])             
         self.connect('freestream.alpha', ['supin.Freestream.Alpha', 'cart3d.alpha', 'fun3d.alpha'])

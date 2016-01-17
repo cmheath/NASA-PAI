@@ -214,9 +214,6 @@ class SUPIN(ExternalCode):
         self.force_execute = True
     
     def execute(self):
-        
-        if not os.path.isfile(self.supin_exec) and find_in_path(self.supin_exec) is None:
-            raise RuntimeError("SUPIN executable '%s' not found" % self.supin_exec)
 
         # --------------------------------------
         # --- Execute file-wrapped component --- 
