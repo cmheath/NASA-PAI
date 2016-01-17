@@ -253,7 +253,8 @@ foreach qlt $dbQuilts {
 set wingLowerCons [ConsFromDom $modelDoms(wing-lower)]
 set wingUpperCons [ConsFromDom $modelDoms(wing-upper)]
 set wingTipCons   [ConsFromDom $modelDoms(wing-tip)]
-set wingLETECons  [intersect $wingLowerCons $wingUpperCons]
+set wingLECon     [intersect $wingLowerCons $wingUpperCons]
+set wingTECons    [ConsFromDom $modelDoms(wing-trailing-edge)]
 
 set horizTailLowerCons [ConsFromDom $modelDoms(htail-lower)]
 set horizTailUpperCons [ConsFromDom $modelDoms(htail-upper)]
@@ -297,12 +298,17 @@ set nozzleIMLSymCons [intersect $nozzleIMLCons $symCons]
 
 set fuseSymCons [intersect $symCons $fuselageCons]
 
-## Isolate Connectors for 2D T-Rex
+## Isolate Connectors for Specific Distributions
 
-set wingLowerRootCon [intersect $wingLowerCons $fuselageCons]
-set wingUpperRootCon [intersect $wingUpperCons $fuselageCons]
-set wingLowerTipCon  [intersect $wingLowerCons $wingTipCons]
-set wingUpperTipCon  [intersect $wingUpperCons $wingTipCons]
+set wingLowerRootCons [intersect $wingLowerCons $fuselageCons]
+set wingLowerSymCon   [intersect $wingLowerCons $symCons]
+set wingUpperRootCon  [intersect $wingUpperCons $fuselageCons]
+set wingLowerTipCon   [intersect $wingLowerCons $wingTipCons]
+set wingUpperTipCon   [intersect $wingUpperCons $wingTipCons]
+set wingTEUpperCon    [intersect $wingTECons    $wingUpperCons]
+set wingTELowerCon    [intersect $wingTECons    $wingLowerCons]
+set wingTipTECon      [intersect $wingTECons    $wingTipCons]
+set wingRootTECon     [intersect $wingTECons    $fuselageCons]
 
 set horizTailLowerRootCon [intersect $horizTailLowerCons $vertTailCons]
 set horizTailUpperRootCon [intersect $horizTailUpperCons $vertTailCons]
@@ -354,9 +360,9 @@ set plugUpperCon          [intersect $plugUpperCons $symCons]
 set plugLowerCon          [intersect $plugLowerCons $symCons]
 set plugSymCon            [intersect $plugUpperCons $plugLowerCons]
 
-set spinnerUpperCon          [intersect $spinnerUpperCons $symCons]
-set spinnerLowerCon          [intersect $spinnerLowerCons $symCons]
-set spinnerSymCon            [intersect $spinnerUpperCons $spinnerLowerCons]
+set spinnerUpperCon       [intersect $spinnerUpperCons $symCons]
+set spinnerLowerCon       [intersect $spinnerLowerCons $symCons]
+set spinnerSymCon         [intersect $spinnerUpperCons $spinnerLowerCons]
 
 set aipNode0              [$aipCon getXYZ -parameter 0.0]
 set aipNode1              [$aipCon getXYZ -parameter 1.0]
@@ -369,7 +375,10 @@ set noseCenterNode1       [$noseCenterCon getXYZ -parameter 1.0]
 
 set fairingCenterNode0    [$centerFairingCon getXYZ -parameter 0.0]
 set fairingCenterNode1    [$centerFairingCon getXYZ -parameter 1.0]
- 
+
+set wingLowerSymNode0     [$wingLowerSymCon getXYZ -parameter 0.0]
+set wingLowerSymNode1     [$wingLowerSymCon getXYZ -parameter 1.0]
+
 foreach con $inletIMLSymCons {
     lappend engineIMLSymCons $con
 }
@@ -377,43 +386,72 @@ foreach con $nozzleIMLSymCons {
     lappend engineIMLSymCons $con
 }
 
-set fairingCons [list $upperFairingSymCon      \
+## Find AIP and Nozzle Exit Plane Locations
+if { [lindex $aipNode0 0] > [lindex $aipNode1 0] } {
+    set aipMax $aipNode0
+} else {
+    set aipMax $aipNode1
+}
+
+if { [lindex $nozzleNode0 0] < [lindex $nozzleNode1 0] } {
+    set nozzleMin $nozzleNode0
+} else {
+    set nozzleMin $nozzleNode1
+}
+
+## Find Aft Node of Nose Centerline Connector
+if { [lindex $noseCenterNode0 0] > [lindex $noseCenterNode1 0] } {
+    set noseCenterMax $noseCenterNode0
+} else {
+    set noseCenterMax $noseCenterNode1
+}
+
+## Find Forward Node on Fairing
+if { [lindex $fairingCenterNode0 0] < [lindex $fairingCenterNode1 0] } {
+    set fairingCenterMin $fairingCenterNode0
+} else {
+    set fairingCenterMin $fairingCenterNode1
+}
+
+## Find Forward Node on Fuselage Lower Symmetry Connector
+foreach con $fuseSymCons {
+    set Node0 [$con getXYZ -parameter 0.0]
+    set Node1 [$con getXYZ -parameter 1.0]
+
+    if { [lindex $Node0 0] < [lindex $Node1 0] } {  
+        if { [lindex $Node0 2] < [lindex $noseCenterMax 2] } {           ## Lower Fuselage Connector
+            lappend fuseLowerSymCons $con
+        } else {                                                         ## Upper Fuselage Connector
+            lappend fuseUpperSymCon $con
+        }
+    } else {
+        if { [lindex $Node1 2] < [lindex $noseCenterMax 2] } {           ## Lower Fuselage Connector
+            lappend fuseLowerSymCons $con
+        } else {                                                         ## Upper Fuselage Connector
+            lappend fuseUpperSymCon $con
+        }
+    }
+}
+
+set fairingCons [list $upperFairingSymCon    \
                       $centerFairingCon]
 
-set spinnerCons [list $spinnerUpperCon        \
-                   $spinnerLowerCon        \
+set spinnerCons [list $spinnerUpperCon       \
+                   $spinnerLowerCon          \
                    $spinnerSymCon]
 
 set plugCons [list $plugUpperCon        \
                    $plugLowerCon        \
                    $plugSymCon]
 
-set Node0 [[lindex $wingLETECons 0] getXYZ -parameter 0.0]
-set Node1 [[lindex $wingLETECons 0] getXYZ -parameter 1.0]
-
-if { [lindex $Node0 0] < [lindex $Node1 0] } {
-    set Min1 $Node0
+## Find Forward Node of Wing Root Symmetry Connector
+if { [lindex $wingLowerSymNode0 0] < [lindex $wingLowerSymNode1 0] } {
+    set wingRootSymMin $wingLowerSymNode0
 } else {
-    set Min1 $Node1
+    set wingRootSymMin $wingLowerSymNode1
 }
 
-set Node0 [[lindex $wingLETECons 1] getXYZ -parameter 0.0]
-set Node1 [[lindex $wingLETECons 1] getXYZ -parameter 1.0]
-
-if { [lindex $Node0 0] < [lindex $Node1 0] } {
-    set Min2 $Node0
-} else {
-    set Min2 $Node1
-}
-
-if { [lindex $Min1 0] < [lindex $Min2 0] } {
-    set wingLECon [lindex $wingLETECons 0]
-    set wingTECon [lindex $wingLETECons 1]
-} else {
-    set wingLECon [lindex $wingLETECons 1]
-    set wingTECon [lindex $wingLETECons 0]
-}
-
+## Separate Horizontal Tail Leading and Trailing Edge Connectors
 set Node0 [[lindex $horizTailLETECons 0] getXYZ -parameter 0.0]
 set Node1 [[lindex $horizTailLETECons 0] getXYZ -parameter 1.0]
 
@@ -451,7 +489,6 @@ $allDomsCollection delete
 
 pw::Display update
 
-# Refine Wing and Tail Surface Meshes with 2D T-Rex
 ## Adjust Domain Solver Attributes/Update Edge Spacing on Wing & Tail Connectors
 set wingTailDomsCollection [pw::Collection create]
     $wingTailDomsCollection set [list $modelDoms(wing-lower)  \
@@ -500,33 +537,7 @@ set engineConsCollection [pw::Collection create]
    $engineConsCollection do calculateDimension
 $engineConsCollection delete
 
-## Find AIP and Nozzle Exit Plane Locations
-if { [lindex $aipNode0 0] > [lindex $aipNode1 0] } {
-    set aipMax $aipNode0
-} else {
-    set aipMax $aipNode1
-}
-
-if { [lindex $nozzleNode0 0] < [lindex $nozzleNode1 0] } {
-    set nozzleMin $nozzleNode0
-} else {
-    set nozzleMin $nozzleNode1
-}
-
-## Find aft node of nose center connector
-if { [lindex $noseCenterNode0 0] > [lindex $noseCenterNode1 0] } {
-    set noseCenterMax $noseCenterNode0
-} else {
-    set noseCenterMax $noseCenterNode1
-}
-
-## Find forward node of fairing
-if { [lindex $fairingCenterNode0 0] < [lindex $fairingCenterNode1 0] } {
-    set fairingCenterMin $fairingCenterNode0
-} else {
-    set fairingCenterMin $fairingCenterNode1
-}
-
+## Redistribute Internal Engine Connector Distributions
 foreach con $aipCons {
     RedistCons $growthRate [expr {int(log(2.0)/log($growthRate))}] [expr {int(log(2.0)/log($growthRate))}] $EFSpacing $EFSpacing $con
 }
@@ -567,6 +578,7 @@ foreach con $plugCons {
     }
 }
 pw::Display update
+puts "Redistributed internal engine connectors."
 
 foreach con $fairingCons {
     RedistCons $fairingGrowthRate [expr {int(log(15)/log($fairingGrowthRate))}] [expr {int(log(15)/log($fairingGrowthRate))}] $leteFairing $leteFairing $con
@@ -576,39 +588,52 @@ foreach con $lowerFairingSymCons {
     set Node0 [$con getXYZ -parameter 0.0]
     set Node1 [$con getXYZ -parameter 1.0]
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        if { [lindex $Node0 0] == [lindex $fairingCenterMin 0] } {               ## Forward Connector
+        if { [lindex $Node0 0] == [lindex $fairingCenterMin 0] } {               ## Forward Fairing Connector
             RedistCons $fairingGrowthRate [expr {int(log(10)/log($fairingGrowthRate))}] [expr {int(log(10)/log($fairingGrowthRate))}] $leteFairing $rtSpacing $con
-        } else {                                                                 ## Aft Connector
+        } else {                                                                 ## Aft Fairing Connector
             RedistCons $fairingGrowthRate [expr {int(log(10)/log($fairingGrowthRate))}] [expr {int(log(10)/log($fairingGrowthRate))}] $rtSpacing $leteFairing $con
         }
     } else {
-        if { [lindex $Node1 0] == [lindex $fairingCenterMin 0] } {               ## Forward Connector
+        if { [lindex $Node1 0] == [lindex $fairingCenterMin 0] } {               ## Forward Fairing Connector
             RedistCons $fairingGrowthRate [expr {int(log(10)/log($fairingGrowthRate))}] [expr {int(log(10)/log($fairingGrowthRate))}] $rtSpacing $leteFairing $con
-        } else {                                                                 ## Aft Connector
+        } else {                                                                 ## Aft Fairing Connector
             RedistCons $fairingGrowthRate [expr {int(log(10)/log($fairingGrowthRate))}] [expr {int(log(10)/log($fairingGrowthRate))}] $leteFairing $rtSpacing $con
         }
     }
 }
 pw::Display update
-puts "Redistributed fairing connectors."
+puts "Redistributed aerodynamic tail fairing connectors."
 
-## Differentiate Between Upper/Lower Fuselage Connectors
-foreach con $fuseSymCons {
+## Set Fuselage Upper Symmetry Connector Distributions
+foreach con $fuseUpperSymCon {
 
     set Node0 [$con getXYZ -parameter 0.0]
     set Node1 [$con getXYZ -parameter 1.0]
 
-    if { [lindex $Node0 0] < [lindex $Node1 0] } {  
-        if { [lindex $Node0 2] < [lindex $noseCenterMax 2] } {           ## Lower Fuselage Connector
-            RedistCons $fuseGrowthRate [expr {int(log(1.5)/log($fuseGrowthRate))}] [expr {int(log(2.0)/log($fuseGrowthRate))}] $avgDs2 [expr {$avgDs2/$aspectRatio}] $con
-        } else {                                                         ## Upper Fuselage Connector
-            RedistCons $fuseGrowthRate [expr {int(log(2.0)/log($fuseGrowthRate))}] [expr {int(log(1.5)/log($fuseGrowthRate))}] $avgDs2 $LESpacing $con
+    if { [lindex $Node0 0] < [lindex $Node1 0] } {
+        RedistCons $fuseGrowthRate [expr {int(log(2.0)/log($fuseGrowthRate))}] [expr {int(log(1.0)/log($fuseGrowthRate))}] $avgDs2 $LESpacing $con   
+    } else {
+        RedistCons $fuseGrowthRate [expr {int(log(1.0)/log($fuseGrowthRate))}] [expr {int(log(2.0)/log($fuseGrowthRate))}] $LESpacing $avgDs2 $con
+    }
+}
+
+## Set Fuselage Lower Symmetry Connector Distributions
+foreach con $fuseLowerSymCons {
+
+    set Node0 [$con getXYZ -parameter 0.0]
+    set Node1 [$con getXYZ -parameter 1.0]
+
+    if { [lindex $Node0 0] <= [lindex $wingRootSymMin 0] } {            ## Forward Lower Fuselage Symmetry Con
+        if { [lindex $Node0 0] < [lindex $Node1 0] } {
+            RedistCons $fuseGrowthRate [expr {int(log(1.5)/log($fuseGrowthRate))}] $rootLayers $avgDs2 $LESpacing $con
+        } else {                                                       
+            RedistCons $fuseGrowthRate $rootLayers [expr {int(log(1.5)/log($fuseGrowthRate))}] $LESpacing $avgDs2 $con
         }
-    } else {                                            
-        if { [lindex $Node1 2] < [lindex $noseCenterMax 2] } {           ## Lower Fuselage Connector
-            RedistCons $fuseGrowthRate [expr {int(log(2.0)/log($fuseGrowthRate))}] [expr {int(log(1.5)/log($fuseGrowthRate))}] [expr {$avgDs2/$aspectRatio}] $avgDs2  $con
-        } else {                                                         ## Upper Fuselage Connector
-            RedistCons $fuseGrowthRate [expr {int(log(1.5)/log($fuseGrowthRate))}] [expr {int(log(2.0)/log($fuseGrowthRate))}] $LESpacing  $avgDs2 $con
+    } else {                                                           ## Aft Lower Fuselage Symmetry Con
+        if { [lindex $Node0 0] < [lindex $Node1 0] } {
+            RedistCons $fuseGrowthRate $rootLayers $fuseTELayers $LESpacing [expr {$avgDs2/$aspectRatio}] $con
+        } else {                                                       
+            RedistCons $fuseGrowthRate $fuseTELayers $rootLayers [expr {$avgDs2/$aspectRatio}] $LESpacing $con
         }
     }
 }
@@ -616,7 +641,7 @@ foreach con $fuseSymCons {
 pw::Display update
 puts "Redistributed fuselage symmetry connectors."
 
-## Differentiate Between Inlet/Nozzle Connectors
+## Differentiate Between Inlet/Nozzle OML Connectors
 foreach con $engineOMLSymCons {
 
     set Node0 [$con getXYZ -parameter 0.0]
@@ -637,7 +662,7 @@ foreach con $engineOMLSymCons {
     }
 }
 
-## Differentiate Between Inlet/Nozzle Connectors
+## Differentiate Between Inlet/Nozzle IML Connectors
 foreach con $engineIMLSymCons {
 
     set Node0 [$con getXYZ -parameter 0.0]
@@ -662,7 +687,6 @@ pw::Display update
 puts "Redistributed inlet/nozzle connectors."
 
 ## Isolate Beg/End Nodes for Fuselage Tail Section & Modify
-
 set tailCons [list $fuseLowerTESymCon      \
                    $fuseCenterTECon]
 
@@ -696,10 +720,9 @@ RedistCons $fuseGrowthRate $fuseTELayers $fuseTELayers [expr {$avgDs2/$aspectRat
 RedistCons $fuseGrowthRate $fuseTELayers $fuseTELayers [expr {$avgDs2/$aspectRatio}] [expr {$avgDs2/$aspectRatio}] $fuseLowerTECon
 pw::Display update
 
-## Modify Connector Distributions at the Wing and VTail Root
-set chordCons [list $wingLowerRootCon      \
-                    $wingUpperRootCon      \
-                    $vertTailRootCon       \
+## Modify Connector Distributions at the upper Wing, VTail and pylon Upper Root
+set chordCons [list $wingUpperRootCon     \
+                    $vertTailRootCon      \
                     $pylonUpperCon]
 
 foreach con $chordCons {
@@ -711,6 +734,25 @@ foreach con $chordCons {
         RedistCons $rtGrowthRate $rootLayers $rootLayers $LESpacing $TESpacing $con
     } else {
         RedistCons $rtGrowthRate $rootLayers $rootLayers $TESpacing $LESpacing $con
+    }
+}
+
+RedistCons $rtGrowthRate $rootLayers $rootLayers $LESpacing $LESpacing $wingLowerSymCon
+
+## Modify Connector Distributions on Wing Lower Root
+foreach con $wingLowerRootCons {
+
+    set Node0 [$con getXYZ -parameter 0.0]
+    set Node1 [$con getXYZ -parameter 1.0]
+
+    if { [lindex $Node0 0] <= [lindex $wingRootSymMin 0] } {            ## Forward Symmetry Con
+            RedistCons $rtGrowthRate $rootLayers $rootLayers $LESpacing $LESpacing $con
+    } else {                                                            ## Aft Symmetry Con
+        if { [lindex $Node0 0] < [lindex $Node1 0] } {
+            RedistCons $rtGrowthRate $rootLayers $rootLayers $LESpacing $TESpacing $con
+        } else {
+            RedistCons $rtGrowthRate $rootLayers $rootLayers $TESpacing $LESpacing $con
+        }
     }
 }
 
@@ -790,8 +832,10 @@ pw::Display update
 
 [[$wingLECon getDistribution 1] getBeginSpacing] setValue $LESpacing
 [[$wingLECon getDistribution 1] getEndSpacing] setValue $LESpacing
-[[$wingTECon getDistribution 1] getBeginSpacing] setValue $TESpacing
-[[$wingTECon getDistribution 1] getEndSpacing] setValue $TESpacing 
+[[$wingTEUpperCon getDistribution 1] getBeginSpacing] setValue $TESpacing
+[[$wingTEUpperCon getDistribution 1] getEndSpacing] setValue $TESpacing 
+[[$wingTELowerCon getDistribution 1] getBeginSpacing] setValue $TESpacing
+[[$wingTELowerCon getDistribution 1] getEndSpacing] setValue $TESpacing
 
 [[$horizTailLECon getDistribution 1] getBeginSpacing] setValue $LESpacing
 [[$horizTailLECon getDistribution 1] getEndSpacing] setValue $LESpacing
@@ -820,20 +864,21 @@ pw::Display update
 
 ## Modify Connector Distributions at Wing/hTail Leading & Trailing Edges
 set spanCons [list $wingLECon               \
-                   $wingTECon               \
+                   $wingTEUpperCon          \
+                   $wingTELowerCon          \
                    $horizTailLECon          \
                    $horizTailTECon]
 
 RedistCons $leteGrowthRate [expr {int(log($aspectRatio)/log($leteGrowthRate))}] [expr {int(log($aspectRatio)/log($leteGrowthRate))}] $LESpacing  $LESpacing $spanCons
 
 ## Modify Connector Distributions at vTail Leading & Trailing Edges
-set spanCons [list $vertTailLECon           \
+set vTailCons [list $vertTailLECon           \
                    $vertTailTELowerCon      \
                    $vertTailTEUpperCon      \
                    $vertTailTEUpperSymCon   \
                    $vertTailTELowerSymCon]
 
-RedistCons $leteGrowthRate $tailLayers $tailLayers $LESpacing  $LESpacing $spanCons
+RedistCons $leteGrowthRate $tailLayers $tailLayers $LESpacing  $LESpacing $vTailCons
 
 ## Modify Connector Distributions at Pylon Leading & Trailing Edges
 set pylonCons [list $pylonLECon              \
@@ -843,6 +888,7 @@ set pylonCons [list $pylonLECon              \
 RedistCons $leteGrowthRate [expr {int(log(2.5)/log($leteGrowthRate))}] [expr {int(log(2.5)/log($leteGrowthRate))}] $LESpacing  $LESpacing $pylonCons
 
 $pylonTESymCon setDimension [$pylonTECon getDimension]
+$wingTELowerCon setDimension [$wingTEUpperCon getDimension]
 $vertTailTELowerSymCon setDimension [$vertTailTELowerCon getDimension]
 $vertTailTEUpperSymCon setDimension [$vertTailTEUpperCon getDimension]
 
@@ -855,7 +901,9 @@ RedistCons $leteGrowthRate [expr {int(log(2.5)/log($leteGrowthRate))}] [expr {in
 
 ## Modify Connector Dimensions at TE for Wing/Tail
 set trailingEdgeRootConsCollection [pw::Collection create]
-    $trailingEdgeRootConsCollection set [list $vertTailRootTECon       \
+    $trailingEdgeRootConsCollection set [list $wingRootTECon           \
+                                              $wingTipTECon            \
+                                              $vertTailRootTECon       \
                                               $vertTailTipTECon        \
                                               $vertTailTEAboveHtailCon \
                                               $vertTailTEBelowHtailCon \
@@ -866,6 +914,8 @@ set trailingEdgeRootConsCollection [pw::Collection create]
 $trailingEdgeRootConsCollection delete
 
 ## Re-create Unstructured Domains on Wing/Tail Trailing Edges as Structured
+set idx [lsearch $surfDoms $modelDoms(wing-trailing-edge)]
+set surfDoms [lreplace $surfDoms $idx $idx]
 set idx [lsearch $surfDoms $modelDoms(vtail-upper-trailing-edge)]
 set surfDoms [lreplace $surfDoms $idx $idx]
 set idx [lsearch $surfDoms $modelDoms(vtail-lower-trailing-edge)]
@@ -874,14 +924,16 @@ set idx [lsearch $surfDoms $modelDoms(pylon-trailing-edge)]
 set surfDoms [lreplace $surfDoms $idx $idx]
 
 set trailingEdgeDomsCollection [pw::Collection create]
-    $trailingEdgeDomsCollection set [list $modelDoms(pylon-trailing-edge) \
+    $trailingEdgeDomsCollection set [list $modelDoms(wing-trailing-edge)        \
+                                          $modelDoms(pylon-trailing-edge)       \
                                           $modelDoms(vtail-upper-trailing-edge) \
                                           $modelDoms(vtail-lower-trailing-edge)]
 
     $trailingEdgeDomsCollection do delete
 $trailingEdgeDomsCollection delete
 
-set trailingEdges [list pylon-trailing-edge \
+set trailingEdges [list wing-trailing-edge        \
+                        pylon-trailing-edge       \
                         vtail-upper-trailing-edge \
                         vtail-lower-trailing-edge]
 
@@ -896,6 +948,9 @@ foreach edge $trailingEdges {
         pylon-trailing-edge {
             set conSet $pylonTECons
         }
+        wing-trailing-edge {
+            set conSet $wingTECons
+        }        
     }
 
     set structDom [pw::DomainStructured createFromConnectors $conSet]
@@ -909,7 +964,7 @@ foreach edge $trailingEdges {
 ## Resolve Inlet and Nozzle Leading/Trailing Edges with Anisotropic Triangles
 set engineDomsCollection [pw::Collection create]
     $engineDomsCollection set [list $modelDoms(engine-OML)  \
-                                    $modelDoms(inlet-IML)  \
+                                    $modelDoms(inlet-IML)   \
                                     $modelDoms(nozzle-IML)]
     $engineDomsCollection do setUnstructuredSolverAttribute \
         TRexMaximumLayers $domLayers
@@ -959,11 +1014,11 @@ set wingEmpennageDomsCollection [pw::Collection create]
     $leBC setType Wall
     $leBC setSpacing $LESpacing
     $leBC apply [list \
-        [list $modelDoms(wing-lower) $wingLECon] \
-        [list $modelDoms(wing-upper) $wingLECon] \
+        [list $modelDoms(wing-lower) $wingLECon]       \
+        [list $modelDoms(wing-upper) $wingLECon]       \
         [list $modelDoms(htail-lower) $horizTailLECon] \
         [list $modelDoms(htail-upper) $horizTailLECon] \
-        [list $modelDoms(vtail) $vertTailLECon] \
+        [list $modelDoms(vtail) $vertTailLECon]        \
         [list $modelDoms(pylon) $pylonLECon]
     ]
 
@@ -973,14 +1028,13 @@ set wingEmpennageDomsCollection [pw::Collection create]
     $teBC setType Wall
     $teBC setSpacing $TESpacing
     $teBC apply [list \
-        [list $modelDoms(wing-lower) $wingTECon] \
-        [list $modelDoms(wing-upper) $wingTECon] \
+        [list $modelDoms(wing-lower) $wingTELowerCon]  \
+        [list $modelDoms(wing-upper) $wingTEUpperCon]  \
         [list $modelDoms(htail-lower) $horizTailTECon] \
         [list $modelDoms(htail-upper) $horizTailTECon] \
-        [list $modelDoms(vtail) $vertTailTEUpperCon] \
-        [list $modelDoms(vtail) $vertTailTELowerCon] \
-        [list $modelDoms(pylon) $pylonTECon] \
-    ]
+        [list $modelDoms(vtail) $vertTailTEUpperCon]   \
+        [list $modelDoms(vtail) $vertTailTELowerCon]   \
+        [list $modelDoms(pylon) $pylonTECon]]
 
     $wingEmpennageDomsCollection do initialize
 $wingEmpennageDomsCollection delete
@@ -1009,18 +1063,18 @@ puts "Redistributed fuselage nose connectors."
 
 ## Re-Initialize Domains
 set DomsCollection [pw::Collection create]
-    $DomsCollection set [list $modelDoms(nose-upper)  \
-                              $modelDoms(nose-lower)  \
+    $DomsCollection set [list $modelDoms(nose-upper)     \
+                              $modelDoms(nose-lower)     \
                               $modelDoms(fairing-lower)  \
                               $modelDoms(fairing-upper)  \
-                              $modelDoms(fuselage)  \
+                              $modelDoms(fuselage)       \
                               $modelDoms(symmetry)]
     $DomsCollection do initialize
 $DomsCollection delete
 
 puts "Surface Meshing Complete"
 
-## Create Farfield Block
+## Block Assembly
 
 set allDoms [pw::Grid getAll -type pw::Domain]
 set doms {}
@@ -1028,7 +1082,7 @@ foreach dom $allDoms {
     lappend doms $dom
 }
 
-# Assemble blocks from these domains
+# Assemble Block From All Model Domains
 set blks [pw::BlockUnstructured createFromDomains $doms]
 
 set blk1 [pw::GridEntity getByName "blk-1"]
@@ -1036,10 +1090,10 @@ set isoMode [pw::Application begin UnstructuredSolver [list $blk1]]
 $isoMode run Initialize
 $isoMode end
 
-set surfDoms [list $modelDoms(htail-lower)         \
-                   $modelDoms(htail-upper)         \
-                   $modelDoms(htail-tip)           \
-                   $modelDoms(vtail)               \
+set surfDoms [list $modelDoms(htail-lower)               \
+                   $modelDoms(htail-upper)               \
+                   $modelDoms(htail-tip)                 \
+                   $modelDoms(vtail)                     \
                    $modelDoms(vtail-upper-trailing-edge) \
                    $modelDoms(vtail-lower-trailing-edge) \
                    $modelDoms(fairing-upper)             \
@@ -1102,6 +1156,7 @@ set plugBC [pw::BoundaryCondition create]
 
 set wingDoms [list $modelDoms(wing-lower)          \
                    $modelDoms(wing-upper)          \
+                   $modelDoms(wing-trailing-edge)  \
                    $modelDoms(wing-tip)]
 
 set wingBC [pw::BoundaryCondition create]
