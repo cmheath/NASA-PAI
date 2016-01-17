@@ -24,7 +24,7 @@ GE F404 Conditions.
    Kapp      Nsapp    Alpha_Inlet (deg) Beta_Inlet (deg)
     3          0         0.0        0.0    
   Mach_L   pt_L/pt_0  Alpha_L (deg) Beta_L (deg)
-  1.616       1.0        0.0        0.0    
+   1.6        1.0        0.0        0.0    
 
 ---------------------------------------------------------------------------
   DataID  

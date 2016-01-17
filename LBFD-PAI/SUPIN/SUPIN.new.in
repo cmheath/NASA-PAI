@@ -24,7 +24,7 @@ DataID.  Approach Flow
 Kapp   Nsapp   Alpha_Inlet(deg)   Beta_Inlet(deg)
   3      0         0.0000            0.0000
   Mach_L   pt_L/pt_0   Alpha_L(deg)   Beta_L(deg)
-  1.6160    1.00000        0.0000        0.0000
+  1.6000    1.00000        0.0000        0.0000
  
 -----------------------------------------------------------
 DataID.  External Supersonic Diffuser
@@ -44,7 +44,7 @@ Kclip      Kclin     Kclex
  bclin     ARclin     thclin
 0.00040    4.0000      0.000
  bclex     ARclex     thclex
-0.00040    4.0000      2.154
+0.00040    4.0000      2.235
  
 -----------------------------------------------------------
 DataID.  Cowl Exterior
@@ -76,7 +76,7 @@ FdcwSD    FdcwX     FLcwX
 DataID.  Engine Face
  11
 KxEF     FxEF    KyEF     FyEF     ThetEF
-  2    5.58102     1    0.68500    0.0000
+  2    5.56357     1    0.68500    0.0000
 KEF
  2
 diamEF(ft)   HubTip
