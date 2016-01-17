@@ -2,7 +2,7 @@
 #    NASA Low-Boom Flight Demonstrator 
 #    Written By: Christopher Heath
 #    NASA Glenn Research Center
-#    Version Date: 12/10/15
+#    Version Date: 1/17/16
 # --------------------------------------
 # ----------------------
 # --- Build Switches ---
@@ -45,7 +45,7 @@ despmtr fwdc_fuse   0.0250
 despmtr aftl_fuse   0.0000
 despmtr aftc_fuse   0.0000
 
-despmtr   x_fuse      "  0.00;  1.00;  5.00; 10.00; 15.00; 20.00; 25.00; 30.00; 35.00; 38.00;  40.00;  45.00;  50.00; 55.0;\
+despmtr   x_fuse      "  0.00;  0.25;  5.00; 10.00; 15.00; 20.00; 25.00; 30.00; 35.00; 38.00;  40.00;  45.00;  50.00; 55.0;\
                         63.00; 68.40; 72.66; 77.22; 81.48; 84.43; 87.91; 91.63; 95.12; 97.68; 101.34; 103.63; 105.91"
 
 despmtr   z_fuse      " 2.65; 2.65; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.6500; 2.70; 2.75;\ 
@@ -77,9 +77,9 @@ dimension ns_eng      4   1   1
 despmtr   xloc_eng   "  -2.0;   2.0;   5.0;   6.25"
 despmtr   yloc_eng   "   0.0;   0.0;   0.0;    0.0"
 despmtr   zloc_eng   "   0.0;   0.0;   0.0;    0.0" 
-despmtr   zn_eng     " 1.315;  1.365;  1.41;  1.385" 
-despmtr   zs_eng     " 1.315;  1.365;  1.41;  1.385"
-despmtr   ns_eng     "  2.25;   2.5;   2.5;   2.5"
+despmtr   zn_eng     " 1.315; 1.365;  1.41;  1.385" 
+despmtr   zs_eng     " 1.315; 1.365;  1.41;  1.385"
+despmtr   ns_eng     "  2.25;   2.5;   2.5;    2.5"
 despmtr   x_eng      0.225
 despmtr   y_eng      0.00
 despmtr   z_eng     -0.262161
@@ -146,15 +146,17 @@ dimension LA2   1  5  1
 despmtr   toc_wing    "  0.0000;  0.0000;  0.0246;  0.0300;  0.0354"
 despmtr   chord_wing  " 59.0000; 51.2536; 27.4989; 13.2223;  5.0910"
 despmtr   twist_wing  "  0.0000;  0.1583;  0.6611; -0.1982; -0.3123"
-despmtr   cmax_wing   "  0.0000;  0.0000; -0.0100; -0.0075;  0.0600"
-despmtr   xmaxc_wing  "  0.0000;  0.0000;  0.5000;  0.4500;  0.5000"
-despmtr   xloc_wing   "  2.1794;  8.7704;  32.034; 47.9512; 62.8289"
-despmtr   yloc_wing   "  0.0000;  2.0593;  4.1888;  7.9970; 15.2629"
+despmtr   cmax_wing   "  0.0000;  0.0000; -0.0010; -0.0084;  0.0443"
+despmtr   xmaxc_wing  "  0.0000;  0.0000;  0.6094;  0.2500;  0.6858"
+despmtr   xloc_wing   "  2.1794;  8.7704;  32.034; 47.9512; 62.8389"
+despmtr   yloc_wing   "  0.8332;  2.0593;  4.1888;  7.9970; 15.2629"
 despmtr   zloc_wing   "  0.0344;  0.1780;  0.7740;  0.9850;  1.2640"
+
 despmtr   angle_wing     0.0669
 despmtr   x_wing        33.7928
 despmtr   y_wing         0.0000
-despmtr   z_wing         2.6520
+#despmtr   z_wing         2.6520
+despmtr   z_wing         2.4798
 
 despmtr   C1    "0.5; 1.0;"
 despmtr   TE1   "0.0; 0.0;"
@@ -196,9 +198,9 @@ dimension xloc_vtail  4  1  1
 dimension yloc_vtail  4  1  1
 dimension zloc_vtail  4  1  1
 
-despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;    0.035"
-despmtr   chord_vtail " 14.000;   13.500;    11.5;     5.0"
-despmtr   xloc_vtail  " 1.0000;   2.0000;    4.50;   13.42"
+despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;   0.035"
+despmtr   chord_vtail "  14.000;   13.500;    11.5;     5.0"
+despmtr   xloc_vtail  "  1.0000;   2.0000;    4.50;   13.42"
 despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
@@ -457,7 +459,6 @@ patbeg foo subtractNearfield
 patend
 
 restore engine
-#rotatey -0.15 0 0 
 translate  x_vtail   y_vtail    z_vtail
 
 restore pod

@@ -33,6 +33,19 @@ mark
   rotatex   90 0 0
   rotatey   twist_wing[i]   0         0
   scale     chord_wing[i]  
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.022)+1 2 10
+  intersect  
+  translate xloc_wing[i] 0 zloc_wing[i]
+
+  udparg    kulfan    class     C1
+  udparg    kulfan    ztail     TE1
+  udparg    kulfan    aupper    UA1
+  udprim    kulfan    alower    LA1   
+  rotatex   90 0 0
+  rotatey   twist_wing[i]   0         0
+  scale     chord_wing[i]  
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.022)+1 2 10
+  intersect  
   translate xloc_wing[i] yloc_wing[i] zloc_wing[i]
 
   set i 2
@@ -43,23 +56,11 @@ mark
   rotatex   90 0 0
   rotatey   twist_wing[i]   0         0  
   scale     chord_wing[i]  
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.004)+1 2 10
+  intersect  
   translate xloc_wing[i] yloc_wing[i] zloc_wing[i]
 
-  set i 3
-  udparg naca456 thkcode $65A
-  udparg naca456 toc     toc_wing[i]
-  udparg naca456 camcode $6M
-  udparg naca456 cmax  cmax_wing[i]
-  udparg naca456 xmaxc xmaxc_wing[i]
-  udprim naca456   
-  rotatex   90 0 0
-  rotatey   twist_wing[i]   0         0  
-  scale     chord_wing[i]
-  translate xloc_wing[i] yloc_wing[i] zloc_wing[i]
-blend 0 0 1
-
-# --- Create Outboard Wing Section ---
-mark
+  # --- Create Outboard Wing Section ---
   set i 3
   udparg naca456 thkcode $65A
   udparg naca456 toc     toc_wing[i]
@@ -70,6 +71,8 @@ mark
   rotatex   90 0 0
   rotatey   twist_wing[i]   0         0  
   scale     chord_wing[i]
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.007)+1 2 10
+  intersect
   translate xloc_wing[i] yloc_wing[i] zloc_wing[i]
 
   set i 4
@@ -82,6 +85,8 @@ mark
   rotatex   90 0 0     
   rotatey   twist_wing[i]   0         0
   scale     chord_wing[i]
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.03)+1 2 10
+  intersect
   translate xloc_wing[i] yloc_wing[i] zloc_wing[i]
 
   set i 5
@@ -94,10 +99,12 @@ mark
   rotatex   90 0 0    
   rotatey   twist_wing[i]   0         0  
   scale     chord_wing[i]
+  box -1 -1 -5 (chord_wing[i]-chord_wing[i]*0.04)+1 2 10
+  intersect  
   translate xloc_wing[i] yloc_wing[i] zloc_wing[i] 
-blend 0 0 1
 
-join 0.01
+rule 1
+
 rotatey   angle_wing        0         0
 translate     x_wing        y_wing    z_wing  
 attribute WingOML 0
