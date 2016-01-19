@@ -7,14 +7,14 @@
 # ----------------------
 # --- Build Switches ---
 # ----------------------
-despmtr  remakeFuselage    1
+despmtr  remakeFuselage    0
 despmtr  remakeInlet       1
 despmtr  remakeEngine      1
-despmtr  remakeVtail       1
-despmtr  remakeHtail       1
-despmtr  remakeSpinner     1
-despmtr  remakeWing        1
-despmtr  remakePod         1
+despmtr  remakeVtail       0
+despmtr  remakeHtail       0
+despmtr  remakeSpinner     0
+despmtr  remakeWing        0
+despmtr  remakePod         0
 despmtr  remakeNearfield   1
 despmtr  subtractNearfield 1
 despmtr  unionAll          1
@@ -77,8 +77,8 @@ dimension ns_eng      4   1   1
 despmtr   xloc_eng   "  -2.0;   2.0;   5.0;   6.25"
 despmtr   yloc_eng   "   0.0;   0.0;   0.0;    0.0"
 despmtr   zloc_eng   "   0.0;   0.0;   0.0;    0.0" 
-despmtr   zn_eng     " 1.315; 1.365;  1.41;  1.385" 
-despmtr   zs_eng     " 1.315; 1.365;  1.41;  1.385"
+despmtr   zn_eng     " 1.265; 1.365;  1.40;  1.385" 
+despmtr   zs_eng     " 1.265; 1.365;  1.40;  1.385"
 despmtr   ns_eng     "  2.25;   2.5;   2.5;    2.5"
 despmtr   x_eng      0.225
 despmtr   y_eng      0.00

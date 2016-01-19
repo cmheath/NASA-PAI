@@ -1,4 +1,4 @@
-# --- STEX Inlet ---
+# --- AxiSpike Inlet ---
 interface   xloc_eng   in  0
 interface   yloc_eng   in  0
 interface   zloc_eng   in  0 
@@ -12,7 +12,7 @@ interface   zEF        in  0
 interface   x_cutoff   in  0
 interface   t_cutoff   in  0
 
-import SUPIN.egads 1
+import SUPIN.egads 2
 
 rotatex -90 0 0
 translate  x_eng-@xmin  y_eng  zEF
@@ -38,7 +38,7 @@ set    xmin min(x1,x2)
 skbeg     xmin_inlet          ymin_inlet-1  z1
   linseg  xmax_inlet-0.01     ymin_inlet-1  z1
   linseg  xmax_inlet-0.01     ymin_inlet-1  z2
-  linseg  max(x1,x2)-0.01     ymin_inlet-1  z2
+  linseg  xmin_inlet          ymin_inlet-1  z2
   linseg  xmin_inlet          ymin_inlet-1  z1
 skend
 extrude    0.0  ymax_inlet-ymin_inlet+2  0.0

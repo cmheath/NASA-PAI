@@ -127,11 +127,9 @@ udprim box dx 50 dy 50 dz 0
 translate x_eng y_eng 0
 subtract
 
-restore interior_inlet
-subtract
 
-restore forward_inlet
-join 0.01
+
+
 
 translate 0 0 z_eng
 
@@ -155,6 +153,23 @@ union
 
 restore lower_vtail
 union
+
+
+
+
+
+
+restore interior_inlet
+translate 0 0 z_eng
+subtract
+
+restore forward_inlet
+translate 0 0 z_eng
+join 0.01
+
+
+
+
 
 restore spinner
 translate xEF y_eng z_eng
