@@ -1,0 +1,739 @@
+ 
+===========================================================
+!    Supersonic Inlet Design and Analysis Code (SUPIN)    !
+!              Beta Version (October 2015)                !
+-----------------------------------------------------------
+ 
+-----------------------------------------------------------
+! Echo of the input data file to the output data file     !
+-----------------------------------------------------------
+ 
+SUPIN Input File                                                      
+AxiSpike Inlet.                                                       
+GE F404 Conditions.                                                   
+ 
+-----------------------------------------------------------
+DataID.  Main Control for SUPIN
+  0
+Kmode    Ktyp    Kcomp    Ksurf    KgCFD
+  2        3       1        1        0
+KWinp     FWinp     KWunit     Flapeng
+  1     51.9440        2        1.000
+WRspill   WRbleed   WRbypass   WRother
+0.00000   0.00000    0.00000   0.00000
+ 
+-----------------------------------------------------------
+DataID.  Freestream
+  1
+ Kfs  Mach  Pres(psf)  Temp(R) Alpha(deg) Beta(deg) Alt(ft)
+  2  1.600    224.508  389.970    0.000     0.000   51707.0
+ 
+-----------------------------------------------------------
+DataID.  Approach Flow
+  2
+Kapp   Nsapp   Alpha_Inlet(deg)   Beta_Inlet(deg)
+  3      0         0.0000            0.0000
+  Mach_L   pt_L/pt_0   Alpha_L(deg)   Beta_L(deg)
+  1.6000    1.00000        0.0000        0.0000
+ 
+-----------------------------------------------------------
+DataID.  Capture Cross-Section
+  3
+   FAcap     Fhclip      Fwclip
+ 0.00000   -0.00000     1.00000
+  Xinlet     Yinlet     Thinlet
+ 0.00000    0.00000       0.000
+ARtopcap    ptopcap    ARbotcap    pbotcap
+ 1.00000     2.000      1.00000     2.000
+ 
+-----------------------------------------------------------
+DataID.  External Supersonic Diffuser
+  4
+Kexd
+  5
+Kmatch    Fmatch    Kfocal
+  1      1.30000       1
+Knose     Xnose      Rnose
+  1      0.00000    0.00000
+Stage      Angle     Xstage     Dyfocal
+  1      15.0000   -1.47038     0.00000
+  2      18.4635   -0.60311     0.00000
+  3      22.3113    0.39883     0.00000
+ 
+-----------------------------------------------------------
+DataID.  Cowl Lip
+  5
+Kclip      Kclin     Kclex
+  1          3         3
+ bclin     ARclin     thclin
+0.00200    4.0000     10.000
+ bclex     ARclex     thclex
+0.00200    4.0000     12.500
+ 
+-----------------------------------------------------------
+DataID.  Cowl Exterior
+  6
+Kcex    Frcex    FXcext    Thswex
+  1   1.10000  -3.00000   5.00000
+ 
+-----------------------------------------------------------
+DataID.  Throat
+  8
+Kthrt
+  5
+Kthcb
+  1
+dthcb1    dxcbSD    dycbSD    thcbSD    Fncb1    FncbSD
+ 0.000    1.5000    0.0000   -10.000    0.333     0.333
+Kthcw
+  1
+ aTHaS1    thcwTH    machTH
+ 1.0700    0.0000    0.7500
+ aSDaS1    thcwSD    machSD
+ 1.1400   -2.0000    0.6000
+ 
+-----------------------------------------------------------
+DataID.  Subsonic Diffuser
+ 10
+Ksubd    KLsubd    FLsubd     theqsd     dptsubd
+  3         5      4.0000      3.000     -0.0250
+Ksdcb
+  1
+FdcbSD    FdcbX     thcbX      FLcbX
+ 1.000    0.050    -0.087     0.6000
+Ksdcw
+  1
+FdcwSD    FdcwX     FLcwX
+ 0.333    0.333    0.1000
+ 
+-----------------------------------------------------------
+DataID.  Engine Face
+ 11
+KxEF     FxEF    KyEF     FyEF     ThetEF
+  2    0.00000     1    0.67750    0.0000
+KEF
+ 2
+diamEF(ft)   HubTip
+  2.2284     0.3000
+Kspin
+  0
+ 
+-----------------------------------------------------------
+DataID.  Grid Spacing
+ 13
+ Fgdds   Rgsmax    Fdswall    Fdssym    Fdscex    Fdsthrt
+ 1.000     1.15   0.000500    0.0200    0.1000     0.0150
+ Ddinf    Ddfar      Ddnoz     Ddclp     thfar      Fgnoz
+ 1.000    1.500      1.000     0.050    35.000     0.8850
+ 
+ 
+===========================================================
+! Start of the Design and Analysis Operations             !
+-----------------------------------------------------------
+  
+  Title and Descriptor lines from the Input File
+  
+    SUPIN Input File                                                      
+    AxiSpike Inlet.                                                       
+    GE F404 Conditions.                                                   
+  
+  Inlet Type flag, Ktyp =     3
+  
+    Axisymmetric, outward-turning inlet
+  
+  Kmode Flag, Kmode =     2
+  
+Inlet sizing operations will be performed to      
+determine the theoretical capture area (Acap).    
+The aerodynamic performance of the inlet will     
+be calculated.                                    
+ 
+-----------------------------------------------------------
+! Freestream                                              !
+-----------------------------------------------------------
+ 
+  Freestream input mode, Kfs             =     2
+  Mach number,        fsmach             =     1.60000
+  Altitude,           fsalt  (ft)        =     51707.0
+  Dynamic pressure,   fsqdyn (psf)       =   402.31824
+  Dynamic pressure,   fsqdyn (psi)       =     2.79388
+  Static pressure,    fspres (psf)       =   224.50793
+  Static pressure,    fspres (psi)       =     1.55908
+  Total pressure,     fsptot (psf)       =   954.25208
+  Total pressure,     fsptot (psi)       =     6.62675
+  Static temperature, fstemp (R)         =   389.97000
+  Total temperature,  fsttot (R)         =   589.63470
+  Static density,     fsrho  (slug/ft3)  =  3.35445E-04
+  Speed,              fsvel  (ft/s)      =  1548.77869
+  Acoustic speed,     fsasos (ft/s)      =   967.98669
+  Dynamic viscosity,  fsvisc (slug/ft-s) =  2.88430E-07
+  Reynold number,     fsreyn (/ft)       =  1.80123E+06
+  Angle-of-Attack,    fsalph (deg)       =     0.00000
+  Angle-of-Sideslip,  fsbeta (deg)       =     0.00000
+ 
+-----------------------------------------------------------
+! Approach Flow                                           !
+-----------------------------------------------------------
+ 
+  Flag,             Kapp   =     3
+ 
+  The approach flow consists of the specified flow 
+  conditions at stage L.
+ 
+-----------------------------------------------------------
+! Flow Conditions at Station L                            !
+-----------------------------------------------------------
+ 
+  Mach number,          machL            =     1.60000
+  Static pressure,      psL   (psf)      =   224.50793
+  Static pressure,      psL   (psi)      =     1.55908
+  Total pressure,       ptL   (psf)      =   954.25208
+  Total pressure,       ptL   (psi)      =     6.62675
+  Static temperature,   tsL   (R)        =   389.97003
+  Total temperature,    ttL   (R)        =   589.63470
+  Static density,       rhoL  (slug/ft3) =  3.35445E-04
+  Acoustic speed,       asosL (ft/s)     =   967.98676
+  Angle-of-attack,      alphL (deg)      =     0.00000
+  Angle-of-sideslip,    betaL (deg)      =     0.00000
+  Dynamic pressure,     qdynL (psf)      =   402.31824
+  Dynamic pressure,     qdynL (psi)      =     2.79388
+  Total pressure ratio, ptL / pt0        =     1.00000
+ 
+-----------------------------------------------------------
+! Engine Face                                             !
+-----------------------------------------------------------
+ 
+  Type of engine face,         KEF          =     2
+    Co-annular circular engine face
+  Engine Face Diameter,        diamEF (ft)  =     2.22840
+  Engine Face Radius,          radEF  (ft)  =     1.11420
+  Hub Radius,                  rhub   (ft)  =     0.33426
+  Hub-to-Tip Ratio,            hubtip       =     0.30000
+  Engine Face Area,            Area2  (ft2) =     3.54909
+  Engine Face Area,            Area2B (ft2) =     3.54909
+ 
+-----------------------------------------------------------
+! Iterations for Inlet Sizing and Performance Analysis    !
+-----------------------------------------------------------
+ 
+  MIL-SPEC (MIL-E-5008B):
+    MIL-SPEC subsonic total pressure recovery =  0.9950
+    MIL-SPEC inlet total pressure recovery    =  0.9576
+ 
+   Iteration    pt_2 / pt_L      Mach_2      A_cap(ft2)
+        1         0.943441      0.496237      3.107563
+        2         0.948441      0.492609      3.107563
+        3         0.948928      0.492259      3.107563
+        4         0.949147      0.492102      3.107563
+        5         0.949134      0.492112      3.107563
+        6         0.949134      0.492111      3.107563
+ 
+-----------------------------------------------------------
+! Summary of Inlet Flow Rates, Sizing, and Performance    !
+-----------------------------------------------------------
+  
+  Kmode Flag, Kmode =     2
+  
+  Inlet sizing operations were performed to determine   
+  the theoretical capture area (Acap) and cross-section.
+  
+  Inlet Flow Input Flag,  KWinp        =     1
+  
+  Engine Lapse Rate,        Flapeng    =     1.00000
+  Sizing Pressure Recovery, pt2 / ptL  =     0.94913
+  Sizing Temperature Ratio, Tt2 / TtL  =     1.00000
+  
+  Engine Flow Rates
+    Wc2 (corrected, slug/s)            =     4.02192
+    Wc2 (corrected, lbm/s)             =   129.40140
+    Wa2 (actual, slug/s)               =     1.61447
+    Wa2 (actual, lbm/s)                =    51.94400
+  
+  Capture Flow Rate, Wcap (slug/s)     =     1.61447
+  Capture Flow Rate, Wcap (lbm/s)      =    51.94400
+  
+  Flow Ratios
+    Spillage,      Wspill  / Wcap      =     0.00000
+    Bleed,         Wbleed  / Wcap      =     0.00000
+    Bypass,        Wbypass / Wcap      =     0.00000
+    Other,         Wother  / Wcap      =     0.00000
+    Inlet,         W1      / Wcap      =     1.00000
+    Engine Face,   W2      / Wcap      =     1.00000
+  
+  
+  Reference Capture Area,  Acap  (ft2) =     3.10756
+  Engine Face Area,        Area2 (ft2) =     3.54909
+  Flow area at station L,  AreaL (ft2) =     3.10756
+  
+  Nose Coordinates,     x_nose (ft)    =    -1.10567
+                        y_nose (ft)    =     0.00000
+  
+  Cowl Lip Coordinates, x_clip (ft)    =     0.00000
+                        y_clip (ft)    =     0.99457
+  
+  Station 1:            x_1 (ft)       =     0.10638
+                        y_1 (ft)       =     0.72268
+                        A_1 (ft)       =     2.65142
+                        Mach_1         =     0.78596
+                        pt_1 / pt_L    =     0.97899
+  
+  Station SD:           x_SD (ft)      =     1.76759
+                        y_SD (ft)      =     0.76175
+                        A_SD (ft)      =     3.02262
+                        Mach_SD        =     0.60009
+                        pt_SD / pt_L   =     0.97700
+  
+  Station 2 (EF):       x_EF (ft)      =     3.99599
+                        y_EF (ft)      =     0.00000
+                        A_2  (ft)      =     3.54909
+                        Mach_2         =     0.49211
+                        pt_2 / pt_L    =     0.94913
+ 
+-----------------------------------------------------------
+! Cowl Lip                                                !
+-----------------------------------------------------------
+ 
+  Internal cowl lip shape flag, Kclin     =     3
+    The internal cowl lip is elliptical
+    Semi-major length,  aclin (ft)        =     0.00800
+    Semi-minor length,  bclin (ft)        =     0.00200
+    Aspect ratio,       ARclin            =     4.00000
+    Cowl lip interior angle, thclin (deg) =    10.000
+ 
+  External cowl lip shape flag, Kclex     =     3
+    The external cowl lip is elliptical
+    Semi-major length,  aclex (ft)        =     0.00800
+    Semi-minor length,  bclex (ft)        =     0.00200
+    Aspect ratio,       ARclex            =     4.00000
+    Cowl lip exterior angle, thclex (deg) =    12.500
+  
+  Planar Cowl Lip Coordinates            x (ft)    y (ft)
+  Cowl Lip                (x,y)_clip    0.00000   0.99457
+  Cowl Lip Interior Point (x,y)_clin    0.00823   0.99399
+  Cowl Lip Exterior Point (x,y)_clex    0.00618   0.99766
+  
+  Thickness of the cowl lip,  tclip (ft)  =     0.00397
+  Height of the capture area, hclip (ft)  =     1.98914
+  Width of the capture area,  wclip (ft)  =     1.98914
+ 
+-----------------------------------------------------------
+! External Supersonic Diffuser                            !
+-----------------------------------------------------------
+ 
+  Type of inlet,                        Ktyp   =     3
+  Type of external supersonic diffuser, Kexd   =     5
+  Number of stages,                     Nstexd =     3
+ 
+  Coordinates
+    Location                x (ft)      y (ft) 
+    Nose                  -1.10567     0.00000
+    Start of Diffuser     -1.10567     0.00000
+    Cowl Lip               0.00000     0.99457
+ 
+  Number of stages =     3
+   
+  Stage  Type   Theta(deg)    Xend(ft)     Yend(ft)
+    1      1     15.00000     -0.80302      0.08110
+    2      2     17.99133     -0.38596      0.21654
+    3      1     21.36839      0.21276      0.45079
+  Stage 2 Theta for isentropic contour is angle for line
+  between stage 1 and stage 2
+ 
+  Mach number,              machEX       =     1.30000
+  Total Pressure Ratio,     pt_EX / pt_L =     0.99961
+  Static Pressure Ratio,    ps_EX / ps_L =     1.53344
+  Static Temperature Ratio, Ts_EX / Ts_L =     1.13004
+  
+  Stage Type  Dthet(deg)  Dbeta(deg)    Mach       REC
+    1     1    15.00000   41.97186    1.49303   0.99961
+    2     2     2.99133    5.33616    1.18043   1.00000
+    3     1     3.37706    1.53770    1.18043   1.00000
+  
+  Wave Angle and Focal Point Coordinates
+  Stage Type   Beta(deg)    Xfocal(ft)    Yfocal(ft)
+    1     1    41.97186       0.00000       0.99457
+    2     2    47.30801       0.00000       0.99457
+    3     1    48.84571       0.00000       0.99457
+  
+  Focal Point Delta Coordinates
+  Stage Type   dXfocal(ft)   dYfocal(ft)
+    1     1      0.00000       0.00000
+    2     2      0.00000       0.00000
+    3     1      0.00000       0.00000
+  
+  Flow Angle
+  Stage Type   Alpha(deg)
+    1     1     3.15119
+    2     2    17.99133
+    3     1    21.36840
+ 
+  Conical Flow Solution
+  Ray  Ray_Angle(deg)  Flow_Theta(deg)   Mach      p/pL
+    1    15.00000         15.00000     1.36053   1.41095
+    2    15.53943         14.47889     1.36068   1.41064
+    3    16.07887         13.99155     1.36112   1.40979
+    4    16.61831         13.53449     1.36179   1.40847
+    5    17.15774         13.10451     1.36266   1.40676
+    6    17.69718         12.69900     1.36371   1.40472
+    7    18.23662         12.31562     1.36491   1.40238
+    8    18.77605         11.95225     1.36623   1.39979
+    9    19.31549         11.60725     1.36768   1.39698
+   10    19.85493         11.27891     1.36922   1.39398
+   11    20.39436         10.96579     1.37085   1.39081
+   12    20.93380         10.66674     1.37256   1.38750
+   13    21.47323         10.38056     1.37434   1.38405
+   14    22.01267         10.10619     1.37619   1.38049
+   15    22.55211          9.84275     1.37809   1.37682
+   16    23.09154          9.58938     1.38005   1.37305
+   17    23.63098          9.34535     1.38206   1.36919
+   18    24.17042          9.10994     1.38412   1.36525
+   19    24.70985          8.88248     1.38622   1.36124
+   20    25.24929          8.66241     1.38837   1.35715
+   21    25.78872          8.44923     1.39055   1.35299
+   22    26.32816          8.24235     1.39278   1.34877
+   23    26.86760          8.04138     1.39504   1.34448
+   24    27.40703          7.84581     1.39735   1.34013
+   25    27.94647          7.65530     1.39969   1.33571
+   26    28.48591          7.46943     1.40208   1.33123
+   27    29.02534          7.28781     1.40451   1.32669
+   28    29.56478          7.11014     1.40697   1.32207
+   29    30.10422          6.93605     1.40949   1.31739
+   30    30.64366          6.76520     1.41205   1.31264
+   31    31.18310          6.59731     1.41466   1.30780
+   32    31.72253          6.43206     1.41732   1.30289
+   33    32.26197          6.26912     1.42003   1.29789
+   34    32.80141          6.10821     1.42281   1.29279
+   35    33.34085          5.94896     1.42565   1.28759
+   36    33.88029          5.79110     1.42856   1.28228
+   37    34.41972          5.63426     1.43155   1.27685
+   38    34.95916          5.47808     1.43462   1.27129
+   39    35.49860          5.32217     1.43778   1.26557
+   40    36.03804          5.16609     1.44105   1.25969
+   41    36.57748          5.00935     1.44444   1.25362
+   42    37.11692          4.85139     1.44796   1.24733
+   43    37.65635          4.69154     1.45164   1.24079
+   44    38.19579          4.52898     1.45550   1.23397
+   45    38.73523          4.36270     1.45957   1.22680
+   46    39.27467          4.19135     1.46389   1.21922
+   47    39.81411          4.01319     1.46853   1.21112
+   48    40.35354          3.82565     1.47357   1.20237
+   49    40.89298          3.62483     1.47915   1.19275
+   50    41.43242          3.40422     1.48549   1.18190
+   51    41.97186          3.15119     1.49303   1.16911
+  
+  Capture Streamline Coordinates and Pressure Ratio
+  Number of points, Nslexd =     1
+  Point     Xsl(ft)      Ysl(ft)      p / p_L
+    1       0.00000      0.99457      1.00000
+    Capture streamline coordinate is the cowl lip
+  
+  Supersonic spillage as calculated from the  
+  cross-sectional area of the inlet streamtube
+  at station L, Wsupspill / Wcap =     0.00000
+ 
+-----------------------------------------------------------
+! Throat                                                  !
+-----------------------------------------------------------
+ 
+  Inlet y-coordinate, yinlet (ft)    =     0.00000
+  Station SD y-coordinate, ySD (ft)  =     0.76175
+ 
+  External Centerbody Angle, thEXD1 (deg) =    21.36839
+  Centerbody Break Angle,    dthCB1 (deg) =     0.00000
+  Height at Station 1,       h1 (ft)      =     0.58392
+  Aspect ratio at Station 1, w1 / h1      =    10.76037
+ 
+  Coordinates on the centerbody
+  Station     x (ft)      y (ft)   Theta (deg)
+    cb1      0.21276     0.45079     21.368
+    cbTH     0.82781     0.55456      0.000
+    cbTX     1.71276     0.45079    -10.000
+    cbSD     1.71276     0.45079    -10.000
+ 
+  Coordinates on the cowl
+  Station     x (ft)      y (ft)   Theta (deg)
+    clip     0.00000     0.99457     10.000
+    clin     0.00823     0.99399     10.000
+    cwTH     0.82781     1.10027      0.000
+    cwTX     1.82242     1.07272     -2.000
+    cwSD     1.82242     1.07272     -2.000
+ 
+  Coordinates at throat stations
+  Station     x (ft)      y (ft)   Theta (deg)
+    1        0.10638     0.72268     21.368
+    TH       0.82781     0.82741      0.000
+    TX       1.76759     0.76175    -10.000
+    SD       1.76759     0.76175    -10.000
+ 
+  Area Ratio, A_TH / A_1 =     1.07000
+  Area Ratio, A_TX / A_1 =     1.14000
+  Area Ratio, A_SD / A_1 =     1.14000
+ 
+  Station  Area(ft2)    Mach    p/p_L    T/T_L   pt/pt_L
+    EX      2.65142   1.3000   1.5334   1.1300   0.99961
+    NS      2.65142   0.7860   2.7679   1.3457   0.97899
+    1       2.65142   0.7860   2.7679   1.3457   0.97899
+    TH      2.83702   0.6733   3.0648   1.3863   0.97700
+    TX      3.02262   0.6001   3.2555   1.4104   0.97700
+    SD      3.02262   0.6001   3.2555   1.4104   0.97700
+ 
+  Mach number at TH for linear variation       =     0.73145
+  Area ratio (A_TH/A_1) for linear Mach number =     1.02775
+ 
+  Mach number at SD for linear variation       =     0.66046
+  Area ratio (A_SD/A_1) for linear Mach number =     1.07835
+ 
+  Total Pressure Ratio, pt_TH / pt_1    =     0.99796
+  Total Pressure Ratio, pt_TX / pt_TH   =     1.00000
+  Total Pressure Ratio, pt_SD / pt_TX   =     1.00000
+ 
+  Total Pressure Ratio, pt_SD / pt_1    =     0.99796
+ 
+  Inlet Contraction Ratio,   A_L / A_TH =     1.09536
+ 
+-----------------------------------------------------------
+! Subsonic Diffuser                                       !
+-----------------------------------------------------------
+ 
+  Inlet y-coordinate, yinlet (ft)    =     0.00000
+  Station SD y-coordinate, ySD (ft)  =     0.76175
+  Engine-face y-coordinate, yEF (ft) =     0.00000
+ 
+  Coordinates at the Inflow Plane (Station SD)
+  Location             x (ft)    y (ft)   Theta (deg)
+  Centerbody (cbSD)    1.7128    0.4508     -10.000
+  Mid-point  (  SD)    1.7676    0.7618     -10.000
+  Cowl       (cwSD)    1.8224    1.0727      -2.000
+ 
+  Inflow Area,      A_SD (ft2)              =     3.02262
+  Engine-face Area, A_2  (ft2)              =     3.54909
+  Engine-face Area, A_2B (ft2)              =     3.54909
+ 
+  Area Ratio, A_SD / A_2                    =     0.85166
+  Area Ratio, A_2  / A_SD                   =     1.17418
+  Area Ratio, A_2  / A_2B                   =     1.00000
+ 
+  Length of Diffuser, L_subd (ft)           =     2.22840
+  Length / Diameter,  L_subd / D_EF         =     1.00000
+  Engine-face offset, |y_SD-y_EF| / L_SD    =     0.00000
+  Diffuser Angle,     Theta_SD (deg)        =     3.42374
+ 
+  Angle of the engine face, thetEF (deg)    =     0.00000
+ 
+  Coordinates at the Engine Face
+  Location              x (ft)    y (ft)
+  Center point ( EF)    3.9960    0.0000
+  Top          (TEF)    3.9960    1.1142
+  Bottom       (BEF)    3.9960   -1.1142
+ 
+  End of the Centerbody on the Hub
+    xCBX  (ft)  =     2.65895
+    yCBX  (ft)  =     0.33426
+    thCBX (deg) =    -5.00000
+ 
+  Mach number at inflow (SD),  machSD       =     0.60009
+  Engine-Face Mach Number,     mach2        =     0.49211
+ 
+  Total Pressure Ratio,        pt_2 / pt_SD =     0.97148
+  Static Pressure Ratio,       ps_2 / ps_SD =     1.05015
+  Static Temperature Ratio,    Ts_2 / Ts_SD =     1.02250
+ 
+  Total Pressure Ratio,        pt_2 / pt_2B =     1.00000
+  Engine-Face Mach Number,     mach2B       =     0.49211
+ 
+  Total Pressure Recovery,     pt_2 / pt_L  =     0.94913
+ 
+  Inlet Pressure Ratio,        ps_2 / ps_L  =     3.41873
+  Inlet Temperature Ratio,     Ts_2 / Ts_L  =     1.44215
+ 
+-----------------------------------------------------------
+! Cowl Exterior                                           !
+-----------------------------------------------------------
+ 
+  Cowl exterior flag,            Kcex   =     1
+  Cowl exterior radial,          Frcex  =    1.100
+  Cowl lip exterior angle (deg), thclex =   12.500
+ 
+  Cowl lip (ft),          (x,y)_clip =   0.00000  0.99457
+  Cowl lip exterior (ft), (x,y)_clex =   0.00618  0.99766
+  Cowl exterior end (ft), (x,y)_cext =   3.99599  1.22562
+ 
+  Cowl frontal area (ft2), afcex =     1.61156
+ 
+  Flow conditions just ahead of the cowl lip exterior
+  Mach number,      =     1.60000
+  Flow angle (deg), =     0.00000
+ 
+-----------------------------------------------------------
+! Inlet Drag                                              !
+-----------------------------------------------------------
+ 
+  Additive Drag,    cdadd                    =    0.00000
+  Cowl Lip Suction, clsuct                   =    0.00000
+  Spillage Drag,    cdspill = cdadd - clsuct =    0.00000
+ 
+  Wave Drag,        cdwav                    =    0.15390
+  Cowl Lip Drag,    cdlip                    =    0.00000
+  Cowl Drag,        cdcowl = cdwav + cdlip   =    0.15390
+ 
+  Bleed Drag,       cdbld                    =    0.00000
+  Bypass Drag,      cdbyp                    =    0.00000
+ 
+  Inlet Drag, cdrag = cdspill + cdcowl + cdbld + cdbyp 
+ 
+  Inlet Drag Coefficient, cdrag              =    0.15390
+ 
+  Inlet Drag, Drag (lbf)                     =  192.41353
+ 
+-----------------------------------------------------------
+! Inlet Design and Analysis Summary                       !
+-----------------------------------------------------------
+ 
+   Station     X(ft)     Area(ft2)     Area / Acap
+      L      -1.1057       3.1076         1.0000
+     EX       0.1064       2.6514         0.8532
+     NS       0.1064       2.6514         0.8532
+      1       0.1064       2.6514         0.8532
+     TH       0.8278       2.8370         0.9129
+     SD       1.7676       3.0226         0.9727
+      2       3.9960       3.5491         1.1421
+ 
+  Subsonic diffuser area ratio (A_2/A_TH) =  1.25099
+  
+  Engine Flow Rates (lbm/sec)
+    Wc2 (corrected)                    =   129.4014
+    Wa2 (actual)                       =    51.9440
+  
+  Engine Lapse Rate,        Flapeng    =     1.0000
+  
+  Capture Flow Rate, Wcap (lbm/sec)    =    51.9440
+  Capture Flow Rate, Wcap (slug/sec)   =     1.6145
+ 
+   Station   Flow(lbm/s)   W / Wcap
+      L         51.9440     1.0000
+     EX         51.9440     1.0000
+     NS         51.9440     1.0000
+      1         51.9440     1.0000
+     TH         51.9440     1.0000
+     SD         51.9440     1.0000
+      2         51.9440     1.0000
+ 
+  Flow Ratios:
+    Spillage,       Wspill  / Wcap     =  0.00000
+    Inlet,          W1      / Wcap     =  1.00000
+    Bleed,          Wbleed  / Wcap     =  0.00000
+    Bypass,         Wbypass / Wcap     =  0.00000
+    Other,          Wother  / Wcap     =  0.00000
+    Engine Face,    W2      / Wcap     =  1.00000
+ 
+  Total pressure ratios over inlet segments:
+    Approach Flow,                 0 to  L:   1.00000
+    External Supersonic Diffuser,  L to EX:   0.99961
+    Normal Shock,                 EX to NS:   0.97937
+    Cowl Lip Entrance,            NS to  1:   1.00000
+    Throat,                        1 to SD:   0.99796
+    Subsonic Diffuser,            SD to  2:   0.97148
+ 
+    Inlet Recovery,    pt_2 / pt_L   =    0.94913
+    Total Recovery,    pt_2 / pt_0   =    0.94913
+ 
+    Station   Mach     pt/ptL     p/pL     T/TL
+       L     1.6000    1.0000    1.0000   1.0000
+      EX     1.3000    0.9996    1.5334   1.1300
+      NS     0.7860    0.9790    2.7679   1.3457
+       1     0.7860    0.9790    2.7679   1.3457
+      TH     0.6733    0.9770    3.0648   1.3863
+      SD     0.6001    0.9770    3.2555   1.4104
+       2     0.4921    0.9491    3.4187   1.4422
+ 
+  Lengths of some inlet parts (ft): 
+    Cowl exterior,                L_cex   =     3.9898
+    External supersonic diffuser, L_exd   =     1.1057
+    Throat,                       L_thrt  =     1.6612
+    Subsonic diffuser,            L_sub   =     2.2284
+    Overall length of the inlet,  L_inlet =     5.1017
+ 
+  Frontal areas of the inlet (ft2):
+    Cowl exterior and sidewall,   Ax_cex  =     1.6116
+    External supersonic diffuser, Ax_exd  =     0.6384
+    Cowl lip entrance plane,      Ax_1    =     2.4692
+    Total frontal area,           Ax_tot  =     4.7191
+ 
+  Lengths in feet and normalized by radEF and h_clip
+  Ref Length (ft)    L_exd     L_thrt    L_sub    L_inlet
+  (ft)    1.00000   1.10567   1.66121   2.22840   5.10166
+  radEF   1.11420   0.99235   1.49094   2.00000   4.57877
+  h_clip  1.98914   0.55586   0.83514   1.12028   2.56476
+ 
+  Areas in square feet and normalized by A_2 and A_cap
+  Ref Area (ft^2)      A_1      A_cap     Afcex      A_2    
+  (ft^2)  1.00000   2.65142   3.10756   1.61156   3.54909
+  A_cap   3.10756   0.85322   1.00000   0.51859   1.14208
+  A_2     3.54909   0.74707   0.87559   0.45408   1.00000
+ 
+  Flow rates in slug/s and normalized by W_2 and Wc_2
+  Ref Flow  (slug/s)     W_1      W_cap      W_2            
+  (slug/s)   1.00000   1.61447   1.61447   1.61447
+  W_2        1.61447   1.00000   1.00000   1.00000
+  Wc_2       4.02192   0.40142   0.40142   0.40142
+ 
+  Total Pressure Recovery
+  ptEX/ptL   pt1/ptEX   ptSD/pt1   pt2/ptSD   pt2/ptL
+   0.99961    0.97937    0.99796    0.97148   0.94913
+ 
+  Inlet Drag
+  Afcex(ft2)   Afcex/A2   Afcex/Acap    Cdwave    CDdrag
+    1.61156     0.45408     0.51859    0.15390   0.15390
+ 
+-----------------------------------------------------------
+! Surface Grids                                           !
+-----------------------------------------------------------
+ 
+  Surface    1  : External Supersonic Diffuser
+  Surface    2  : Cowl Lip Interior and Throat Cowl
+  Surface    3  : Throat Centerbody
+  Surface    4  : Subsonic Diffuser Centerbody
+  Surface    5  : Subsonic Diffuser Cowl Surface 2
+  Surface    6  : Cowl Lip Exterior and Cowl Exterior
+  Surface    7  : Cap Surface #4 at End of Cowl
+  Surface    8  : Cap Surface #5 at End of Centerbody
+   
+  srf   Klabel   srfips   srfni   srfnj   srfnk    srfpts
+   1      4           1      73       1      65      4745
+   2      2        4746     109       1      65      7085
+   3      4       11831      85       1      65      5525
+   4      4       17356      51       1      65      3315
+   5      2       20671      51       1      65      3315
+   6      1       23986     103       1      65      6695
+   7      1       30681       1       3      65       195
+   8      3       30876       1       3      65       195
+   
+  Total number of surface grid points =        31070
+ 
+  Surface areas of the parts of the inlet:
+  Asnose (ft2)   =    0.000000000
+  Asexd  (ft2)   =    1.827069283
+  Asclin (ft2)   =    0.053523909
+  Asclex (ft2)   =    0.045054533
+  Aswin  (ft2)   =    0.000000000
+  Aswex  (ft2)   =    0.000000000
+  Asbex  (ft2)   =    0.000000000
+  Ascex  (ft2)   =   30.065879822
+  Asthcb (ft2)   =    4.946092129
+  Asthcw (ft2)   =   12.315809250
+  Asthss (ft2)   =    0.000000000
+  Assd1  (ft2)   =    5.075755119
+  Assd2  (ft2)   =   14.897060394
+  Assd3  (ft2)   =    0.000000000
+  Assd4  (ft2)   =    0.000000000
+  Asstrut(ft2)   =    0.000000000
+ 
+  Total surface area of the inlet:
+  Asinlet (ft2)   =   69.226242065
+  Asinlet / A2    =   19.505325317
+  Asinlet / Acap  =   22.276695251
+ 
+-----------------------------------------------------------
+!                    End of SUPIN                         !
+===========================================================
+ 
