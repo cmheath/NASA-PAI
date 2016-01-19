@@ -14,8 +14,8 @@ from Helper import copy_files
 # -------------------------- #
 # --- Specify Inlet Type
 # -------------------------- #     
-Inlet = "STEX"
-#Inlet = "AxiSpike"
+#Inlet = "STEX"
+Inlet = "AxiSpike"
 
 if Inlet == "STEX":
     from SUPIN_STEX import SUPIN
@@ -68,8 +68,8 @@ class Design(Assembly):
         # self.driver.workflow.add(['freestream', 'npss', 'supin', 'opencsm', 'pointwise', 'aflr3', 'cart3d', 'fun3d'])
 
         #self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'aflr3', 'fun3d'])
-	    self.driver.workflow.add(['freestream', 'supin', 'opencsm'])
-        
+        self.driver.workflow.add(['freestream', 'supin', 'opencsm'])
+
         # --------------------------------------------------------------------------- #        
         # --- Create Data Connections 
         # --------------------------------------------------------------------------- #
