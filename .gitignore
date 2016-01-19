@@ -1,2 +1,4 @@
 *.pyc
 *.jrnl
+*.log
+*.egads
