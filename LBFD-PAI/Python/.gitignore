@@ -1,2 +1,3 @@
 *.log
 /openmdao_log.txt
+/error.out
