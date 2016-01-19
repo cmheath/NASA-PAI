@@ -44,7 +44,7 @@ set scriptDir [file dirname [info script]]
 # --
 # --------------------------------------------------------
 
-set fileName                 "LBFD.pw";  # Aircraft geometry filename
+set fileName                 "LBFD-AxiSpike.pw";  # Aircraft geometry filename
 set cLen                          32.0;  # Characteristic length (m)
 set ffSize                       100.0;  # Farfield size (cLen multiplier)
 set avgDs1                         1.0;  # Initial surface triangle average edge length
@@ -1090,27 +1090,35 @@ set isoMode [pw::Application begin UnstructuredSolver [list $blk1]]
 $isoMode run Initialize
 $isoMode end
 
-set surfDoms [list $modelDoms(htail-lower)               \
-                   $modelDoms(htail-upper)               \
-                   $modelDoms(htail-tip)                 \
-                   $modelDoms(vtail)                     \
+set wingDoms [list $modelDoms(wing-lower)          \
+                   $modelDoms(wing-upper)          \
+                   $modelDoms(wing-tip)            \
+                   $modelDoms(wing-trailing-edge)]
+
+set htDoms [list $modelDoms(htail-lower)           \
+                   $modelDoms(htail-upper)         \
+                   $modelDoms(htail-tip)]
+                   
+set vtDoms [list $modelDoms(vtail)                       \
                    $modelDoms(vtail-upper-trailing-edge) \
-                   $modelDoms(vtail-lower-trailing-edge) \
-                   $modelDoms(fairing-upper)             \
-                   $modelDoms(fairing-lower)             \
-                   $modelDoms(nose-upper)                \
+                   $modelDoms(vtail-lower-trailing-edge)]
+
+set fuseDoms [list $modelDoms(nose-upper)                \
                    $modelDoms(nose-lower)                \
                    $modelDoms(fuselage)                  \
                    $modelDoms(fuse-upper-trailing-edge)  \
-                   $modelDoms(fuse-lower-trailing-edge)  \
-                   $modelDoms(pylon)                     \
-                   $modelDoms(pylon-trailing-edge)       \
-                   $modelDoms(engine-OML)]
+                   $modelDoms(fuse-lower-trailing-edge)]
 
+set fairDoms [list $modelDoms(fairing-upper)             \
+                   $modelDoms(fairing-lower)]
+                   
+set pylonDoms  [list $modelDoms(pylon)                   \
+                   $modelDoms(pylon-trailing-edge)]
+        
 # Define boundary conditions
-set aircraftBC [pw::BoundaryCondition create]
-    $aircraftBC setName "bc-01"
-    foreach dom $surfDoms {$aircraftBC apply [list $blk1 $dom]}
+set fuseBC [pw::BoundaryCondition create]
+    $fuseBC setName "bc-01"
+    foreach dom $fuseDoms {$fuseBC apply [list $blk1 $dom]}
 
 set freestreamBC [pw::BoundaryCondition create]
     $freestreamBC setName "bc-02"
@@ -1154,14 +1162,29 @@ set plugBC [pw::BoundaryCondition create]
     $plugBC setName "bc-11"
     foreach dom $plugDoms {$plugBC apply [list $blk1 $dom]}
 
-set wingDoms [list $modelDoms(wing-lower)          \
-                   $modelDoms(wing-upper)          \
-                   $modelDoms(wing-trailing-edge)  \
-                   $modelDoms(wing-tip)]
-
 set wingBC [pw::BoundaryCondition create]
     $wingBC setName "bc-12"
-    foreach dom $wingDoms {$wingBC apply [list $blk1 $dom]}
+    foreach dom $wingDoms {$wingBC apply [list $blk1 $dom]} 
+    
+set htBC [pw::BoundaryCondition create]
+    $htBC setName "bc-13"
+    foreach dom $htDoms {$htBC apply [list $blk1 $dom]}     
+
+set vtBC [pw::BoundaryCondition create]
+    $vtBC setName "bc-14"
+    foreach dom $vtDoms {$vtBC apply [list $blk1 $dom]} 
+    
+set fairBC [pw::BoundaryCondition create]
+    $fairBC setName "bc-15"
+    foreach dom $fairDoms {$fairBC apply [list $blk1 $dom]} 
+    
+set pyBC [pw::BoundaryCondition create]
+    $pyBC setName "bc-16"
+    foreach dom $pylonDoms {$pyBC apply [list $blk1 $dom]}
+    
+set engineBC [pw::BoundaryCondition create]
+    $engineBC setName "bc-17"
+    $engineBC apply [list $blk1 $modelDoms(engine-OML)]
 
 timestamp
 puts "Run Time: [convSeconds [pwu::Time elapsed $tBegin]]"
