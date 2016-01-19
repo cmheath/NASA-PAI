@@ -1,5 +1,5 @@
-12
-1              4000           Aircraft
+17
+1              4000           Fuselage
 2              5050           Freestream
 3              5000           Farfield
 4              6662           Y-Symmetry
@@ -10,4 +10,9 @@
 9              4000           Nozzle-IML
 10             4000           Spinner
 11             4000           Plug
-12			   4000           Wing
+12             4000           Wing
+13             4000           HT
+14             4000           VT
+15             4000           Fairing
+16             4000           Pylon
+17             4000           Engine
