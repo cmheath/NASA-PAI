@@ -44,7 +44,7 @@ set scriptDir [file dirname [info script]]
 # --
 # --------------------------------------------------------
 
-set fileName                 "LBFD-AxiSpike.pw";  # Aircraft geometry filename
+set fileName                 "LBFD.pw";  # Aircraft geometry filename
 set cLen                          32.0;  # Characteristic length (m)
 set ffSize                       100.0;  # Farfield size (cLen multiplier)
 set avgDs1                         1.0;  # Initial surface triangle average edge length
@@ -379,13 +379,6 @@ set fairingCenterNode1    [$centerFairingCon getXYZ -parameter 1.0]
 set wingLowerSymNode0     [$wingLowerSymCon getXYZ -parameter 0.0]
 set wingLowerSymNode1     [$wingLowerSymCon getXYZ -parameter 1.0]
 
-foreach con $inletIMLSymCons {
-    lappend engineIMLSymCons $con
-}
-foreach con $nozzleIMLSymCons {
-    lappend engineIMLSymCons $con
-}
-
 ## Find AIP and Nozzle Exit Plane Locations
 if { [lindex $aipNode0 0] > [lindex $aipNode1 0] } {
     set aipMax $aipNode0
@@ -662,26 +655,31 @@ foreach con $engineOMLSymCons {
     }
 }
 
-## Differentiate Between Inlet/Nozzle IML Connectors
-foreach con $engineIMLSymCons {
+## Redistribute Inlet IML Connectors
+foreach con $inletIMLSymCons {
 
     set Node0 [$con getXYZ -parameter 0.0]
     set Node1 [$con getXYZ -parameter 1.0]
 
-    if { [lindex $Node0 0] <= [lindex $aipMax 0] } {            ## Inlet Cons
-        if { [lindex $Node0 0] < [lindex $Node1 0] } {
-            RedistCons $inletGrowthRate [expr {int(log(12.5)/log($inletGrowthRate))}] [expr {int(log(5.0)/log($inletGrowthRate))}] $inletSpacing $EFSpacing $con
-        } else {
+    if { [lindex $Node0 0] < [lindex $Node1 0] } {
+        RedistCons $inletGrowthRate [expr {int(log(12.5)/log($inletGrowthRate))}] [expr {int(log(5.0)/log($inletGrowthRate))}] $inletSpacing $EFSpacing $con
+    } else {
             RedistCons $inletGrowthRate [expr {int(log(5.0)/log($inletGrowthRate))}] [expr {int(log(12.5)/log($inletGrowthRate))}] $EFSpacing $inletSpacing $con
-        }
-    } else {                                                   ## Nozzle Cons
-        if { [lindex $Node0 0] < [lindex $Node1 0] } {
-            RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $EFSpacing $nozzleSpacing $con
-        } else {
-            RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $nozzleSpacing $EFSpacing $con
-        }
     }
-}
+} 
+
+## Redistribute Nozzle IML Connectors
+foreach con $nozzleIMLSymCons {
+
+    set Node0 [$con getXYZ -parameter 0.0]
+    set Node1 [$con getXYZ -parameter 1.0]
+
+    if { [lindex $Node0 0] < [lindex $Node1 0] } {
+        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $EFSpacing $nozzleSpacing $con
+    } else {
+        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $nozzleSpacing $EFSpacing $con
+    }
+} 
 
 pw::Display update
 puts "Redistributed inlet/nozzle connectors."
