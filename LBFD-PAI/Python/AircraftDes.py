@@ -14,8 +14,8 @@ from Helper import copy_files
 # -------------------------- #
 # --- Specify Inlet Type
 # -------------------------- #     
-#Inlet = "STEX"
-Inlet = "AxiSpike"
+Inlet = "STEX"
+#Inlet = "AxiSpike"
 
 if Inlet == "STEX":
     from SUPIN_STEX import SUPIN
