@@ -1,0 +1,196 @@
+# --- AxiSpike Engine Assembly w/Super Ellipse X-Sections ---
+interface   xloc_eng      in  0
+interface   yloc_eng      in  0
+interface   zloc_eng      in  0 
+interface   zn_eng        in  0 
+interface   zs_eng        in  0
+interface   ns_eng        in  0
+interface   x_eng         in  0
+interface   y_eng         in  0
+interface   z_eng         in  0
+interface   zEF           in  0
+interface   x_cutoff      in  0
+interface   t_cutoff      in  0
+interface   xloc_nozl     in  0
+interface   yloc_nozl     in  0 
+interface   zloc_nozl     in  0 
+interface   a_nozl        in  0 
+interface   zn_nozl       in  0 
+interface   zs_nozl       in  0 
+interface   ns_nozl       in  0  
+interface   z_nozl        in  0 
+interface   x_plug        in  0
+interface   r_plug        in  0 
+interface   remakeInlet   in  0
+interface   remakeVtail   in  0
+interface   remakeSpinner in  0
+
+# --- Create Inlet ---
+patbeg foo 1-remakeInlet
+  import forward_inlet.egads
+  store  forward_inlet
+  import interior_inlet.egads
+  store  interior_inlet
+patend
+
+# --- Create Vtail ---
+patbeg foo 1-remakeVtail
+  import vtail.egads
+  store vtail
+patend
+
+# --- Create Engine Spinner ---
+patbeg foo 1-remakeSpinner
+  import spinner.egads
+  store spinner
+patend
+
+patbeg foo remakeInlet
+  udparg  $/inlet   xloc_eng   xloc_eng  
+  udparg  $/inlet   yloc_eng   yloc_eng  
+  udparg  $/inlet   zloc_eng   zloc_eng   
+  udparg  $/inlet   zn_eng     zn_eng   
+  udparg  $/inlet   zs_eng     zs_eng  
+  udparg  $/inlet   ns_eng     ns_eng  
+  udparg  $/inlet   x_eng      x_eng  
+  udparg  $/inlet   y_eng      y_eng  
+  udparg  $/inlet   z_eng      z_eng  
+  udparg  $/inlet   x_cutoff   x_cutoff  
+  udparg  $/inlet   t_cutoff   t_cutoff 
+  udparg  $/inlet   zEF        zEF
+  udprim  $/inlet
+patend
+
+import whole_inlet.egads
+
+set xEF @xmax
+store whole_inlet.egads
+
+# Extract edges from oblique plane and combine into sheet
+mark
+  mark  
+    restore   forward_inlet
+    extract   -12 
+    restore   forward_inlet
+    extract   -9 
+    restore   forward_inlet  
+    extract   -21
+    restore   forward_inlet
+    extract   -18   
+  combine
+  reorder 1
+
+  # --- Build Engine Nacelle OML
+  patbeg i xloc_eng.size
+    udparg supell ry (zn_eng[i]+zs_eng[i])/2.075  rx_e zs_eng[i]  rx_w zn_eng[i]
+    udprim supell n_e ns_eng[i]
+    rotatey    90   0   0
+    translate xEF+xloc_eng[i]  y_eng+yloc_eng  zloc_eng[i]
+  patend
+  attribute engOML 0
+
+  # --- Build Nozzle Nacelle OML
+  patbeg i xloc_nozl.size-1
+    udparg supell ry z_nozl[(i+1)]  rx_e zs_nozl[(i+1)]  rx_w zn_nozl[(i+1)]
+    udprim supell n_e ns_nozl[(i+1)]
+    rotatey   90   0   0
+    translate xEF+xloc_nozl[(i+1)]  y_eng+yloc_eng  zloc_nozl[(i+1)]
+  patend
+  attribute nozlOML 0
+blend
+
+store eng_assembly
+restore eng_assembly
+
+extract 6
+store nozl_exit
+
+# Build Nozzle Nacelle IML Based on Explicit Flow Areas at Nozzle Plenum, Throat and Exit
+mark
+  patbeg i a_nozl.size-1
+    set r sqrt((a_nozl[i]+pi(1)*r_plug[i]*r_plug[i])/pi(1))
+    udparg supell rx r  ry r
+    udprim supell
+    rotatey     90   0   0
+    rotatex    -90   0   0
+    translate   xEF+xloc_nozl[i] y_eng+yloc_nozl[i] zloc_nozl[i]
+  patend
+  restore nozl_exit
+  restore nozl_exit
+  translate 1 0 0
+loft 0
+dump interior_nozl.egads
+store interior_nozl
+
+restore eng_assembly
+udprim box dx 50 dy 50 dz 0
+translate x_eng y_eng 0
+subtract
+
+
+
+
+
+translate 0 0 z_eng
+
+store eng_assembly
+
+restore vtail
+restore eng_assembly
+
+subtract zmin 1
+store lower_vtail
+
+restore vtail
+restore eng_assembly
+subtract zmax 1
+store upper_vtail
+
+restore eng_assembly
+
+restore upper_vtail
+union
+
+restore lower_vtail
+union
+
+
+
+
+
+
+restore interior_inlet
+translate 0 0 z_eng
+subtract
+
+restore forward_inlet
+translate 0 0 z_eng
+join 0.01
+
+
+
+
+
+restore spinner
+translate xEF y_eng z_eng
+union
+
+restore interior_nozl
+translate 0 0 z_eng
+subtract
+
+mark
+  patbeg i x_plug.size-1
+    udparg supell  rx  r_plug[i]  ry  r_plug[i]
+    udprim supell
+    rotatey 90 0 0
+    translate  xEF+x_plug[i]  y_eng  z_eng
+  patend
+
+  skbeg xEF+x_plug[x_plug.size] y_eng  z_eng
+  skend
+rule
+union
+dump engine.egads
+
+end
