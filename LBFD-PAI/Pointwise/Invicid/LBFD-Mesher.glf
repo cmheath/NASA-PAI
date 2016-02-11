@@ -253,7 +253,7 @@ foreach qlt $dbQuilts {
 set wingLowerCons [ConsFromDom $modelDoms(wing-lower)]
 set wingUpperCons [ConsFromDom $modelDoms(wing-upper)]
 set wingTipCons   [ConsFromDom $modelDoms(wing-tip)]
-set wingLETECons     [intersect $wingLowerCons $wingUpperCons]
+set wingLETECons  [intersect $wingLowerCons $wingUpperCons]
 
 set horizTailLowerCons [ConsFromDom $modelDoms(htail-lower)]
 set horizTailUpperCons [ConsFromDom $modelDoms(htail-upper)]
@@ -457,7 +457,6 @@ if { [lindex $Min1 0] < [lindex $Min2 0] } {
     set horizTailTECon [lindex $horizTailLETECons 0]
 }
 
-
 ## Separate Wing Leading and Trailing Edge Connectors
 set Node0 [[lindex $wingLETECons 0] getXYZ -parameter 0.0]
 set Node1 [[lindex $wingLETECons 0] getXYZ -parameter 1.0]
@@ -484,7 +483,6 @@ if { [lindex $Min1 0] < [lindex $Min2 0] } {
     set wingLECon [lindex $wingLETECons 1]
     set wingTECon [lindex $wingLETECons 0]
 }
-
 
 ## Separate Pylon Leading and Trailing Edge Connectors
 set Node0 [[lindex $pylonLETECons 0] getXYZ -parameter 0.0]
@@ -551,7 +549,6 @@ puts "Finished isolating connectors."
 
 # Update Display Window to More Clearly Render the Surface Mesh
 pw::Display setShowDatabase 0
-
 
 set allDomsCollection [pw::Collection create]
     $allDomsCollection set [pw::Grid getAll -type pw::Domain]
@@ -620,6 +617,8 @@ foreach con $plumeShearSymCons {
         RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $EFSpacing $con
     }
 }
+
+pw::Entity delete [list $modelDoms(plume-exit)]
 
 foreach con $plumeExitCons {
 
@@ -937,6 +936,7 @@ pw::Display update
 
 ## Modify Connector Distributions at Wing/hTail Leading & Trailing Edges
 set spanCons [list $wingLECon               \
+                   $wingTECon               \
                    $horizTailLECon          \
                    $horizTailTECon]
 
@@ -1086,15 +1086,20 @@ foreach dom $allDoms {
 }
 
 # Assemble Block From All Model Domains
-set blks [pw::BlockUnstructured createFromDomains $doms]
+set blk [pw::BlockUnstructured createFromDomains $doms]
 
-set plume_blk [pw::GridEntity getByName "blk-1"]
-set isoMode [pw::Application begin UnstructuredSolver [list $plume_blk]]
-$isoMode run Initialize
+set blk_1 [pw::GridEntity getByName "blk-1"]
+
+set isoMode [pw::Application begin Modify -notopology [list $blk_1]]
+  set PW_2 [subst {$blk_1}]
+  set face_1 [$PW_2 getFace 1]
+  set face_2 [pw::FaceUnstructured create]
+  $face_2 addDomain $modelDoms(plume-nearfield)
+  $face_2 setBaffle true
+  $PW_2 addFace $face_2
 $isoMode end
 
-set aircraft_blk [pw::GridEntity getByName "blk-2"]
-set isoMode [pw::Application begin UnstructuredSolver [list $aircraft_blk]]
+set isoMode [pw::Application begin UnstructuredSolver [list $blk_1]]
 $isoMode run Initialize
 $isoMode end
 
@@ -1119,91 +1124,84 @@ set fairDoms [list $modelDoms(fairing-upper)            \
                    
 set pylonDoms [list $modelDoms(pylon)]   
 
+set spinnerDoms [list $modelDoms(spinner-upper) \
+                    $modelDoms(spinner-lower)]
+
+set plugDoms [list $modelDoms(plug-upper) \
+                   $modelDoms(plug-lower)]
 
 # Define boundary conditions
 set fuseBC [pw::BoundaryCondition create]
     $fuseBC setName "bc-01"
-    foreach dom $fuseDoms {$fuseBC apply [list $aircraft_blk $dom]}
+    foreach dom $fuseDoms {$fuseBC apply [list $blk_1 $dom]}
 
 set freestreamBC [pw::BoundaryCondition create]
     $freestreamBC setName "bc-02"
-    $freestreamBC apply [list $aircraft_blk $modelDoms(freestream)]
+    $freestreamBC apply [list $blk_1 $modelDoms(freestream)]
 
 set nearfieldBC [pw::BoundaryCondition create]
     $nearfieldBC setName "bc-03"
-    $nearfieldBC apply [list $aircraft_blk $modelDoms(nearfield)]
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield)]
 
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-04"
-    $symmetryBC apply [list $aircraft_blk $modelDoms(symmetry)]
+    $symmetryBC apply [list $blk_1 $modelDoms(symmetry)]
 
 set outflowBC [pw::BoundaryCondition create]
     $outflowBC setName "bc-05"
-    $outflowBC apply [list $aircraft_blk $modelDoms(outflow)]
+    $outflowBC apply [list $blk_1 $modelDoms(outflow)]
 
 set aipBC [pw::BoundaryCondition create]
     $aipBC setName "bc-06"
-    $aipBC apply [list $aircraft_blk $modelDoms(aip)]
+    $aipBC apply [list $blk_1 $modelDoms(aip)]
 
 set nozzleBC [pw::BoundaryCondition create]
     $nozzleBC setName "bc-07"
-    $nozzleBC apply [list $plume_blk $modelDoms(nozzle-exit)]
+    $nozzleBC apply [list $blk_1 $modelDoms(nozzle-exit)]
 
 set inletBC [pw::BoundaryCondition create]
     $inletBC setName "bc-08"
-    $inletBC apply [list $aircraft_blk $modelDoms(inlet-IML)]
+    $inletBC apply [list $blk_1 $modelDoms(inlet-IML)]
 
 set nozzleBC [pw::BoundaryCondition create]
     $nozzleBC setName "bc-09"
-    $nozzleBC apply [list $plume_blk $modelDoms(nozzle-IML)]
+    $nozzleBC apply [list $blk_1 $modelDoms(nozzle-IML)]
 
-set spinnerDoms [list $modelDoms(spinner-upper) $modelDoms(spinner-lower)]
 set spinnerBC [pw::BoundaryCondition create]
     $spinnerBC setName "bc-10"
-    foreach dom $spinnerDoms {$spinnerBC apply [list $aircraft_blk $dom]}
+    foreach dom $spinnerDoms {$spinnerBC apply [list $blk_1 $dom]}
 
-set plugDoms [list $modelDoms(plug-upper) $modelDoms(plug-lower)]
 set plugBC [pw::BoundaryCondition create]
     $plugBC setName "bc-11"
-    foreach dom $plugDoms {$plugBC apply [list $plume_blk $dom]}
+    foreach dom $plugDoms {$plugBC apply [list $blk_1 $dom]}
 
 set wingBC [pw::BoundaryCondition create]
     $wingBC setName "bc-12"
-    foreach dom $wingDoms {$wingBC apply [list $aircraft_blk $dom]} 
+    foreach dom $wingDoms {$wingBC apply [list $blk_1 $dom]} 
     
 set htBC [pw::BoundaryCondition create]
     $htBC setName "bc-13"
-    foreach dom $htDoms {$htBC apply [list $aircraft_blk $dom]}     
+    foreach dom $htDoms {$htBC apply [list $blk_1 $dom]}     
 
 set vtBC [pw::BoundaryCondition create]
     $vtBC setName "bc-14"
-    foreach dom $vtDoms {$vtBC apply [list $aircraft_blk $dom]} 
+    foreach dom $vtDoms {$vtBC apply [list $blk_1 $dom]} 
     
 set fairBC [pw::BoundaryCondition create]
     $fairBC setName "bc-15"
-    foreach dom $fairDoms {$fairBC apply [list $aircraft_blk $dom]} 
+    foreach dom $fairDoms {$fairBC apply [list $blk_1 $dom]} 
     
 set pyBC [pw::BoundaryCondition create]
     $pyBC setName "bc-16"
-    foreach dom $pylonDoms {$pyBC apply [list $aircraft_blk $dom]}
+    foreach dom $pylonDoms {$pyBC apply [list $blk_1 $dom]}
     
 set engineBC [pw::BoundaryCondition create]
     $engineBC setName "bc-17"
-    $engineBC apply [list $aircraft_blk $modelDoms(engine-OML)]
+    $engineBC apply [list $blk_1 $modelDoms(engine-OML)]
 
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-18"
-    $symmetryBC apply [list $plume_blk $modelDoms(plume-symmetry)]
-
-set plumeNFBC [pw::BoundaryCondition create]
-    $plumeNFBC setName "bc-19"
-    $plumeNFBC apply [list $plume_blk $modelDoms(plume-nearfield)]
-    $plumeNFBC apply [list $aircraft_blk $modelDoms(plume-nearfield)]
-
-set plumeExitBC [pw::BoundaryCondition create]
-    $plumeExitBC setName "bc-20"
-    $plumeExitBC apply [list $plume_blk $modelDoms(plume-exit)]
-    $plumeExitBC apply [list $aircraft_blk $modelDoms(plume-exit)]
+    $symmetryBC apply [list $blk_1 $modelDoms(plume-symmetry)]
 
 timestamp
 puts "Run Time: [convSeconds [pwu::Time elapsed $tBegin]]"
@@ -1218,8 +1216,8 @@ puts ""
 
 pw::Application save [file join $scriptDir $fileExport]
 
-set ioMode [pw::Application begin CaeExport [pw::Entity sort [list $aircraft_blk $plume_blk]]]
-  $ioMode initialize -type CAE [file join $scriptDir "../AFLR3/LBFD_PW"]
+set ioMode [pw::Application begin CaeExport [pw::Entity sort [list $blk_1]]]
+  $ioMode initialize -type CAE [file join $scriptDir "../../AFLR3/Inviscid/LBFD_PW"]
 
   if {![$ioMode verify]} {
     error "Data verification failed."
