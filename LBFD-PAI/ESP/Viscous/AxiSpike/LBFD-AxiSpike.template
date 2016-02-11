@@ -74,18 +74,18 @@ dimension zn_eng      4   1   1
 dimension zs_eng      4   1   1
 dimension ns_eng      4   1   1
 
-despmtr   xloc_eng   " -2.0;    2.0;   5.0;   6.25"
-despmtr   yloc_eng   "  0.0;    0.0;   0.0;    0.0"
-despmtr   zloc_eng   "  0.0;    0.0;   0.0;    0.0" 
-despmtr   zn_eng     " 1.05; 1.3475;  1.40;  1.385" 
-despmtr   zs_eng     " 1.35;  1.325; 1.415;    1.4"
-despmtr   ns_eng     "  2.0;    2.5;   2.5;    2.5"
-despmtr   x_eng     -2.225
+despmtr   xloc_eng   "  -2.0;   2.0;   5.0;   6.25"
+despmtr   yloc_eng   "   0.0;   0.0;   0.0;    0.0"
+despmtr   zloc_eng   "   0.0;   0.0;   0.0;    0.0" 
+despmtr   zn_eng     " 1.265; 1.365;  1.40;  1.385" 
+despmtr   zs_eng     " 1.265; 1.365;  1.40;  1.385"
+despmtr   ns_eng     "  2.25;   2.5;   2.5;    2.5"
+despmtr   x_eng      0.225
 despmtr   y_eng      0.00
 despmtr   z_eng     -0.262161
 
-despmtr   x_cutoff   3.75
-despmtr   t_cutoff   -2.0
+despmtr   x_cutoff    0.75
+despmtr   t_cutoff    0.0
 
 # --- Nozzle Cowl ---
 dimension xloc_nozl    4   1   1
@@ -95,19 +95,16 @@ dimension a_nozl       4   1   1
 dimension zn_nozl      4   1   1
 dimension zs_nozl      4   1   1
 dimension ns_nozl      4   1   1
-#dimension z_nozl       4   1   1
+dimension z_nozl       4   1   1
 
-despmtr   xloc_nozl   "   6.5;    8.0;    9.5;      11.5"
-despmtr   yloc_nozl   "   0.0;    0.0;    0.0;       0.0"
-despmtr   zloc_nozl   "   0.0;    0.0;    0.0;       0.0"
-#despmtr   a_nozl      " 4.198;  4.198;  1.623;     3.917"
-
-despmtr   a_nozl      " 4.197763889;  4.197763889;  1.756131944;     4.442340278"
-
-despmtr   zn_nozl     " 1.385;  1.350;    1.3;  1.173987"
-despmtr   zs_nozl     "   1.4;  1.350;    1.3;  1.173987"
-despmtr   ns_nozl     "   2.5;   2.25;    2.0;       2.0"
-#despmtr   z_nozl      " 1.375;  1.350;    1.3;  1.173987"
+despmtr   xloc_nozl   "   6.5;    8.0;   9.5;      11.5"
+despmtr   yloc_nozl   "   0.0;    0.0;   0.0;       0.0"
+despmtr   zloc_nozl   "   0.0;    0.0;   0.0;       0.0"
+despmtr   a_nozl      " 4.198;  4.198; 1.623;     3.917"
+despmtr   zn_nozl     " 1.345;  1.350;   1.3;  1.173987"
+despmtr   zs_nozl     " 1.345;  1.350;   1.3;  1.173987"
+despmtr   ns_nozl     "   2.5;   2.25;   2.0;       2.0"
+despmtr   z_nozl      " 1.375;  1.350;   1.3;  1.173987"
 
 # --- Nozzle Plug ---
 dimension x_plug      6   1    1
@@ -200,14 +197,14 @@ dimension xloc_vtail  4  1  1
 dimension yloc_vtail  4  1  1
 dimension zloc_vtail  4  1  1
 
-despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;    0.035"
-despmtr   chord_vtail " 15.5000;  14.5000;    11.5;     5.0"
-despmtr   xloc_vtail  " -0.5000;   1.0000;    4.50;   13.42"
+despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;   0.035"
+despmtr   chord_vtail "  14.000;   13.500;    11.5;     5.0"
+despmtr   xloc_vtail  "  1.0000;   2.0000;    4.50;   13.42"
 despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
 despmtr   y_vtail        0.0000
-despmtr   z_vtail        7.1
+despmtr   z_vtail        7.08
 
 # ------------------------
 # --- Build Components ---
@@ -245,12 +242,36 @@ patbeg foo remakeVtail
       udparg naca456 cl      0.0
       udparg naca456 a       0.0
       udprim naca456
+      box -1 -1 -1 1.95 2 2
+      intersect
       scale  chord_vtail[i] 
       translate xloc_vtail[i] yloc_vtail[i] zloc_vtail[i]
     patend
   rule 1
   dump vtail.egads
   store vtail
+patend
+
+# --- Create Engine Spinner ---
+patbeg foo remakeSpinner
+
+    import SUPIN.egads 1
+    rotatex -90 0 0
+    translate -@xmax 0 zEF
+    rotatex -90 0 0
+    store spinner
+  mark
+    restore spinner
+    extract   -14
+    restore spinner
+    extract   -12
+  combine
+
+  extrude Lspin 0 0
+  restore spinner
+  union
+  dump spinner.egads
+  store spinner
 patend
 
 # --- Create Fuselage ---
@@ -296,28 +317,6 @@ patbeg foo remakeWing
   udparg $$/wing   LA2         LA2   
   udprim $$/wing
   store wing
-patend
-
-# --- Create Engine Spinner ---
-patbeg foo remakeSpinner
-
-    import SUPIN.egads 2
-    rotatex -90 0 0
-    translate -@xmax 0 zEF
-    rotatex -90 0 0    
-    store spinner
-  mark
-    restore spinner
-    extract   -6
-    restore spinner
-    extract   -3
-  combine
-
-  extrude Lspin 0 0
-  restore spinner
-  union
-  dump spinner.egads
-  store spinner
 patend
 
 # --- Create Right Horizontal Tail ---
@@ -391,7 +390,8 @@ patbeg foo remakeEngine
   udparg  $$/engine   a_nozl        a_nozl 
   udparg  $$/engine   zn_nozl       zn_nozl 
   udparg  $$/engine   zs_nozl       zs_nozl 
-  udparg  $$/engine   ns_nozl       ns_nozl    
+  udparg  $$/engine   ns_nozl       ns_nozl  
+  udparg  $$/engine   z_nozl        z_nozl  
   udparg  $$/engine   x_plug        x_plug
   udparg  $$/engine   r_plug        r_plug 
   udparg  $$/engine   remakeInlet   remakeInlet
@@ -427,8 +427,6 @@ patend
 patbeg foo 1-remakeEngine
   import engine.egads
   store engine
-  import plume.egads
-  store plume  
 patend
 
 patbeg foo 1-remakeFuselage
@@ -512,23 +510,8 @@ patbeg foo unionAll
   scale scale_factor 
 patend
 
-# Write out final aircraft
-dump ../../Geometry/LBFD_STEX_Inviscid.egads
-dump ../../Geometry/LBFD_STEX_Inviscid.step
-dump ../../Geometry/LBFD_STEX_Inviscid.iges
-
-restore nearfield
-restore plume
-translate  x_vtail   y_vtail    z_vtail
-intersect
-
-patbeg foo unionAll
-  scale scale_factor 
-patend
-
-# Write out jet plume
-dump ../Geometry/Plume.egads
-dump ../Geometry/Plume.step
-dump ../Geometry/Plume.iges
-
+# Dump final aircraft
+dump ../../Geometry/LBFD_AxiSpike_Viscous.egads
+dump ../../Geometry/LBFD_AxiSpike_Viscous.step
+dump ../../Geometry/LBFD_AxiSpike_Viscous.iges
 end

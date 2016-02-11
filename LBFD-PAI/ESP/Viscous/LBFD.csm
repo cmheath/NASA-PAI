@@ -25,7 +25,7 @@ set scale_factor 0.3048
 dimension GridParams 1 3 0
 set       GridParams "1.0; 0.25; 15.0;"
 
-set zEF   $yEF  # Initial vertical position of engine face
+set zEF   0.685  # Initial vertical position of engine face
 set Lspin 3.5   # Spinner length
 
 # -------------------------------
@@ -158,6 +158,7 @@ despmtr   zloc_wing   "  0.0344;  0.1780;  0.7740;  0.9850;  1.2640"
 despmtr   angle_wing     0.0669
 despmtr   x_wing        33.7928
 despmtr   y_wing         0.0000
+#despmtr   z_wing         2.6520
 despmtr   z_wing         2.4798
 
 despmtr   C1    "0.5; 1.0;"
@@ -207,7 +208,7 @@ despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
 despmtr   y_vtail        0.0000
-despmtr   z_vtail        7.1
+despmtr   z_vtail        7.08
 
 # ------------------------
 # --- Build Components ---
@@ -239,12 +240,14 @@ patbeg foo remakeVtail
   mark
     patbeg i toc_vtail.size
       # NACA 65A
-      udparg naca456 thkcode $$65A
+      udparg naca456 thkcode $65A
       udparg naca456 toc     toc_vtail[i]
-      udparg naca456 camcode $$6M
+      udparg naca456 camcode $6M
       udparg naca456 cl      0.0
       udparg naca456 a       0.0
       udprim naca456
+      box -1 -1 -1 1.95 2 2
+      intersect
       scale  chord_vtail[i] 
       translate xloc_vtail[i] yloc_vtail[i] zloc_vtail[i]
     patend
@@ -255,46 +258,46 @@ patend
 
 # --- Create Fuselage ---
 patbeg foo remakeFuselage
-  udparg $$/fuselage  x_fuse     x_fuse
-  udparg $$/fuselage  z_fuse     z_fuse
-  udparg $$/fuselage  w_fuse     w_fuse
-  udparg $$/fuselage  hn_fuse    hn_fuse
-  udparg $$/fuselage  hs_fuse    hs_fuse
-  udparg $$/fuselage  nn_fuse    nn_fuse
-  udparg $$/fuselage  ns_fuse    ns_fuse
-  udparg $$/fuselage  fwdl_fuse  fwdl_fuse
-  udparg $$/fuselage  fwdc_fuse  fwdc_fuse
-  udparg $$/fuselage  aftl_fuse  aftl_fuse
-  udparg $$/fuselage  aftc_fuse  aftc_fuse
-  udprim $$/fuselage
+  udparg $/fuselage  x_fuse     x_fuse
+  udparg $/fuselage  z_fuse     z_fuse
+  udparg $/fuselage  w_fuse     w_fuse
+  udparg $/fuselage  hn_fuse    hn_fuse
+  udparg $/fuselage  hs_fuse    hs_fuse
+  udparg $/fuselage  nn_fuse    nn_fuse
+  udparg $/fuselage  ns_fuse    ns_fuse
+  udparg $/fuselage  fwdl_fuse  fwdl_fuse
+  udparg $/fuselage  fwdc_fuse  fwdc_fuse
+  udparg $/fuselage  aftl_fuse  aftl_fuse
+  udparg $/fuselage  aftc_fuse  aftc_fuse
+  udprim $/fuselage
   store fuselage
 patend
 
 # --- Create Right Wing ---
 patbeg foo remakeWing
-  udparg $$/wing   toc_wing    toc_wing
-  udparg $$/wing   chord_wing  chord_wing 
-  udparg $$/wing   twist_wing  twist_wing  
-  udparg $$/wing   cmax_wing   cmax_wing
-  udparg $$/wing   xmaxc_wing  xmaxc_wing
-  udparg $$/wing   xloc_wing   xloc_wing 
-  udparg $$/wing   yloc_wing   yloc_wing 
-  udparg $$/wing   zloc_wing   zloc_wing 
-  udparg $$/wing   angle_wing  angle_wing
-  udparg $$/wing   x_wing      x_wing  
-  udparg $$/wing   y_wing      y_wing  
-  udparg $$/wing   z_wing      z_wing 
+  udparg $/wing   toc_wing    toc_wing
+  udparg $/wing   chord_wing  chord_wing 
+  udparg $/wing   twist_wing  twist_wing  
+  udparg $/wing   cmax_wing   cmax_wing
+  udparg $/wing   xmaxc_wing  xmaxc_wing
+  udparg $/wing   xloc_wing   xloc_wing 
+  udparg $/wing   yloc_wing   yloc_wing 
+  udparg $/wing   zloc_wing   zloc_wing 
+  udparg $/wing   angle_wing  angle_wing
+  udparg $/wing   x_wing      x_wing  
+  udparg $/wing   y_wing      y_wing  
+  udparg $/wing   z_wing      z_wing 
 
-  udparg $$/wing   C1          C1   
-  udparg $$/wing   TE1         TE1    
-  udparg $$/wing   UA1         UA1 
-  udparg $$/wing   LA1         LA1 
+  udparg $/wing   C1          C1   
+  udparg $/wing   TE1         TE1    
+  udparg $/wing   UA1         UA1 
+  udparg $/wing   LA1         LA1 
 
-  udparg $$/wing   C2          C2
-  udparg $$/wing   TE2         TE2 
-  udparg $$/wing   UA2         UA2  
-  udparg $$/wing   LA2         LA2   
-  udprim $$/wing
+  udparg $/wing   C2          C2
+  udparg $/wing   TE2         TE2 
+  udparg $/wing   UA2         UA2  
+  udparg $/wing   LA2         LA2   
+  udprim $/wing
   store wing
 patend
 
@@ -324,9 +327,9 @@ patend
 patbeg foo remakeHtail
   mark
     patbeg i toc_htail.size
-      udparg naca456 thkcode $$65A
+      udparg naca456 thkcode $65A
       udparg naca456 toc     toc_htail[i]
-      udparg naca456 camcode $$6M
+      udparg naca456 camcode $6M
       udparg naca456 cmax  cmax_htail[i]
       udparg naca456 xmaxc xmaxc_htail[i]
       udprim naca456
@@ -373,31 +376,31 @@ patend
 
 # --- Create Inlet/Engine/Nozzle ---
 patbeg foo remakeEngine
-  udparg  $$/engine   xloc_eng      xloc_eng  
-  udparg  $$/engine   yloc_eng      yloc_eng  
-  udparg  $$/engine   zloc_eng      zloc_eng   
-  udparg  $$/engine   zn_eng        zn_eng   
-  udparg  $$/engine   zs_eng        zs_eng  
-  udparg  $$/engine   ns_eng        ns_eng  
-  udparg  $$/engine   x_eng         x_eng  
-  udparg  $$/engine   y_eng         y_eng  
-  udparg  $$/engine   z_eng         z_eng  
-  udparg  $$/engine   x_cutoff      x_cutoff  
-  udparg  $$/engine   t_cutoff      t_cutoff 
-  udparg  $$/engine   zEF           zEF
-  udparg  $$/engine   xloc_nozl     xloc_nozl
-  udparg  $$/engine   yloc_nozl     yloc_nozl 
-  udparg  $$/engine   zloc_nozl     zloc_nozl 
-  udparg  $$/engine   a_nozl        a_nozl 
-  udparg  $$/engine   zn_nozl       zn_nozl 
-  udparg  $$/engine   zs_nozl       zs_nozl 
-  udparg  $$/engine   ns_nozl       ns_nozl    
-  udparg  $$/engine   x_plug        x_plug
-  udparg  $$/engine   r_plug        r_plug 
-  udparg  $$/engine   remakeInlet   remakeInlet
-  udparg  $$/engine   remakeVtail   remakeVtail
-  udparg  $$/engine   remakeSpinner remakeSpinner
-  udprim  $$/engine
+  udparg  $/engine   xloc_eng      xloc_eng  
+  udparg  $/engine   yloc_eng      yloc_eng  
+  udparg  $/engine   zloc_eng      zloc_eng   
+  udparg  $/engine   zn_eng        zn_eng   
+  udparg  $/engine   zs_eng        zs_eng  
+  udparg  $/engine   ns_eng        ns_eng  
+  udparg  $/engine   x_eng         x_eng  
+  udparg  $/engine   y_eng         y_eng  
+  udparg  $/engine   z_eng         z_eng  
+  udparg  $/engine   x_cutoff      x_cutoff  
+  udparg  $/engine   t_cutoff      t_cutoff 
+  udparg  $/engine   zEF           zEF
+  udparg  $/engine   xloc_nozl     xloc_nozl
+  udparg  $/engine   yloc_nozl     yloc_nozl 
+  udparg  $/engine   zloc_nozl     zloc_nozl 
+  udparg  $/engine   a_nozl        a_nozl 
+  udparg  $/engine   zn_nozl       zn_nozl 
+  udparg  $/engine   zs_nozl       zs_nozl 
+  udparg  $/engine   ns_nozl       ns_nozl    
+  udparg  $/engine   x_plug        x_plug
+  udparg  $/engine   r_plug        r_plug 
+  udparg  $/engine   remakeInlet   remakeInlet
+  udparg  $/engine   remakeVtail   remakeVtail
+  udparg  $/engine   remakeSpinner remakeSpinner
+  udprim  $/engine
   store engine
 patend 
 
@@ -513,9 +516,9 @@ patbeg foo unionAll
 patend
 
 # Write out final aircraft
-dump ../../Geometry/LBFD_STEX_Inviscid.egads
-dump ../../Geometry/LBFD_STEX_Inviscid.step
-dump ../../Geometry/LBFD_STEX_Inviscid.iges
+dump ../Geometry/LBFD_STEX.egads
+dump ../Geometry/LBFD_STEX.step
+dump ../Geometry/LBFD_STEX.iges
 
 restore nearfield
 restore plume

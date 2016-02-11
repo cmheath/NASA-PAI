@@ -158,6 +158,7 @@ despmtr   zloc_wing   "  0.0344;  0.1780;  0.7740;  0.9850;  1.2640"
 despmtr   angle_wing     0.0669
 despmtr   x_wing        33.7928
 despmtr   y_wing         0.0000
+#despmtr   z_wing         2.6520
 despmtr   z_wing         2.4798
 
 despmtr   C1    "0.5; 1.0;"
@@ -207,7 +208,7 @@ despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
 despmtr   y_vtail        0.0000
-despmtr   z_vtail        7.1
+despmtr   z_vtail        7.08
 
 # ------------------------
 # --- Build Components ---
@@ -245,6 +246,8 @@ patbeg foo remakeVtail
       udparg naca456 cl      0.0
       udparg naca456 a       0.0
       udprim naca456
+      box -1 -1 -1 1.95 2 2
+      intersect
       scale  chord_vtail[i] 
       translate xloc_vtail[i] yloc_vtail[i] zloc_vtail[i]
     patend
@@ -513,9 +516,9 @@ patbeg foo unionAll
 patend
 
 # Write out final aircraft
-dump ../../Geometry/LBFD_STEX_Inviscid.egads
-dump ../../Geometry/LBFD_STEX_Inviscid.step
-dump ../../Geometry/LBFD_STEX_Inviscid.iges
+dump ../Geometry/LBFD_STEX.egads
+dump ../Geometry/LBFD_STEX.step
+dump ../Geometry/LBFD_STEX.iges
 
 restore nearfield
 restore plume
