@@ -9,16 +9,15 @@ alpha = 3.275 * np.pi/180.0
 
 N_to_lbf = 0.224809
 
-area  = 1.0
 symmetry  = 2.0
-convert_area  = 1.0
+reference_area  = 37.1612
 
 azm = np.sqrt(gamma*R*tzm)
 rhozm = 0.1729                         # freestream density [kg/m^3]
 pzm   = 10749.4980                     # freestream pressure [Pa]
 
 mach_factor   = 0.5 * xmach * xmach
-area          = symmetry * convert_area
+area          = symmetry * reference_area
 convert_flux  = area * rhozm * azm * azm
 convert_pres  = area * pzm * gamma
 
@@ -48,8 +47,8 @@ with open('LBFD.forces') as f:
         Cl = float(line.split()[2])
         Cd = float(line.split()[5])        
 
-        L = 0.5 * rhozm * (xmach*azm)**2 * Cl * symmetry * N_to_lbf
-        D = 0.5 * rhozm * (xmach*azm)**2 * Cd * symmetry * N_to_lbf
+        L = 0.5 * rhozm * (xmach*azm)**2 * Cl * area * N_to_lbf
+        D = 0.5 * rhozm * (xmach*azm)**2 * Cd * area * N_to_lbf
 
         L_net += L
         D_net += D
@@ -106,8 +105,8 @@ with open('LBFD.forces') as f:
         Cl = float(line.split()[2])
         Cd = float(line.split()[5])        
 
-        L = 0.5 * rhozm * (xmach*azm)**2 * Cl * symmetry * N_to_lbf
-        D = 0.5 * rhozm * (xmach*azm)**2 * Cd * symmetry * N_to_lbf
+        L = 0.5 * rhozm * (xmach*azm)**2 * Cl * area * N_to_lbf
+        D = 0.5 * rhozm * (xmach*azm)**2 * Cd * area * N_to_lbf
 
         L_net += L
         D_net += D
