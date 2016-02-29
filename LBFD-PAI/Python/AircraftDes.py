@@ -17,6 +17,11 @@ from Helper import copy_files
 Inlet = "STEX"
 #Inlet = "AxiSpike"
 
+# -------------------------- #
+# --- Specify Euler/RANS
+# -------------------------- #
+Grid = "Euler"
+
 if Inlet == "STEX":
     from SUPIN_STEX import SUPIN
 elif Inlet == "AxiSpike":
@@ -89,13 +94,28 @@ class Design(Assembly):
         self.connect('supin.Outputs.Rspin', ['opencsm.Rspin'])
 
         if Inlet == "STEX":
-            self.opencsm._filein = '../ESP/LBFD-STEX.template'
+            if Grid == "Euler":
+                self.opencsm._filein = '../ESP/LBFD-STEX.template'
+                copy_files('../ESP/Inviscid/*', '../ESP/')                
+                copy_files('../ESP/Inviscid/STEX/*', '../ESP/')
+            else:
+                self.opencsm._filein = '../ESP/LBFD-STEX.template'
+                copy_files('../ESP/Viscous/*', '../ESP/') 
+                copy_files('../ESP/Viscous/STEX/*', '../ESP/')      
+
             self.pointwise._filein = '../Pointwise/Load-STEX.glf'            
-            copy_files('../ESP/STEX/*', '../ESP/')
+
         elif Inlet == "AxiSpike":
-            self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
+            if Grid == "Euler":            
+                self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
+                copy_files('../ESP/Inviscid/*', '../ESP/Inviscid/')                
+                copy_files('../ESP/Inviscid/AxiSpike/*', '../ESP/')
+            else:            
+                self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
+                copy_files('../ESP/Viscous/*', '../ESP/')                
+                copy_files('../ESP/Viscous/AxiSpike/*', '../ESP/')                
+            
             self.pointwise._filein = '../Pointwise/Load-AxiSpike.glf'            
-            copy_files('../ESP/AxiSpike/*', '../ESP/')
 
 if __name__ == '__main__':
 
