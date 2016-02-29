@@ -9,7 +9,8 @@ def remove_files(filepath):
 
 def copy_files(src_glob, dst_folder):
     for fname in iglob(src_glob):
-        shutil.copy2(fname, dst_folder)
+    	if not os.path.isdir(fname):
+        	shutil.copy2(fname, dst_folder)
 
 def _2str(var):
     ''' Converts OpenMDAO integer variable to string '''
