@@ -113,7 +113,7 @@ set i xloc_nozl.size-1
 mark
   restore nozl_exit
   restore nozl_exit
-  translate 10 0 0
+  translate 25 0 0
 rule
 restore eng_assembly
 join 0.01
