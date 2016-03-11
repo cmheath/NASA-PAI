@@ -20,7 +20,7 @@ Inlet = "STEX"
 # -------------------------- #
 # --- Specify Euler/RANS
 # -------------------------- #
-Grid = "Euler"
+Grid = "RANS"
 
 if Inlet == "STEX":
     from SUPIN_STEX import SUPIN

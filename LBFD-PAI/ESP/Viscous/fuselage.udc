@@ -44,17 +44,14 @@ mark
   rotatex 90 0 0      
   translate  x 0 z
 
-#blend
 rule
-
-
 
 mark
   set i 2
   set x x_fuse[i]
   set z z_fuse[i]
 
-  patbeg i x_fuse.size-2
+  patbeg i x_fuse.size-3
     set x x_fuse[(i+1)]
     set z z_fuse[(i+1)]
 
@@ -74,13 +71,12 @@ blend
 join
 
 udprim box dx 0 dy 10 dz 10
-translate x_fuse[8] 0 z_fuse[2]
+translate x_fuse[10] 0 z_fuse[2]
 subtract
 
 
-
 mark
-  set i x_fuse.size-1
+  set i x_fuse.size-2
   set x x_fuse[i]
   set z z_fuse[i]
     
@@ -109,7 +105,7 @@ mark
   skbeg x 0 z
   skend
 
-rule
+blend
 join
 attribute fuselageOML 0
 attribute .qParams $$off
