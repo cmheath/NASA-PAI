@@ -82,7 +82,7 @@ mark
 
   # --- Build Engine Nacelle OML
   patbeg i xloc_eng.size
-    udparg supell ry (zn_eng[i]+zs_eng[i])/2.075  rx_e zs_eng[i]  rx_w zn_eng[i]
+    udparg supell ry (zn_eng[i]+zs_eng[i])/2.0  rx_e zs_eng[i]  rx_w zn_eng[i]
     udprim supell n_e ns_eng[i]
     rotatey    90   0   0
     translate xEF+xloc_eng[i]  y_eng+yloc_eng  zloc_eng[i]
@@ -91,11 +91,12 @@ mark
 
   # --- Build Nozzle Nacelle OML
   patbeg i xloc_nozl.size-1
-    udparg supell ry z_nozl[(i+1)]  rx_e zs_nozl[(i+1)]  rx_w zn_nozl[(i+1)]
+    udparg supell ry (zn_nozl[(i+1)]+zs_nozl[(i+1)])/2.0  rx_e zs_nozl[(i+1)]  rx_w zn_nozl[(i+1)]
     udprim supell n_e ns_nozl[(i+1)]
     rotatey   90   0   0
     translate xEF+xloc_nozl[(i+1)]  y_eng+yloc_eng  zloc_nozl[(i+1)]
   patend
+
   attribute nozlOML 0
 blend
 
@@ -104,6 +105,19 @@ restore eng_assembly
 
 extract 6
 store nozl_exit
+
+# --- New
+set i xloc_nozl.size-1
+mark
+  restore nozl_exit
+  restore nozl_exit
+  scale 2.0 2.0 2.0
+  translate 3.5 0 1.0
+rule
+restore eng_assembly
+join 0.01
+store eng_assembly
+
 
 # Build Nozzle Nacelle IML Based on Explicit Flow Areas at Nozzle Plenum, Throat and Exit
 mark
@@ -117,7 +131,8 @@ mark
   patend
   restore nozl_exit
   restore nozl_exit
-  translate 1 0 0
+  scale 2.0 2.0 2.0
+  translate 3.5 0 1.0
 loft 0
 dump interior_nozl.egads
 store interior_nozl
@@ -126,10 +141,6 @@ restore eng_assembly
 udprim box dx 50 dy 50 dz 0
 translate x_eng y_eng 0
 subtract
-
-
-
-
 
 translate 0 0 z_eng
 
@@ -143,6 +154,7 @@ store lower_vtail
 
 restore vtail
 restore eng_assembly
+
 subtract zmax 1
 store upper_vtail
 
@@ -154,11 +166,6 @@ union
 restore lower_vtail
 union
 
-
-
-
-
-
 restore interior_inlet
 translate 0 0 z_eng
 subtract
@@ -167,17 +174,26 @@ restore forward_inlet
 translate 0 0 z_eng
 join 0.01
 
-
-
-
-
 restore spinner
 translate xEF y_eng z_eng
 union
 
+# --- New
+dump engine.egads
+store engine
+
 restore interior_nozl
 translate 0 0 z_eng
-subtract
+
+
+
+
+
+# ---Uncomment for Inlet Only
+#subtract
+
+
+
 
 mark
   patbeg i x_plug.size-1
@@ -190,7 +206,21 @@ mark
   skbeg xEF+x_plug[x_plug.size] y_eng  z_eng
   skend
 rule
-union
-dump engine.egads
+subtract
+
+
+
+# ---Uncomment for Inlet Only
+#union
+#dump engine.egads
+#store engine
+#restore engine
+#end
+
+
+dump plume.egads
+store plume
+
+restore engine
 
 end

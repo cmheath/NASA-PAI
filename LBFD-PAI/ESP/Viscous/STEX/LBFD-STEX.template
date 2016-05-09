@@ -7,14 +7,14 @@
 # ----------------------
 # --- Build Switches ---
 # ----------------------
-despmtr  remakeFuselage    0
-despmtr  remakeInlet       0
-despmtr  remakeEngine      0
-despmtr  remakeVtail       0
+despmtr  remakeFuselage    1
+despmtr  remakeInlet       1
+despmtr  remakeEngine      1
+despmtr  remakeVtail       1
 despmtr  remakeHtail       1
-despmtr  remakeSpinner     0
+despmtr  remakeSpinner     1
 despmtr  remakeWing        1
-despmtr  remakePod         0
+despmtr  remakePod         1
 despmtr  remakeNearfield   1
 despmtr  subtractNearfield 1
 despmtr  unionAll          1
@@ -80,9 +80,9 @@ despmtr   zloc_eng   "  0.0;    0.0;   0.0;    0.0"
 despmtr   zn_eng     " 1.05; 1.3475;  1.40;  1.385" 
 despmtr   zs_eng     " 1.35;  1.325; 1.415;    1.4"
 despmtr   ns_eng     "  2.0;    2.5;   2.5;    2.5"
-despmtr   x_eng     -2.225
+despmtr   x_eng     -2.77413
 despmtr   y_eng      0.00
-despmtr   z_eng     -0.262161
+despmtr   z_eng      0.262161
 
 despmtr   x_cutoff   3.75
 despmtr   t_cutoff   -2.0
@@ -203,14 +203,14 @@ dimension xloc_vtail  4  1  1
 dimension yloc_vtail  4  1  1
 dimension zloc_vtail  4  1  1
 
-despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;    0.035"
-despmtr   chord_vtail " 15.5000;  14.5000;    11.5;     5.0"
-despmtr   xloc_vtail  " -0.5000;   1.0000;    4.50;   13.42"
+despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;   0.035"
+despmtr   chord_vtail "  14.500;   14.000;    11.5;     5.0"
+despmtr   xloc_vtail  "  0.5000;   1.5000;    4.50;   13.42"
 despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
 despmtr   y_vtail        0.0000
-despmtr   z_vtail        7.08
+despmtr   z_vtail        7.1
 
 # ------------------------
 # --- Build Components ---
@@ -409,18 +409,22 @@ patbeg foo remakeEngine
 patend 
 
 # --- Create Near-field ---
-set Rnearfield 20
+set Rnearfield 17
 set x1 x_fuse[1]-20
 set x2 x_fuse[x_fuse.size]+50
-set z_offset 8
+set z_offset 2.0
 
-cylinder x1 0 0 x2 0 0 Rnearfield
-translate 0 0 z_offset
-box x1 0 -Rnearfield (abs(x1)+abs(x2)) -Rnearfield 2*Rnearfield
-translate 0 0 z_offset
-subtract
+skbeg x1 Rnearfield*cos(pi(0)) z_offset+Rnearfield*sin(pi(0))
+  patbeg i 36
+    linseg x1 Rnearfield*cos(pi(i*1./18.)) z_offset+Rnearfield*sin(pi(i*1./18.))
+  patend
+skend
+extrude x2-x1 0 0
+
+box (x1-10) 0.0 -50.0 (x2-x1+10) 50.0 100.0
+intersect
+
 dump nearfield.egads
-
 store nearfield
 
 # ------------------------------------------
@@ -503,6 +507,8 @@ patbeg foo unionAll
    union
 patend
 
+rotatey 3.23328690178692 0.0 0.0
+
 # --- Rotate vehicle into flight position, and rescale to SI
 patbeg foo unionAll
    #rotatex  -90   0   0
@@ -527,6 +533,7 @@ dump ../Geometry/LBFD_STEX_Viscous.iges
 restore nearfield
 restore plume
 translate  x_vtail   y_vtail    z_vtail
+rotatey 3.23328690178692 0.0 0.0
 intersect
 
 patbeg foo unionAll

@@ -2,14 +2,14 @@
 #    NASA Low-Boom Flight Demonstrator 
 #    Written By: Christopher Heath
 #    NASA Glenn Research Center
-#    Version Date: 1/17/16
+#    Version Date: 3/20/16
 # --------------------------------------
 # ----------------------
 # --- Build Switches ---
 # ----------------------
 despmtr  remakeFuselage    0
-despmtr  remakeInlet       0
-despmtr  remakeEngine      0
+despmtr  remakeInlet       1
+despmtr  remakeEngine      1
 despmtr  remakeVtail       0
 despmtr  remakeHtail       0
 despmtr  remakeSpinner     0
@@ -80,9 +80,9 @@ despmtr   zloc_eng   "   0.0;   0.0;   0.0;    0.0"
 despmtr   zn_eng     " 1.265; 1.365;  1.40;  1.385" 
 despmtr   zs_eng     " 1.265; 1.365;  1.40;  1.385"
 despmtr   ns_eng     "  2.25;   2.5;   2.5;    2.5"
-despmtr   x_eng      0.225
+despmtr   x_eng      0.9
 despmtr   y_eng      0.00
-despmtr   z_eng     -0.262161
+despmtr   z_eng      0.262161
 
 despmtr   x_cutoff    0.75
 despmtr   t_cutoff    0.0
@@ -95,16 +95,14 @@ dimension a_nozl       4   1   1
 dimension zn_nozl      4   1   1
 dimension zs_nozl      4   1   1
 dimension ns_nozl      4   1   1
-dimension z_nozl       4   1   1
 
 despmtr   xloc_nozl   "   6.5;    8.0;   9.5;      11.5"
 despmtr   yloc_nozl   "   0.0;    0.0;   0.0;       0.0"
 despmtr   zloc_nozl   "   0.0;    0.0;   0.0;       0.0"
-despmtr   a_nozl      " 4.198;  4.198; 1.623;     3.917"
+despmtr   a_nozl      " 4.197763889;  4.197763889;  1.756131944;  4.442340278"
 despmtr   zn_nozl     " 1.345;  1.350;   1.3;  1.173987"
 despmtr   zs_nozl     " 1.345;  1.350;   1.3;  1.173987"
 despmtr   ns_nozl     "   2.5;   2.25;   2.0;       2.0"
-despmtr   z_nozl      " 1.375;  1.350;   1.3;  1.173987"
 
 # --- Nozzle Plug ---
 dimension x_plug      6   1    1
@@ -132,6 +130,8 @@ dimension xmaxc_wing  5  1  1
 dimension xloc_wing   5  1  1
 dimension yloc_wing   5  1  1
 dimension zloc_wing   5  1  1
+dimension x_mwing     5  1  1
+dimension chord_mwing 5  1  1
 
 dimension C1    1  2  1
 dimension TE1   1  2  1
@@ -146,11 +146,14 @@ dimension LA2   1  5  1
 despmtr   toc_wing    "  0.0000;  0.0000;  0.0246;  0.0300;  0.0354"
 despmtr   chord_wing  " 59.0000; 51.2536; 27.4989; 13.2223;  5.0910"
 despmtr   twist_wing  "  0.0000;  0.1583;  0.6611; -1.9817; -3.1233"
+
 despmtr   cmax_wing   "  0.0000;  0.0000; -0.0010; -0.0084;  0.0443"
 despmtr   xmaxc_wing  "  0.0000;  0.0000;  0.6094;  0.2500;  0.6858"
 despmtr   xloc_wing   "  2.1794;  8.7704;  32.034; 47.9516; 62.8389"
 despmtr   yloc_wing   "  0.8332;  2.0593;  4.1888;  7.9970; 15.2629"
 despmtr   zloc_wing   "  0.0344;  0.1780;  0.7740;  0.9850;  1.2640"
+despmtr   x_mwing     " 15.2000;  4.2704;  22.000; 44.0000; 62.8389"
+despmtr   chord_mwing " 24.0000; 36.0000;  24.100; 10.5000;  2.7500"
 
 despmtr   angle_wing     0.0669
 despmtr   x_wing        33.7928
@@ -186,7 +189,7 @@ despmtr   xloc_htail   "     0.0000;     5.9300;   11.8600"
 despmtr   yloc_htail   "     0.0000;     4.0000;    8.0000"
 despmtr   zloc_htail   "     0.0000;     0.0600;    0.1196"
 despmtr   angle_htail        0.5941
-despmtr   x_htail           96.9750           
+despmtr   x_htail           97.4750           
 despmtr   y_htail            0.0000
 despmtr   z_htail           10.4747
 
@@ -198,8 +201,8 @@ dimension yloc_vtail  4  1  1
 dimension zloc_vtail  4  1  1
 
 despmtr   toc_vtail   "  0.0400;   0.0400;    0.04;   0.035"
-despmtr   chord_vtail "  14.000;   13.500;    11.5;     5.0"
-despmtr   xloc_vtail  "  1.0000;   2.0000;    4.50;   13.42"
+despmtr   chord_vtail "  13.500;   13.000;    11.5;     5.0"
+despmtr   xloc_vtail  "  1.5000;   2.5000;    4.50;   13.42"
 despmtr   yloc_vtail  "  0.0000;   0.0000;     0.0;     0.0"
 despmtr   zloc_vtail  "  -2.865;   0.0000;  1.7636;     9.7"
 despmtr   x_vtail       90.5460
@@ -250,28 +253,6 @@ patbeg foo remakeVtail
   store vtail
 patend
 
-# --- Create Engine Spinner ---
-patbeg foo remakeSpinner
-
-    import SUPIN.egads 1
-    rotatex -90 0 0
-    translate -@xmax 0 zEF
-    rotatex -90 0 0
-    store spinner
-  mark
-    restore spinner
-    extract   -14
-    restore spinner
-    extract   -12
-  combine
-
-  extrude Lspin 0 0
-  restore spinner
-  union
-  dump spinner.egads
-  store spinner
-patend
-
 # --- Create Fuselage ---
 patbeg foo remakeFuselage
   udparg $$/fuselage  x_fuse     x_fuse
@@ -303,6 +284,8 @@ patbeg foo remakeWing
   udparg $$/wing   x_wing      x_wing  
   udparg $$/wing   y_wing      y_wing  
   udparg $$/wing   z_wing      z_wing 
+  udparg $$/wing   x_mwing     x_mwing
+  udparg $$/wing   chord_mwing chord_mwing
 
   udparg $$/wing   C1          C1   
   udparg $$/wing   TE1         TE1    
@@ -315,6 +298,28 @@ patbeg foo remakeWing
   udparg $$/wing   LA2         LA2   
   udprim $$/wing
   store wing
+patend
+
+# --- Create Engine Spinner ---
+patbeg foo remakeSpinner
+
+    import SUPIN.egads 1
+    rotatex -90 0 0
+    translate -@xmax 0 zEF
+    rotatex -90 0 0
+    store spinner
+  mark
+    restore spinner
+    extract   -14
+    restore spinner
+    extract   -12
+  combine
+
+  extrude Lspin 0 0
+  restore spinner
+  union
+  dump spinner.egads
+  store spinner
 patend
 
 # --- Create Right Horizontal Tail ---
@@ -388,8 +393,7 @@ patbeg foo remakeEngine
   udparg  $$/engine   a_nozl        a_nozl 
   udparg  $$/engine   zn_nozl       zn_nozl 
   udparg  $$/engine   zs_nozl       zs_nozl 
-  udparg  $$/engine   ns_nozl       ns_nozl  
-  udparg  $$/engine   z_nozl        z_nozl  
+  udparg  $$/engine   ns_nozl       ns_nozl    
   udparg  $$/engine   x_plug        x_plug
   udparg  $$/engine   r_plug        r_plug 
   udparg  $$/engine   remakeInlet   remakeInlet
@@ -400,18 +404,48 @@ patbeg foo remakeEngine
 patend 
 
 # --- Create Near-field ---
-set Rnearfield 20
-set x1 x_fuse[1]-20
-set x2 x_fuse[x_fuse.size]+50
-set z_offset 8
+set Rnearfield 100.0
+set mu1 asin(1.0/1.625)
+set mu2 asin(1.0/1.785)
+set b 2.5*(x_fuse[x_fuse.size]-x_fuse[1])
 
-cylinder x1 0 0 x2 0 0 Rnearfield
-translate 0 0 z_offset
-box x1 0 -Rnearfield (abs(x1)+abs(x2)) -Rnearfield 2*Rnearfield
-translate 0 0 z_offset
-subtract
+set xbeg x_fuse[1]-40
+set zbeg 0.0
+
+#set x1 38.5
+#set r1 61.275
+
+set x1 88.0868832021
+set r1 100
+
+set x2 xbeg+b/tan(mu1)
+set r2 b
+
+#set x3 628.069619423
+#set r3 b
+
+set x3 628.069619423
+set r3 b
+
+skbeg  xbeg 0.0 0.0
+linseg   x1 0.0  r1
+linseg   x3 0.0 -r3
+linseg   x2 0.0 -r2
+linseg xbeg 0.0 0.0
+skend
+store nplane
+
+mark
+  restore nplane
+  restore nplane
+  rotatex 20 0 Rnearfield
+  restore nplane
+  rotatex 40 0 Rnearfield
+  restore nplane
+  rotatex 60 0 Rnearfield
+rule
+
 dump nearfield.egads
-
 store nearfield
 
 # ------------------------------------------
@@ -425,6 +459,8 @@ patend
 patbeg foo 1-remakeEngine
   import engine.egads
   store engine
+  import plume.egads
+  store plume  
 patend
 
 patbeg foo 1-remakeFuselage
@@ -458,6 +494,16 @@ patend
 restore engine
 translate  x_vtail   y_vtail    z_vtail
 
+#patbeg foo unionAll
+  # --- Engine Inlet Face
+  #select     face     17
+  #attribute  CartBC    2
+
+  # --- Engine Exit Face
+  #select     face     45
+  #attribute  CartBC    3
+#patend
+
 restore pod
 
 patbeg foo unionAll
@@ -468,16 +514,6 @@ restore htail
 
 patbeg foo unionAll
    union
-patend
-
-patbeg foo unionAll
-  # --- Engine Inlet Face
-  #select     face     28
-  #attribute  CartBC    2
-
-  # --- Engine Exit Face
-  #select     face     38
-  #attribute  CartBC    3
 patend
 
 restore fuselage
@@ -493,11 +529,11 @@ patbeg foo unionAll
 patend
 
 # --- Rotate vehicle into flight position, and rescale to SI
-patbeg foo unionAll
-   #rotatex  -90   0   0
-   #rotatez  -3.375   0   0
-   #rotatez  41.6822  0  0
-patend
+#patbeg foo unionAll
+#   rotatex  -90      0   0
+#   rotatez  -2.16    0   0
+#   rotatez  41.6822  0   0
+#patend
 
 patbeg foo subtractNearfield
   subtract none 1 1E-3
@@ -512,4 +548,23 @@ patend
 dump ../Geometry/LBFD_AxiSpike.egads
 dump ../Geometry/LBFD_AxiSpike.step
 dump ../Geometry/LBFD_AxiSpike.iges
+
+# ---New
+#end
+
+
+restore nearfield
+restore plume
+translate  x_vtail   y_vtail    z_vtail
+intersect
+
+patbeg foo unionAll
+  scale scale_factor
+patend
+
+# Write out jet plume
+dump ../Geometry/Plume.egads
+dump ../Geometry/Plume.step
+dump ../Geometry/Plume.iges
+
 end

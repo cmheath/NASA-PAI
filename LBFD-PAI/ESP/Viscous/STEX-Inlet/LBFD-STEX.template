@@ -7,14 +7,14 @@
 # ----------------------
 # --- Build Switches ---
 # ----------------------
-despmtr  remakeFuselage    1
+despmtr  remakeFuselage    0
 despmtr  remakeInlet       1
 despmtr  remakeEngine      1
-despmtr  remakeVtail       1
-despmtr  remakeHtail       1
+despmtr  remakeVtail       0
+despmtr  remakeHtail       0
 despmtr  remakeSpinner     1
-despmtr  remakeWing        1
-despmtr  remakePod         1
+despmtr  remakeWing        0
+despmtr  remakePod         0
 despmtr  remakeNearfield   1
 despmtr  subtractNearfield 1
 despmtr  unionAll          1
@@ -409,22 +409,18 @@ patbeg foo remakeEngine
 patend 
 
 # --- Create Near-field ---
-set Rnearfield 17
-set x1 x_fuse[1]-20
-set x2 x_fuse[x_fuse.size]+50
-set z_offset 2.0
+set Rnearfield 10
+set x1 x_vtail-25.0
+set x2 x_vtail+10.0
+set z_offset 8
 
-skbeg x1 Rnearfield*cos(pi(0)) z_offset+Rnearfield*sin(pi(0))
-  patbeg i 36
-    linseg x1 Rnearfield*cos(pi(i*1./18.)) z_offset+Rnearfield*sin(pi(i*1./18.))
-  patend
-skend
-extrude x2-x1 0 0
-
-box (x1-10) 0.0 -50.0 (x2-x1+10) 50.0 100.0
-intersect
-
+cylinder x1 0 0 x2 0 0 Rnearfield
+translate 0 0 z_offset
+box x1 0 -Rnearfield (abs(x1)+abs(x2)) -Rnearfield 2*Rnearfield
+translate 0 0 z_offset
+subtract
 dump nearfield.egads
+
 store nearfield
 
 # ------------------------------------------
@@ -473,49 +469,6 @@ patend
 restore engine
 translate  x_vtail   y_vtail    z_vtail
 
-restore pod
-
-patbeg foo unionAll
-  union
-patend
-
-restore htail  
-
-patbeg foo unionAll
-   union
-patend
-
-patbeg foo unionAll
-  # --- Engine Inlet Face
-  #select     face     28
-  #attribute  CartBC    2
-
-  # --- Engine Exit Face
-  #select     face     38
-  #attribute  CartBC    3
-patend
-
-restore fuselage
-
-patbeg foo unionAll
-   union
-patend
-
-restore wing
-
-patbeg foo unionAll
-   union
-patend
-
-rotatey 3.23328690178692 0.0 0.0
-
-# --- Rotate vehicle into flight position, and rescale to SI
-patbeg foo unionAll
-   #rotatex  -90   0   0
-   #rotatez  -3.375   0   0
-   #rotatez  41.6822  0  0
-patend
-
 patbeg foo subtractNearfield
   subtract none 1 1E-3
   attribute .tParams GridParams
@@ -525,24 +478,9 @@ patbeg foo unionAll
   scale scale_factor 
 patend
 
-# Write out final aircraft
-dump ../Geometry/LBFD_STEX_Viscous.egads
-dump ../Geometry/LBFD_STEX_Viscous.step
-dump ../Geometry/LBFD_STEX_Viscous.iges
-
-restore nearfield
-restore plume
-translate  x_vtail   y_vtail    z_vtail
-rotatey 3.23328690178692 0.0 0.0
-intersect
-
-patbeg foo unionAll
-  scale scale_factor 
-patend
-
-# Write out jet plume
-dump ../Geometry/Plume.egads
-dump ../Geometry/Plume.step
-dump ../Geometry/Plume.iges
+# Dump final aircraft
+dump ../Geometry/LBFD_STEX_Inlet_Viscous.egads
+dump ../Geometry/LBFD_STEX_Inlet_Viscous.step
+dump ../Geometry/LBFD_STEX_Inlet_Viscous.iges
 
 end

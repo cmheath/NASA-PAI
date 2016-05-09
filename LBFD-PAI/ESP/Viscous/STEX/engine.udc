@@ -108,14 +108,16 @@ restore eng_assembly
 
 extract 6
 store nozl_exit
-  
+
 set i xloc_nozl.size-1
 mark
   restore nozl_exit
   restore nozl_exit
-  translate 30 0 0
+  scale 2.0 2.0 2.0
+  translate 15.0 0 1.5
 rule
 restore eng_assembly
+
 join 0.01
 store eng_assembly
 
@@ -131,8 +133,10 @@ mark
   patend
   restore nozl_exit
   restore nozl_exit
-  translate 30 0 0
+  scale 2.0 2.0 2.0
+  translate 15.0 0 1.5
 loft 0
+
 dump interior_nozl.egads
 store interior_nozl
 
@@ -140,12 +144,6 @@ restore eng_assembly
 udprim box dx 50 dy 50 dz 0
 translate x_eng y_eng 0
 subtract
-
-restore interior_inlet
-subtract
-
-restore forward_inlet
-join 0.01
 
 translate 0 0 z_eng
 
@@ -159,6 +157,7 @@ store lower_vtail
 
 restore vtail
 restore eng_assembly
+
 subtract zmax 1
 store upper_vtail
 
@@ -169,6 +168,14 @@ union
 
 restore lower_vtail
 union
+
+restore interior_inlet
+translate 0 0 z_eng
+subtract
+
+restore forward_inlet
+translate 0 0 z_eng
+join 0.01
 
 restore spinner
 translate xEF y_eng z_eng

@@ -66,6 +66,9 @@ import whole_inlet.egads
 set xEF @xmax
 store whole_inlet.egads
 
+#restore forward_inlet
+#end
+
 # Extract edges from oblique plane and combine into sheet
 mark
   mark  
@@ -103,39 +106,6 @@ blend
 store eng_assembly
 restore eng_assembly
 
-extract 6
-store nozl_exit
-  
-set i xloc_nozl.size-1
-mark
-  restore nozl_exit
-  restore nozl_exit
-  scale 2.5 2.5 2.5
-  translate 125 0 5.0
-rule
-restore eng_assembly
-join 0.01
-store eng_assembly
-
-# Build Nozzle Nacelle IML Based on Explicit Flow Areas at Nozzle Plenum, Throat and Exit
-mark
-  patbeg i a_nozl.size-1
-    set r sqrt((a_nozl[i]+pi(1)*r_plug[i]*r_plug[i])/pi(1))
-    udparg supell rx r  ry r
-    udprim supell
-    rotatey     90   0   0
-    rotatex    -90   0   0
-    translate   xEF+xloc_nozl[i] y_eng+yloc_nozl[i] zloc_nozl[i]
-  patend
-  restore nozl_exit
-  restore nozl_exit
-  scale 2.5 2.5 2.5
-  translate 125 0 5.0
-loft 0
-dump interior_nozl.egads
-store interior_nozl
-
-restore eng_assembly
 udprim box dx 50 dy 50 dz 0
 translate x_eng y_eng 0
 subtract
@@ -143,26 +113,7 @@ subtract
 translate 0 0 z_eng
 
 store eng_assembly
-
-restore vtail
 restore eng_assembly
-
-subtract zmin 1
-store lower_vtail
-
-restore vtail
-restore eng_assembly
-
-subtract zmax 1
-store upper_vtail
-
-restore eng_assembly
-
-restore upper_vtail
-union
-
-restore lower_vtail
-union
 
 restore interior_inlet
 translate 0 0 z_eng
@@ -178,26 +129,6 @@ union
 
 dump engine.egads
 store engine
-
-restore interior_nozl
-translate 0 0 z_eng
-
-mark
-  patbeg i x_plug.size-1
-    udparg supell  rx  r_plug[i]  ry  r_plug[i]
-    udprim supell
-    rotatey 90 0 0
-    translate  xEF+x_plug[i]  y_eng  z_eng
-  patend
-
-  skbeg xEF+x_plug[x_plug.size] y_eng  z_eng
-  skend
-rule
-subtract
-
-dump plume.egads
-store plume
-
 restore engine
 
 end
