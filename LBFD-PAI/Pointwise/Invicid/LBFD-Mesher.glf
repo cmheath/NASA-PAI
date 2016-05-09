@@ -44,9 +44,9 @@ set scriptDir [file dirname [info script]]
 # --
 # --------------------------------------------------------
 
-set fileName                 "LBFD.pw";  # Aircraft geometry filename
-set avgDs1                         0.5;  # Initial surface triangle average edge length
-set avgDs2                        0.04;  # Refined surface triangle average edge length
+set fileName        "LBFD_AxiSpike3.pw";  # Aircraft geometry filename
+set avgDs1                         2.0;  # Initial surface triangle average edge length
+set avgDs2                       0.041;  # Refined surface triangle average edge length
 set avgDs3                       0.065;  # Engine IML/OML surface triangle average edge length
 set teDim                            5;  # Number of points across trailing edges
 set tailLayers                      10;  # Htail root connector distribution layers 
@@ -63,7 +63,7 @@ set inletGrowthRate                1.2;  # Root/Tip connector distribution growt
 set nozzleGrowthRate               1.2;  # Root/Tip connector distribution growth rate
 set inletSpacing                0.0002;  # Inlet 2D TREX spacing
 set nozzleSpacing                0.005;  # Nozzle 2D TREX spacing
-set plumeExitSpacing             0.025;  # Plume exit plane spacing
+set plumeExitSpacing               0.4;  # Plume exit plane spacing
 set leteLayers                      15;  # Leading/Trailing edge connector distribution layers
 set leteGrowthRate                 1.2;  # Leading/Trailing edge connector distribution layers
 set domLayers                       15;  # Layers for 2D T-Rex surface meshing
@@ -209,6 +209,7 @@ pw::Display update
 # Apply User Settings
 pw::Connector setCalculateDimensionMethod Spacing
 pw::Connector setCalculateDimensionSpacing $avgDs1
+pw::Connector setNormalMaximumDeviation 20
 
 pw::DomainUnstructured setDefault BoundaryDecay $boundaryDecay
 pw::DomainUnstructured setDefault Algorithm AdvancingFront
@@ -243,6 +244,10 @@ foreach db $allDbs {
         }
     }
 }
+
+set merge(mode_10) [pw::Application begin Merge]
+  $merge(mode_10) mergeConnectors -visibleOnly -exclude None -tolerance .001
+$merge(mode_10) end
 
 # Survey Surface Mesh and Isolate Domains and Connectors
 foreach qlt $dbQuilts {
@@ -697,7 +702,6 @@ if { [lindex $Node0 0] < [lindex $Node1 0] } {
 pw::Display update
 puts "Redistributed wing root connectors."
 
-
 ## Modify Connector Distributions at the Empennage Tip
 set tipCons [list $horizTailLowerTipCon  \
                   $horizTailUpperTipCon  \
@@ -782,9 +786,9 @@ foreach con $plumeShearSymCons {
     set Node1 [$con getXYZ -parameter 1.0]
 
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $nozzleSpacing $plumeExitSpacing $con
+        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] 1 $nozzleSpacing $plumeExitSpacing $con
     } else {
-        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $nozzleSpacing $con
+        RedistCons $nozzleGrowthRate 1 [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $nozzleSpacing $con
     }
 }
 
@@ -809,16 +813,16 @@ foreach con $nozzleExitCons {
 foreach con $spinnerCons {
 
     set Node0 [$con getXYZ -parameter 0.0]
-    set Node1 [$con getfuselage symmetryXYZ -parameter 1.0]
+    set Node1 [$con getXYZ -parameter 1.0]
 
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        if {$fileName == "LBFD_AxiSpike.pw"} {
+        if {$fileName == "LBFD_AxiSpike3.pw"} {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $tePlug $EFSpacing $con
         } else {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $EFSpacing $con
         }
     } else {
-        if {$fileName == "LBFD_AxiSpike.pw"} {
+        if {$fileName == "LBFD_AxiSpike3.pw"} {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $tePlug $con
         } else {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $EFSpacing $con
@@ -1233,7 +1237,9 @@ set DomsCollection [pw::Collection create]
                               $modelDoms(fairing-lower)  \
                               $modelDoms(fairing-upper)  \
                               $modelDoms(fuselage)       \
-                              $modelDoms(symmetry)]
+                              $modelDoms(symmetry)       \
+                              $modelDoms(plug-upper)     \
+                              $modelDoms(plug-lower)]
     $DomsCollection do initialize
 $DomsCollection delete
 
@@ -1264,6 +1270,9 @@ $isoMode end
 set isoMode [pw::Application begin UnstructuredSolver [list $blk_1]]
 $isoMode run Initialize
 $isoMode end
+
+set fsDoms [list $modelDoms(freestream-1)         \
+                 $modelDoms(freestream-2)]
 
 set wingDoms [list $modelDoms(wing-lower-LE)     \
                    $modelDoms(wing-upper-LE)     \
@@ -1311,11 +1320,11 @@ set fuseBC [pw::BoundaryCondition create]
 
 set freestreamBC [pw::BoundaryCondition create]
     $freestreamBC setName "bc-02"
-    $freestreamBC apply [list $blk_1 $modelDoms(freestream)]
+    foreach dom $fsDoms {$freestreamBC apply [list $blk_1 $dom]}
 
 set nearfieldBC [pw::BoundaryCondition create]
     $nearfieldBC setName "bc-03"
-    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield)]
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-plane)]
 
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-04"
@@ -1323,7 +1332,7 @@ set symmetryBC [pw::BoundaryCondition create]
 
 set outflowBC [pw::BoundaryCondition create]
     $outflowBC setName "bc-05"
-    $outflowBC apply [list $blk_1 $modelDoms(outflow)]
+    $outflowBC apply [list $blk_1 $modelDoms(outflow-1)]
 
 set aipBC [pw::BoundaryCondition create]
     $aipBC setName "bc-06"
@@ -1351,7 +1360,7 @@ set plugBC [pw::BoundaryCondition create]
 
 set wingBC [pw::BoundaryCondition create]
     $wingBC setName "bc-12"
-    foreach dom $wingDoms {$wingBC apply [list $blk_1 $dom]} 
+    foreach dom $wingDoms {$wingBC apply [list $blk_1 $dom]}
     
 set htBC [pw::BoundaryCondition create]
     $htBC setName "bc-13"
@@ -1376,6 +1385,27 @@ set engineBC [pw::BoundaryCondition create]
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-18"
     $symmetryBC apply [list $blk_1 $modelDoms(plume-symmetry)]
+
+set npBC [pw::BoundaryCondition create]
+    $npBC setName "bc-19"
+    $npBC apply [list $blk_1 $modelDoms(nearfield-1)]
+
+set npBC [pw::BoundaryCondition create]
+    $npBC setName "bc-20"
+    $npBC apply [list $blk_1 $modelDoms(nearfield-2)]
+
+set npBC [pw::BoundaryCondition create]
+    $npBC setName "bc-21"
+    $npBC apply [list $blk_1 $modelDoms(nearfield-3)]
+
+set npBC [pw::BoundaryCondition create]
+    $npBC setName "bc-22"
+    $npBC apply [list $blk_1 $modelDoms(outflow-2)]
+
+set npBC [pw::BoundaryCondition create]
+    $npBC setName "bc-23"
+    $npBC apply [list $blk_1 $modelDoms(outflow-3)]
+
 
 timestamp
 puts "Run Time: [convSeconds [pwu::Time elapsed $tBegin]]"
