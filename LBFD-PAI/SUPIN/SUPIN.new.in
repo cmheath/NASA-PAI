@@ -16,7 +16,7 @@ WRspill   WRbleed   WRbypass   WRother
 DataID.  Freestream
   1
  Kfs  Mach  Pres(psf)  Temp(R) Alpha(deg) Beta(deg) Alt(ft)
-  1  1.600    224.508  389.970    0.000     0.000   51707.0
+  1  1.600    224.508  389.970    3.233     0.000   51707.0
  
 -----------------------------------------------------------
 DataID.  Approach Flow
