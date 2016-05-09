@@ -19,7 +19,7 @@
     temperature = 216.65
     angle_of_attack = 3.375
     angle_of_yaw = 0.0
-    reynolds_number = 5740509.51138
+    reynolds_number = 5740509.51138 
     mach_number = 1.6
 /
 &inviscid_flux_method
@@ -46,7 +46,7 @@
     restart_read = 'off'
 /
 &boundary_conditions
-    static_pressure_ratio(6) = 3.345095459714
+    static_pressure_ratio(6) = 3.16940863939 
     total_pressure_ratio(7) = 13.8240948123
     total_temperature_ratio(7) = 7.31081929379
 /
@@ -60,16 +60,16 @@
     point1(1:3,2) = 31.0 0.0 2.0857
     point2(1:3,2) = 33.5 0.0 2.0857
     radius(2) = 0.35895
-    c(1)     = 1.19942691642    
-    u(1)     = 0.37856398115    
-    rho(1)   = 2.27997035529    
-    c(2)     = 2.58289280808    
-    u(2)     = 0.40220153394    
-    rho(2)   = 1.81209920631
+    c(1)     = 1.19568532084    
+    u(1)     = 0.401015833001    
+    rho(1)   = 2.21689152104    
+    c(2)     = 2.58240969261    
+    u(2)     = 0.410502080665    
+    rho(2)   = 1.83100354259
 /
 &boundary_output_variables
     number_of_boundaries = -1 ! compute from list
-    boundary_list = '1-12'
+    boundary_list = '1-11'
     cp = .true.
     mach = .true.
     ttot = .true.
@@ -111,7 +111,7 @@
     component_symmetry(2) = 2.0
     calculate_cd(2) = .true.
     throat_area(2) = 0.16025774
-    npr(2) = 13.6636671935
+    npr(2) = 13.8240948123
     calculate_thrust_ratio(2) = .true.
     massflow_component(2) = 7
 
