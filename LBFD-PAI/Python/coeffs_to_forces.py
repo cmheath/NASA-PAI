@@ -23,7 +23,7 @@ convert_pres  = area * pzm * gamma
 
 IDs = ['Fuselage', 'Wing', 'HT', 'VT', 'Fairing', 'Pylon', 'Engine', 'Inlet', 'Nozzle', 'Inlet-IML', 'Nozzle-IML', 'Spinner', 'Plug']
 
-L_net = D_net = Fx_net = Fz_net = Airframe_L_net = Airframe_D_net = 0
+L_net = D_net = Fx_net = Fz_net = Airframe_L_net = Airframe_D_net = 0.0
 
 print ("-------------------------------")
 print (" Viscous Component Forces ")
@@ -78,8 +78,8 @@ print ("-------------------------------")
 print ("Net Lift (incl. thrust-induced) = %.6f lbf     Net Drag (incl. lift-induced) = %.6f lbf\n" % (L_net, D_net))
 print ("Net Lift (airframe only) = %.6f lbf            Net Drag (airframe only) = %.6f lbf         L/D = %.6f\n" % (Airframe_L_net, Airframe_D_net, Airframe_L_net/Airframe_D_net))
 
-print ("Net Thrust (In-line) = %.6f lbf\n" % (0.5*rhozm * symmetry * (xmach*azm)**2 * Fx_net * N_to_lbf))
-print ("Net Thrust (Installed) = %.6f lbf" % (0.5*rhozm * symmetry * (xmach*azm)**2 * (Fx_net*np.cos(alpha) + Fz_net*np.sin(alpha)) * N_to_lbf))
+print ("Net Thrust (In-line) = %.6f lbf\n" % (0.5*rhozm * area * (xmach*azm)**2 * Fx_net * N_to_lbf))
+print ("Net Thrust (Installed) = %.6f lbf" % (0.5*rhozm * area * (xmach*azm)**2 * (Fx_net*np.cos(alpha) + Fz_net*np.sin(alpha)) * N_to_lbf))
 
 L_net = D_net = Fx_net = Fz_net = Airframe_L_net = Airframe_D_net = 0
 
@@ -136,5 +136,5 @@ print ("-------------------------------")
 print ("Net Lift (incl. thrust-induced) = %.6f lbf     Net Drag (incl. lift-induced) = %.6f lbf\n" % (L_net, D_net))
 print ("Net Lift (airframe only) = %.6f lbf            Net Drag (airframe only) = %.6f lbf         L/D = %.6f\n" % (Airframe_L_net, Airframe_D_net, Airframe_L_net/Airframe_D_net))
 
-print ("Net Thrust (In-line) = %.6f lbf\n" % (0.5*rhozm * symmetry * (xmach*azm)**2 * Fx_net * N_to_lbf))
-print ("Net Thrust (Installed) = %.6f lbf" % (0.5*rhozm * symmetry * (xmach*azm)**2 * (Fx_net*np.cos(alpha) + Fz_net*np.sin(alpha)) * N_to_lbf))
+print ("Net Thrust (In-line) = %.6f lbf\n" % (0.5*rhozm * area * (xmach*azm)**2 * Fx_net * area * N_to_lbf))
+print ("Net Thrust (Installed) = %.6f lbf" % (0.5*rhozm * area * (xmach*azm)**2 * (Fx_net*np.cos(alpha) + Fz_net*np.sin(alpha)) * N_to_lbf))

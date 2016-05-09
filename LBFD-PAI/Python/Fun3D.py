@@ -202,7 +202,7 @@ class Fun3D(Component):
         print ("mu*     = %f  kg/(m-s)" % mustar)        
 
         # --- Open template file
-        filein = open( '../Fun3D/fun3d.template' )
+        filein = open( '../Fun3D/Flow/RANS/fun3d.template' )
 
         src = Template( filein.read() )
 
@@ -212,7 +212,7 @@ class Fun3D(Component):
         result = src.substitute(d)
 
         # --- Write output
-        fh = open('../Fun3D/fun3d.nml', 'w')
+        fh = open('../Fun3D/Flow/RANS/fun3d.nml', 'w')
         fh.write(result)
         fh.close()
 

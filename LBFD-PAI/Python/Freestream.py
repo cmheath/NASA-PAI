@@ -15,7 +15,7 @@ class Freestream(Component):
     # --- Initialize Input Parameters ---
     # -----------------------------------
     M_inf = Float(1.6, iotype = 'out', desc = 'freestream Mach No.')
-    alpha = Float(0.0, iotype = 'out', desc = 'vehicle AoA', units = 'deg')
+    alpha = Float(3.23328690178692, iotype = 'out', desc = 'vehicle AoA', units = 'deg')
     R = Float(287.05, iotype = 'out', desc = 'specific gas constant', units = 'J/kg/K')      
     alt = Float(51707, iotype = 'out', desc = 'flight altitude', units = 'ft')
 
@@ -44,8 +44,9 @@ class Freestream(Component):
         print "-------------------------------------"
         print " --- Freestream Total Conditions ---"       
         print "-------------------------------------"
+        print ("P_inf = %.6f Pa = %.2f psf" % (self.p_inf, self.p_inf*0.0208854342)) 
         print ("T_inf = %.6f K = %.2f R" % (self.t_inf, self.t_inf*1.8))
-        print ("D_inf = %.6f kg/m^3 = %.2f lb/ft^3" % (self.d_inf, self.d_inf*0.0624279606))
+        print ("D_inf = %.6f kg/m^3 = %.2f lb/ft^3" % (self.d_inf, self.d_inf*0.0624279606)) 
 
 if __name__ == "__main__":
     

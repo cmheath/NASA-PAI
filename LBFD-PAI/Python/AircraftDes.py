@@ -62,7 +62,7 @@ class Design(Assembly):
         self.add('cart3d',Cart3D())
 
         # --------------------------------------------------------------------------- #
-        # --- Instantiate Cart3D Component
+        # --- Instantiate Fun3D Component
         # --------------------------------------------------------------------------- #        
         self.add('fun3d', Fun3D())
 
@@ -73,7 +73,7 @@ class Design(Assembly):
         # self.driver.workflow.add(['freestream', 'npss', 'supin', 'opencsm', 'pointwise', 'aflr3', 'cart3d', 'fun3d'])
 
         #self.driver.workflow.add(['freestream', 'supin', 'opencsm', 'pointwise', 'aflr3', 'fun3d'])
-        self.driver.workflow.add(['freestream', 'supin', 'opencsm'])
+        self.driver.workflow.add(['freestream', 'supin', 'fun3d'])
 
         # --------------------------------------------------------------------------- #        
         # --- Create Data Connections 
@@ -101,20 +101,21 @@ class Design(Assembly):
             else:
                 self.opencsm._filein = '../ESP/LBFD-STEX.template'
                 copy_files('../ESP/Viscous/*', '../ESP/') 
-                copy_files('../ESP/Viscous/STEX/*', '../ESP/')      
+                #copy_files('../ESP/Viscous/STEX-Inlet/*', '../ESP/')      
+                copy_files('../ESP/Viscous/STEX/*', '../ESP/')
 
             self.pointwise._filein = '../Pointwise/Load-STEX.glf'            
 
         elif Inlet == "AxiSpike":
             if Grid == "Euler":            
                 self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
-                copy_files('../ESP/Inviscid/*', '../ESP/Inviscid/')                
+                copy_files('../ESP/Inviscid/*', '../ESP/')                
                 copy_files('../ESP/Inviscid/AxiSpike/*', '../ESP/')
             else:            
                 self.opencsm._filein = '../ESP/LBFD-AxiSpike.template'
                 copy_files('../ESP/Viscous/*', '../ESP/')                
-                copy_files('../ESP/Viscous/AxiSpike/*', '../ESP/')                
-            
+                #copy_files('../ESP/Viscous/AxiSpike-Inlet/*', '../ESP/')                
+                copy_files('../ESP/Viscous/AxiSpike/*', '../ESP/')
             self.pointwise._filein = '../Pointwise/Load-AxiSpike.glf'            
 
 if __name__ == '__main__':

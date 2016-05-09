@@ -1,5 +1,5 @@
 #!/bin/sh
-cd ../AFLR3/Viscous/
+cd ../AFLR3/Inlet/
 rm -rf *.bak
 aflr3 -convert -igrid LBFD_PW.b8.ugrid -ogrid LBFD.surf.gz
 sleep 5

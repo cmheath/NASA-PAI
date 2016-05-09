@@ -48,7 +48,7 @@ class Cart3D(Component):
     R = Float(287.053, iotype = 'in', desc = 'specific gas constant', units = 'J/kg/K')      
     alt = Float(0.0, iotype = 'in', desc = 'flight altitude', units = 'ft')          
 
-    T4_0 = Float(1413.61667, iotype = 'in', desc = 'nozzle plenum stagnation temperature', units = 'K')      
+    T4_0 = Float(1583.889, iotype = 'in', desc = 'nozzle plenum stagnation temperature', units = 'K')      
     mdot = Float(1.0, iotype = 'in', desc = 'engine mass flow rate', units = 'kg/s')
         
     pt2_ptL = Float(1.0, iotype = 'in', desc = 'total to freestream pressure ratio at engine face') 
@@ -74,7 +74,7 @@ class Cart3D(Component):
         Mu = np.arcsin(1/self.M_inf)*180/np.pi
         rotate_angle = Mu - self.alpha + 3.0 # Rotation angle for Cart3D (deg)
         
-        rotate_angle = 0    #FIXME
+        #rotate_angle = 0    #FIXME
 
         a_inf = np.sqrt(gamma_inf*self.R*self.t_inf)
 
@@ -90,8 +90,8 @@ class Cart3D(Component):
         ttL = self.t_inf/((1+(gamma_inf-1)/2*self.M_inf**2))**-1                           # K
 
         # --- Need to apply an adjustment to total pressure loss and M2 to account for inviscid assumption
-        #dP = 0.01325
-        dP = -0.009
+        # AxiSpike --- dP = 0.02574125
+        dP = 0.06208805 # 3.551595459714
 
         # Solve for adjusted engine face Mach #, pt2 and tt2
         M2 = fsolve(g, self.M2, args=(self.pt2_ptL+dP, self.tt2_ttL, ptL, ttL, gamma_inf, self.R, self.A2, self.mdot))[0]
@@ -110,9 +110,6 @@ class Cart3D(Component):
         NonD_P2 = ps2/(gamma_inf*self.p_inf)
         NonD_V2 = v2/a_inf
         NonD_D2 = d2/self.d_inf
-
-
-        #print ptL, ttL, pt2, tt2, self.p_inf, self.t_inf, ps2, M2
 
         print "Inlet Calculations:"    
         print ("Non-D Rho2  = %f" % NonD_D2)
@@ -133,7 +130,8 @@ class Cart3D(Component):
         areas = np.pi*(inner_cowl/2)**2 - np.pi*(plug/2)**2
 
         # Areas used by M. W. in Plume-Aircraft Interaction (SciTech 2015)
-        areas = np.array([4.198, 1.623, 3.917])
+        #areas = np.array([4.198, 1.623, 3.917])
+        areas =  np.array([4.197763889, 1.756131944, 4.442340278])
 
         diameters = 2*np.sqrt(areas/np.pi)
         ap_ft = areas[0]      # plenum area -ft^2
@@ -179,7 +177,7 @@ class Cart3D(Component):
         pe = pe_0*((1+(gamma_e-1)/2*Me**2)**(-gamma_e/(gamma_e-1)))
         pp = pp_0*((1+(gamma_p-1)/2*Mp**2)**(-gamma_p/(gamma_p-1)))
 
-        # --- Static rho at plenum and exit
+        # --- Stagnation rho at plenum and exit
         dp_0 = pp_0/(self.R*self.T4_0)
         de_0 = pe_0/(self.R*self.T4_0)
 
@@ -204,8 +202,12 @@ class Cart3D(Component):
         print ("Non-D Vel_Y = %f " % (NonDVel*np.sin(rotate_angle*np.pi/180)))
         print ("Non-D P_p   = %f " % NonDP)
 
+        print ("SPR = %f" % (ps2/self.p_inf))
+        print ("TPR = %f" % (pp_0/self.p_inf))
+        print ("TTR = %f" % (self.T4_0/self.t_inf))
+
         # --- Open template file
-        filein = open( 'cart3d.template' )
+        filein = open( '../Cart3D/cart3d.template' )
 
         src = Template( filein.read() )
 
