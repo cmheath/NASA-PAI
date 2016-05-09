@@ -44,8 +44,8 @@ set scriptDir [file dirname [info script]]
 # --
 # --------------------------------------------------------
 
-set fileName                 "LBFD.pw";  # Aircraft geometry filename
-set avgDs1                         0.5;  # Initial surface triangle average edge length
+set fileName                 "LBFD-STEX.pw";  # Aircraft geometry filename
+set avgDs1                        0.20;  # Initial surface triangle average edge length
 set avgDs2                        0.04;  # Refined surface triangle average edge length
 set avgDs3                       0.065;  # Engine IML/OML surface triangle average edge length
 set teDim                            6;  # Number of points across trailing edges
@@ -63,7 +63,7 @@ set inletGrowthRate                1.2;  # Root/Tip connector distribution growt
 set nozzleGrowthRate               1.2;  # Root/Tip connector distribution growth rate
 set inletSpacing                0.0002;  # Inlet 2D TREX spacing
 set nozzleSpacing                0.005;  # Nozzle 2D TREX spacing
-set plumeExitSpacing             0.025;  # Plume exit plane spacing
+set plumeExitSpacing              0.05;  # Plume exit plane spacing
 set leteLayers                      15;  # Leading/Trailing edge connector distribution layers
 set leteGrowthRate                 1.2;  # Leading/Trailing edge connector distribution layers
 set domLayers                       15;  # Layers for 2D T-Rex surface meshing
@@ -244,6 +244,10 @@ foreach db $allDbs {
     }
 }
 
+set merge(mode_10) [pw::Application begin Merge]
+  $merge(mode_10) mergeConnectors -visibleOnly -exclude None -tolerance .001
+$merge(mode_10) end
+
 # Survey Surface Mesh and Isolate Domains and Connectors
 foreach qlt $dbQuilts {
     set modelDoms([$qlt getName]) [DomFromQuilt $qlt]
@@ -306,12 +310,15 @@ set fuseLowerTECons [ConsFromDom $modelDoms(fuse-lower-TE)]
 set pylonCons   [ConsFromDom $modelDoms(pylon)]
 set pylonTECons [ConsFromDom $modelDoms(pylon-TE)]
 
-set engineOMLCons [ConsFromDom $modelDoms(engine-OML)]
-set inletIMLCons  [ConsFromDom $modelDoms(inlet-IML)]
-set nozzleIMLCons [ConsFromDom $modelDoms(nozzle-IML)]
+set engineOMLCons   [ConsFromDom $modelDoms(engine-OML)]
+set inletIMLCons    [ConsFromDom $modelDoms(inlet-IML)]
+set inletIMLAftCons [ConsFromDom $modelDoms(inlet-IML-aft)]
+set nozzleIMLCons   [ConsFromDom $modelDoms(nozzle-IML)]
 
-set spinnerUpperCons [ConsFromDom $modelDoms(spinner-upper)]
-set spinnerLowerCons [ConsFromDom $modelDoms(spinner-lower)]
+set spinnerUpperCons    [ConsFromDom $modelDoms(spinner-upper)]
+set spinnerLowerCons    [ConsFromDom $modelDoms(spinner-lower)]
+set spinnerUpperAftCons [ConsFromDom $modelDoms(spinner-upper-aft)]
+set spinnerLowerAftCons [ConsFromDom $modelDoms(spinner-lower-aft)]
 
 set plugUpperCons [ConsFromDom $modelDoms(plug-upper)]
 set plugLowerCons [ConsFromDom $modelDoms(plug-lower)]
@@ -323,10 +330,11 @@ set plumeNearfieldCons [ConsFromDom $modelDoms(plume-nearfield)]
 set plumeExitCons      [ConsFromDom $modelDoms(plume-exit)]
 set plumeSymCons       [ConsFromDom $modelDoms(plume-symmetry)]
 
-set symCons          [ConsFromDom $modelDoms(symmetry)]
-set engineOMLSymCons [intersect $engineOMLCons $symCons]
-set inletIMLSymCons  [intersect $inletIMLCons $symCons]
-set nozzleIMLSymCons [intersect $nozzleIMLCons $plumeSymCons]
+set symCons            [ConsFromDom $modelDoms(symmetry)]
+set engineOMLSymCons   [intersect $engineOMLCons $symCons]
+set inletIMLSymCons    [intersect $inletIMLCons $symCons]
+set inletIMLAftSymCons [intersect $inletIMLAftCons $symCons]
+set nozzleIMLSymCons   [intersect $nozzleIMLCons $plumeSymCons]
 
 set fuseSymCons [intersect $symCons $fuselageCons]
 
@@ -387,9 +395,10 @@ set pylonLowerAftCon        [intersect $pylonCons   $fuseUpperTECons]
 set pylonRootTECon          [intersect $pylonTECons $fuseUpperTECons]
 set pylonTipTECon           [intersect $pylonTECons $engineOMLCons]
 
-set aipCon                  [intersect $aipCons $inletIMLCons]
+set aipCon                  [intersect $aipCons $inletIMLAftCons]
 set nozzleExitCon           [intersect $nozzleExitCons $nozzleIMLCons]
 set inletLECon              [intersect $engineOMLCons $inletIMLCons]
+set inletIMLCon             [intersect $inletIMLAftCons $inletIMLCons]
 set nozzleTECon             [intersect $engineOMLCons $nozzleIMLCons]
 
 set fuseUpperTESymCon       [intersect $fuseUpperTECons $symCons]
@@ -617,14 +626,17 @@ set wingTailConsCollection [pw::Collection create]
 $wingTailConsCollection delete
 
 set engineConsCollection [pw::Collection create]
-    $engineConsCollection set [lsort -unique [join [list $engineOMLCons      \
-                                                         $inletIMLCons       \
-                                                         $nozzleIMLCons      \
-                                                         $spinnerUpperCons   \
-                                                         $spinnerLowerCons   \
-                                                         $plugUpperCons      \
-                                                         $plugLowerCons      \
-                                                         $aipCons            \
+    $engineConsCollection set [lsort -unique [join [list $engineOMLCons       \
+                                                         $inletIMLCons        \
+                                                         $inletIMLAftCons     \
+                                                         $nozzleIMLCons       \
+                                                         $spinnerUpperCons    \
+                                                         $spinnerUpperAftCons \
+                                                         $spinnerLowerCons    \
+                                                         $spinnerLowerAftCons \
+                                                         $plugUpperCons       \
+                                                         $plugLowerCons       \
+                                                         $aipCons             \
                                                          $nozzleExitCons]]]
 
    pw::Connector setCalculateDimensionSpacing $avgDs3
@@ -796,9 +808,9 @@ foreach con $plumeShearSymCons {
     set Node1 [$con getXYZ -parameter 1.0]
 
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $nozzleSpacing $plumeExitSpacing $con
+        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] 1 $nozzleSpacing $plumeExitSpacing $con
     } else {
-        RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $nozzleSpacing $con
+        RedistCons $nozzleGrowthRate 1 [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $nozzleSpacing $con
     }
 }
 
@@ -806,7 +818,7 @@ pw::Entity delete [list $modelDoms(plume-exit)]
 
 foreach con $plumeExitCons {
 
-    RedistCons $nozzleGrowthRate [expr {int(log(2.5)/log($nozzleGrowthRate))}] [expr {int(log(2.5)/log($nozzleGrowthRate))}] $plumeExitSpacing $plumeExitSpacing $con
+    RedistCons $nozzleGrowthRate 1 1 $plumeExitSpacing $plumeExitSpacing $con
 }
 pw::Display update
 puts "Redistributed plume connectors."
@@ -815,6 +827,8 @@ puts "Redistributed plume connectors."
 foreach con $aipCons {
     RedistCons $growthRate [expr {int(log(2.0)/log($growthRate))}] [expr {int(log(2.0)/log($growthRate))}] $EFSpacing $EFSpacing $con
 }
+
+RedistCons $growthRate [expr {int(log(2.0)/log($growthRate))}] [expr {int(log(2.0)/log($growthRate))}] $EFSpacing $EFSpacing $inletIMLCon
 
 foreach con $nozzleExitCons {
     RedistCons $growthRate [expr {int(log(2.0)/log($growthRate))}] [expr {int(log(2.0)/log($growthRate))}] $EFSpacing $EFSpacing $con
@@ -826,19 +840,22 @@ foreach con $spinnerCons {
     set Node1 [$con getXYZ -parameter 1.0]
 
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        if {$fileName == "LBFD_AxiSpike.pw"} {
+        if {$fileName == "LBFD-AxiSpike.pw"} {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $tePlug $EFSpacing $con
         } else {
-            RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $EFSpacing $con
+            RedistCons $growthRate 2 2 $EFSpacing $EFSpacing $con
         }
     } else {
-        if {$fileName == "LBFD_AxiSpike.pw"} {
+        if {$fileName == "LBFD-AxiSpike.pw"} {
             RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $tePlug $con
         } else {
-            RedistCons $growthRate [expr {int(log(2.5)/log($growthRate))}] [expr {int(log(2.5)/log($growthRate))}] $EFSpacing $EFSpacing $con
+            RedistCons $growthRate 2 2 $EFSpacing $EFSpacing $con
         }
     }
 }
+
+RedistCons $growthRate 2 2 $EFSpacing $EFSpacing $spinnerUpperAftCons
+RedistCons $growthRate 2 2 $EFSpacing $EFSpacing $spinnerLowerAftCons
 
 foreach con $plugCons {
 
@@ -949,11 +966,13 @@ foreach con $inletIMLSymCons {
     set Node1 [$con getXYZ -parameter 1.0]
 
     if { [lindex $Node0 0] < [lindex $Node1 0] } {
-        RedistCons $inletGrowthRate [expr {int(log(12.5)/log($inletGrowthRate))}] [expr {int(log(5.0)/log($inletGrowthRate))}] $inletSpacing $EFSpacing $con
+        RedistCons $inletGrowthRate [expr {int(log(12.5)/log($inletGrowthRate))}] 5 $inletSpacing $EFSpacing $con
     } else {
-            RedistCons $inletGrowthRate [expr {int(log(5.0)/log($inletGrowthRate))}] [expr {int(log(12.5)/log($inletGrowthRate))}] $EFSpacing $inletSpacing $con
+        RedistCons $inletGrowthRate 5 [expr {int(log(12.5)/log($inletGrowthRate))}] $EFSpacing $inletSpacing $con
     }
 } 
+
+RedistCons $inletGrowthRate 5 5 $EFSpacing $EFSpacing $inletIMLAftSymCons
 
 ## Redistribute Nozzle IML Connectors
 foreach con $nozzleIMLSymCons {
@@ -1395,7 +1414,10 @@ set pylonDoms [list $modelDoms(pylon)           \
                     $modelDoms(pylon-TE)]   
 
 set spinnerDoms [list $modelDoms(spinner-upper) \
-                    $modelDoms(spinner-lower)]
+                      $modelDoms(spinner-lower)]
+
+set spinnerAftDoms [list $modelDoms(spinner-upper-aft) \
+                         $modelDoms(spinner-lower-aft)]
 
 set plugDoms [list $modelDoms(plug-upper) \
                    $modelDoms(plug-lower)]
@@ -1411,7 +1433,7 @@ set freestreamBC [pw::BoundaryCondition create]
 
 set nearfieldBC [pw::BoundaryCondition create]
     $nearfieldBC setName "bc-03"
-    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield)]
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-1)]
 
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-04"
@@ -1472,6 +1494,82 @@ set engineBC [pw::BoundaryCondition create]
 set symmetryBC [pw::BoundaryCondition create]
     $symmetryBC setName "bc-18"
     $symmetryBC apply [list $blk_1 $modelDoms(plume-symmetry)]
+
+set inletaftBC [pw::BoundaryCondition create]
+    $inletaftBC setName "bc-19"
+    $inletaftBC apply [list $blk_1 $modelDoms(inlet-IML-aft)]
+
+set spinneraftBC [pw::BoundaryCondition create]
+    $spinneraftBC setName "bc-20"
+    foreach dom $spinnerAftDoms {$spinneraftBC apply [list $blk_1 $dom]}
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-21"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-2)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-22"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-3)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-23"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-4)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-24"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-5)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-25"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-6)]        
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-26"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-7)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-27"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-8)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-28"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-9)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-29"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-10)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-30"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-11)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-31"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-12)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-32"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-13)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-33"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-14)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-34"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-15)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-35"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-16)]
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-36"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-17)]                        
+
+set nearfieldBC [pw::BoundaryCondition create]
+    $nearfieldBC setName "bc-37"
+    $nearfieldBC apply [list $blk_1 $modelDoms(nearfield-18)]
 
 timestamp
 puts "Run Time: [convSeconds [pwu::Time elapsed $tBegin]]"
